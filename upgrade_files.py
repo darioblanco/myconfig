@@ -32,7 +32,7 @@ def upgrade_files(hostpath, homepath):
                    "(code: {})").format(filename, error_code)
         if error_str:
             print ("Error adding file '{} to the git repository "
-                   "(reson: {})").format(filename, error_str)
+                   "(reason: {})").format(filename, error_str)
 
     git_command = ["git", "commit"]
     p = Popen(git_command, stderr=PIPE)
