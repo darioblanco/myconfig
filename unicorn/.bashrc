@@ -144,10 +144,10 @@ alias lt='ls -ltr'         # sort by date, most recent last
 alias lm='ls -al |more'    # pipe through 'more'
 alias lr='ls -lR'          # recursive ls
 alias tree='tree -Csu'     # nice alternative to 'recursive ls'
-
+alias remotelycleanbranches="git branch -r --merged master | sed 's/ *origin\///' | grep -v 'master$' | xargs -I% git push origin :%"  # remove obsolete branches from the local and the remote git repository
 
 ##  exports
-
+export PATH=$PATH:/usr/bin/ruby
 
 ## virtualenvwrapper
 export WORKON_HOME=~/env
