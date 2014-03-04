@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
+""" This script is deprecated """
 
 import argparse
 import glob
