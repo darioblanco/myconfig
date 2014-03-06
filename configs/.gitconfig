@@ -8,6 +8,7 @@
     ui = auto
 [core]
     pager = less -FRSX
+    editor = vi
 [alias]
     co = checkout
     ci = commit -m
