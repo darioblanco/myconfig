@@ -2,10 +2,12 @@
     "always_show_minimap_viewport": true,
     "bold_folder_labels": true,
     "color_scheme": "Packages/Monokai Extended/Monokai Extended.tmTheme",
+    "default_line_ending": "unix",
     "draw_minimap_border": true,
     "draw_white_space": "all",
     "enable_telemetry": false,
     "ensure_newline_at_eof_on_save": true,
+    "fallback_encoding": "UTF-8",
     "folder_exclude_patterns": [
         ".svn",
         ".git",
@@ -31,6 +33,7 @@
     "show_panel_on_build": false,
     "soda_classic_tabs": true,
     "soda_folder_icons": false,
+    "tab_size": 4,
     "translate_tabs_to_spaces": true,
     "trim_trailing_white_space_on_save": true,
     "wrap_width": 80
