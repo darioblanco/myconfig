@@ -1,0 +1,17 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Anaconda",
+		"Boxy Theme",
+		"GitGutter",
+		"Jinja2",
+		"Package Control",
+		"Pretty YAML",
+		"SaltStack-related syntax highlighting and snippets",
+		"SideBarEnhancements"
+	]
+}
