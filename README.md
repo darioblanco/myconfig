@@ -11,3 +11,9 @@
   * zsh
 * SublimeText3
 * iTerm
+
+### Console
+
+This is how my console looks like
+
+![my iTerm2](http://i.imgur.com/6vrq9s1.png)
