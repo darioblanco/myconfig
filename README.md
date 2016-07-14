@@ -17,3 +17,9 @@
 This is how my console looks like
 
 ![my iTerm2](http://i.imgur.com/6vrq9s1.png)
+
+### Programming environment
+
+This is how my Sublime Text 3 looks like
+
+![my Sublime Text 3](http://i.imgur.com/WdOiJMy.png)
