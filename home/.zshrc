@@ -92,9 +92,6 @@ bindkey "^X\\x7f" backward-kill-line
 # adds redo
 bindkey "^X^_" redo
 
-# Set virtualenvwrapper
-source /usr/local/bin/virtualenvwrapper.sh
-
 # Set locales
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8 
