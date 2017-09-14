@@ -94,4 +94,12 @@ bindkey "^X^_" redo
 
 # Set locales
 export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8 
+export LANG=en_US.UTF-8
+
+# Python development
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Programming
+source /usr/local/bin/virtualenvwrapper.sh
+
+# HTTP proxy usage discovery
+source ~/proxy.sh
