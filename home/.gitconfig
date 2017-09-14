@@ -3,19 +3,29 @@
     email = dblancoit@gmail.com
 [github]
     user = darioblanco
+    email = dblancoit@gmail.com
 [color]
     pager = true
     ui = auto
 [core]
     pager = less -FRSX
     editor = vi
+[web]
+	browser = google-chrome
+[credential]
+    helper = osxkeychain
 [alias]
     co = checkout
+    cob = checkout -b
     ci = commit -m
     cia = commit -am
+    amend = commit -a --amend
     st = status
     graph = log --all --graph --decorate --oneline -n30
     rgrep = !git grep
     diffc = diff --cached
+    unstage = reset HEAD
     clearbranches = !git branch --merged master | grep -v 'master$' | xargs git branch -d
+    delete-merged-branches = "!git co master && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
     logl = log --oneline
+    ec = config --global -e
