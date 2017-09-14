@@ -1,0 +1,9 @@
+[
+  {
+    title: "Example Project"
+    group: "ExampleGroup"
+    paths: [
+      "/Users/dario/projectpath"
+    ]
+  }
+]
