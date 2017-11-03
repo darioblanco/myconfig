@@ -15,7 +15,17 @@
   "go-plus":
     config: {}
     panel:
-      currentHeight: "15.816326530612246vh"
+      currentHeight: "13.350340136054422vh"
+  "linter-eslint":
+    lintHtmlFiles: true
+    scopes: [
+      "source.js"
+      "source.jsx"
+      "source.js.jsx"
+      "source.babel"
+      "source.js-semantic"
+      "text.html.vue"
+    ]
   "linter-ui-default":
     showPanel: true
   "platformio-ide-terminal":
