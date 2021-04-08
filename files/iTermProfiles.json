@@ -11,7 +11,7 @@
         "Blue Component" : 0.5168579816818237
       },
       "Transparency" : 0,
-      "Normal Font" : "InconsolataForPowerline 15",
+      "Normal Font" : "MesloLGS Nerd Font",
       "Bold Color" : {
         "Green Component" : 0.5648583769798279,
         "Red Component" : 0.5059919357299805,
@@ -57,7 +57,7 @@
         "Red Component" : 0.4405802488327026,
         "Blue Component" : 0.5168579816818237
       },
-      "Working Directory" : "\/Users\/dario",
+      "Working Directory" : "~",
       "Blinking Cursor" : false,
       "Disable Window Resizing" : true,
       "Sync Title" : false,
