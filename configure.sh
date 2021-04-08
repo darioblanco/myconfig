@@ -13,6 +13,31 @@ set -o pipefail
 
 trap exit_gracefully INT
 
+vscode_extensions=(
+  4ops.terraform
+  alefragnani.project-manager
+  arcanis.vscode-zipfs
+  DavidAnson.vscode-markdownlint
+  dbaeumer.vscode-eslint
+  eamodio.gitlens
+  esbenp.prettier-vscode
+  hashicorp.terraform
+  humao.rest-client
+  mikestead.dotenv
+  ms-azuretools.vscode-docker
+  ms-kubernetes-tools.vscode-kubernetes-tools
+  ms-python.python
+  ms-vscode-remote.remote-containers
+  ms-vscode.sublime-keybindings
+  redhat.vscode-yaml
+  shd101wyy.markdown-preview-enhanced
+  streetsidesoftware.code-spell-checker
+  timonwong.shellcheck
+  yzhang.markdown-all-in-one
+  ZainChen.json
+  zxh404.vscode-proto3
+)
+
 function configure_macos_defaults() {
   print_blue "Configuring MacOS settings (requires a logout/restart to be reflected)..."
   # Show hidden files inside the finder
@@ -74,32 +99,9 @@ function configure_iterm() {
 }
 
 function configure_vscode() {
-  VSCODE_EXTENSIONS=(
-    alefragnani.project-manager
-    arcanis.vscode-zipfs
-    DavidAnson.vscode-markdownlint
-    dbaeumer.vscode-eslint
-    eamodio.gitlens
-    esbenp.prettier-vscode
-    hashicorp.terraform
-    humao.rest-client
-    mikestead.dotenv
-    ms-azuretools.vscode-docker
-    ms-kubernetes-tools.vscode-kubernetes-tools
-    ms-python.python
-    ms-vscode-remote.remote-containers
-    ms-vscode.sublime-keybindings
-    redhat.vscode-yaml
-    shd101wyy.markdown-preview-enhanced
-    streetsidesoftware.code-spell-checker
-    timonwong.shellcheck
-    yzhang.markdown-all-in-one
-    ZainChen.json
-    zxh404.vscode-proto3
-  )
   if hash code &>/dev/null; then
     print_blue "Installing Visual Studio Code extensions..."
-    for i in "${VSCODE_EXTENSIONS[@]}"; do
+    for i in "${vscode_extensions[@]}"; do
       if code --list-extensions | grep "$i" > /dev/null; then
         print_yellow "Extension $i is already installed"
       else

@@ -11,9 +11,22 @@ set -o pipefail
 
 trap exit_gracefully INT
 
+taps=(
+  hashicorp/tap
+  helm/tap
+  homebrew/cask
+  homebrew/cask-fonts
+  homebrew/core
+  pulumi/tap
+  romkatv/powerlevel10k
+)
+
 packages=(
+  awscli
+  aws-iam-authenticator
   bash-completion
   bash-git-prompt
+  chart-releaser
   curl
   exa
   gettext
@@ -21,6 +34,7 @@ packages=(
   gh
   git
   google-cloud-sdk
+  hashicorp/tap/terraform
   helm
   jq
   kubectx
@@ -30,15 +44,17 @@ packages=(
   openjdk
   openssl
   pipenv
-  pulumi
   python3
   romkatv/powerlevel10k/powerlevel10k
   ruby
   shellcheck
+  terraformer
   thefuck
   tmux
   tree
+  vault
   vim
+  watch
   wget
   yamllint
   yarn
@@ -94,6 +110,7 @@ apps=(
   signal
   spotify
   telegram
+  tunnelblick
   visual-studio-code
   vlc
   whatsapp
@@ -119,6 +136,17 @@ function install_xcode_clt() {
   fi
 }
 
+function apply_brew_taps() {
+  local taps=$*
+  for tap in $taps; do
+    if brew tap | grep "$tap" > /dev/null; then
+      print_yellow "Tap $tap is already applied"
+    else
+      brew tap "$tap"
+    fi
+  done
+}
+
 function install_homebrew() {
   export HOMEBREW_CASK_OPTS="--appdir=/Applications"
   if hash brew &>/dev/null; then
@@ -131,6 +159,7 @@ function install_homebrew() {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     brew update
   fi
+  apply_brew_taps "${taps[@]}"
 }
 
 function install_brew_formulas() {
