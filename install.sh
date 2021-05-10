@@ -22,6 +22,7 @@ taps=(
 )
 
 packages=(
+  argocd
   awscli
   aws-iam-authenticator
   bash-completion

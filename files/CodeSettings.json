@@ -19,6 +19,7 @@
     "html"
   ],
   "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
   "extensions.autoUpdate": true,
   "extensions.ignoreRecommendations": false,
   "files.exclude": {
@@ -39,7 +40,7 @@
   "terminal.integrated.rendererType": "canvas",
   "terminal.integrated.shell.osx": "/bin/zsh",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "window.closeWhenEmpty": true,
-  "window.zoomLevel": 1
+  "window.zoomLevel": 1,
+  "workbench.editor.enablePreview": false
 }
