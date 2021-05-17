@@ -19,6 +19,7 @@ taps=(
   homebrew/core
   pulumi/tap
   romkatv/powerlevel10k
+  vmware-tanzu/carvel
 )
 
 packages=(
@@ -34,12 +35,17 @@ packages=(
   graphviz
   gh
   git
+  go
   google-cloud-sdk
+  gpg
   hashicorp/tap/terraform
   helm
   jq
+  jsonnet-bundler
+  jsonnet
   kubectx
   kubernetes-cli
+  kustomize
   markdown
   nmap
   openjdk
@@ -59,6 +65,8 @@ packages=(
   wget
   yamllint
   yarn
+  yq
+  ytt
   zsh
   zsh-autosuggestions
   zsh-completions
@@ -103,6 +111,7 @@ apps=(
   keka
   kindle
   little-snitch
+  macs-fan-control
   microsoft-office
   microsoft-teams
   miro
@@ -126,6 +135,10 @@ python_packages=(
 ruby_gems=(
   bundler
   rake
+)
+
+go_libraries=(
+  github.com/brancz/gojsontoyaml
 )
 
 function install_xcode_clt() {
@@ -209,6 +222,12 @@ function install_macos_apps() {
   install_brew_casks "${apps[@]}"
 }
 
+function install_go_libraries() {
+  print_blue "Installing Go libraries..."
+  go get "${go_libraries[@]}"
+  export PATH
+}
+
 function install_python_packages() {
   if pip3 freeze | grep virtualenv > /dev/null; then
     print_yellow "Essential python packages are already installed"
@@ -235,8 +254,11 @@ function main() {
   install_fonts
   install_quicklook_plugins
   install_macos_apps
+  install_go_libraries
   install_python_packages
   install_ruby_gems
+  # Install nvm
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
   print_green "Installation successful"
 }
 

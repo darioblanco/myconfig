@@ -89,6 +89,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH"
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export PATH="$(which python3):$PATH"
+export PATH=$PATH:$(go env GOPATH)/bin
 
 # PowerLevel10k
 source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
