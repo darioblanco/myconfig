@@ -151,8 +151,8 @@ function install_xcode_clt() {
 }
 
 function apply_brew_taps() {
-  local taps=$*
-  for tap in $taps; do
+  local tap_packages=$*
+  for tap in $tap_packages; do
     if brew tap | grep "$tap" > /dev/null; then
       print_yellow "Tap $tap is already applied"
     else
