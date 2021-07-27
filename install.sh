@@ -35,7 +35,7 @@ packages=(
   graphviz
   gh
   git
-  go
+  golang
   google-cloud-sdk
   gpg
   hashicorp/tap/terraform
