@@ -35,7 +35,6 @@ packages=(
   graphviz
   gh
   git
-  go
   golangci/tap/golangci-lint
   google-cloud-sdk
   gpg
