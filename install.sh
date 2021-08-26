@@ -35,7 +35,8 @@ packages=(
   graphviz
   gh
   git
-  golang
+  go
+  golangci/tap/golangci-lint
   google-cloud-sdk
   gpg
   hashicorp/tap/terraform
@@ -51,6 +52,7 @@ packages=(
   openjdk
   openssl
   pipenv
+  protobuf
   python3
   romkatv/powerlevel10k/powerlevel10k
   ruby
