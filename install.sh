@@ -91,7 +91,6 @@ fonts=(
 quicklook_plugins=(
   qlmarkdown
   qlprettypatch
-  qlstephen
   qlimagesize
   quicklook-csv
   quicklook-json
