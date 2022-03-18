@@ -35,6 +35,7 @@ packages=(
   graphviz
   gh
   git
+  go
   golangci/tap/golangci-lint
   google-cloud-sdk
   gpg
@@ -111,15 +112,19 @@ apps=(
   iterm2
   keka
   kindle
+  lastpass
+  lens
   little-snitch
   macs-fan-control
   microsoft-office
   microsoft-teams
   miro
+  notion
   postman
   slack
   signal
   spotify
+  steam
   telegram
   tunnelblick
   visual-studio-code
@@ -154,7 +159,7 @@ function install_xcode_clt() {
 function apply_brew_taps() {
   local tap_packages=$*
   for tap in $tap_packages; do
-    if brew tap | grep "$tap" > /dev/null; then
+    if brew tap | grep -w "$tap" > /dev/null; then
       print_yellow "Tap $tap is already applied"
     else
       brew tap "$tap"
@@ -180,7 +185,7 @@ function install_homebrew() {
 function install_brew_formulas() {
   local formulas=$*
   for formula in $formulas; do
-    if brew list --formula | grep "$formula" > /dev/null; then
+    if brew list --formula | grep -w "$formula" > /dev/null; then
       print_yellow "Formula $formula is already installed"
     else
       brew install "$formula"
@@ -191,7 +196,7 @@ function install_brew_formulas() {
 function install_brew_casks() {
   local casks=$*
   for cask in $casks; do
-    if brew list --casks | grep "$cask" > /dev/null; then
+    if brew list --casks | grep -w "$cask" > /dev/null; then
       print_yellow "Cask $cask is already installed"
     else
       brew install --cask "$cask"
@@ -230,7 +235,7 @@ function install_go_libraries() {
 }
 
 function install_python_packages() {
-  if pip3 freeze | grep virtualenv > /dev/null; then
+  if pip3 freeze | grep -w virtualenv > /dev/null; then
     print_yellow "Essential python packages are already installed"
   else
     print_blue "Installing Python packages (requires admin password)..."
