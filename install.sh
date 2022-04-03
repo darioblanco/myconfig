@@ -23,6 +23,7 @@ taps=(
 )
 
 packages=(
+  antigen
   argocd
   awscli
   aws-iam-authenticator
@@ -70,9 +71,6 @@ packages=(
   yq
   ytt
   zsh
-  zsh-autosuggestions
-  zsh-completions
-  zsh-syntax-highlighting
 )
 
 fonts=(
@@ -259,7 +257,8 @@ function main() {
   install_fonts
   install_quicklook_plugins
   install_macos_apps
-  install_go_libraries
+  # TODO - Fix "'go get' is no longer supported outside a module"
+  # install_go_libraries
   install_python_packages
   install_ruby_gems
   # Install nvm

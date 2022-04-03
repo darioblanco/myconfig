@@ -1,0 +1,44 @@
+# Load oh-my-zsh library
+antigen use oh-my-zsh
+
+# Load bundles from the default repo (oh-my-zsh)
+antigen bundle alias-finder
+antigen bundle brew
+antigen bundle command-not-found
+antigen bundle cp
+antigen bundle docker
+antigen bundle docker-compose
+antigen bundle gcloud
+antigen bundle gem
+antigen bundle git
+antigen bundle github
+antigen bundle history
+antigen bundle jsontools
+antigen bundle kubectl
+antigen bundle node
+antigen bundle npm
+antigen bundle osx
+antigen bundle pip
+antigen bundle pipenv
+antigen bundle python
+antigen bundle rake
+antigen bundle redis-cli
+antigen bundle sudo
+antigen bundle thefuck
+antigen bundle tmux
+antigen bundle urltools
+antigen bundle virtualenv
+antigen bundle yarn
+antigen bundle zsh-interactive-cd
+antigen bundle zsh-navigation-tools
+
+# Load bundles from external repos
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+# Select theme
+antigen theme romkatv/powerlevel10k
+
+# Tell Antigen that you're done
+antigen apply

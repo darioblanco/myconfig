@@ -65,27 +65,12 @@ function configure_macos_defaults() {
 
 function configure_zsh() {
   if [[ ! -f ~/.zshrc ]]; then
-    print_blue "Installing oh my zsh..."
-    ZSH=~/.oh-my-zsh ZSH_DISABLE_COMPFIX=true sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    chmod 744 ~/.oh-my-zsh/oh-my-zsh.sh
-    print_blue "Installing oh my zsh extra plugins..."
-    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-    print_blue "Creating .zshrc file..."
+    print_blue "Configuring zsh + antigen + oh my zsh..."
     cp files/.zshrc ~/.zshrc
-    chsh -s /bin/zsh
+    cp files/.antigenrc ~/.antigenrc
+    chsh -s /bin/zshrc
   else
-    print_yellow "OhMyZsh already installed"
-  fi
-
-  if [[ ! -f ~/.p10k.zsh ]]; then
-    print_blue "Installing powerlevel10k theme for OhMyZsh"
-    echo "source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
-    # shellcheck source=/dev/null
-    /bin/zsh -i -c "p10k configure"
-  else
-    print_yellow "Powerlevel10k theme for OhMyZsh already installed"
+    print_yellow "zsh + antigen + oh my zsh already installed"
   fi
 }
 
