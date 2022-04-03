@@ -3,9 +3,9 @@ antigen use oh-my-zsh
 
 # Load bundles from the default repo (oh-my-zsh)
 antigen bundle alias-finder
+antigen bundle aws2
 antigen bundle brew
 antigen bundle command-not-found
-antigen bundle cp
 antigen bundle docker
 antigen bundle docker-compose
 antigen bundle gcloud
@@ -15,9 +15,9 @@ antigen bundle github
 antigen bundle history
 antigen bundle jsontools
 antigen bundle kubectl
+antigen bundle macos
 antigen bundle node
 antigen bundle npm
-antigen bundle osx
 antigen bundle pip
 antigen bundle pipenv
 antigen bundle python
@@ -33,6 +33,9 @@ antigen bundle zsh-interactive-cd
 antigen bundle zsh-navigation-tools
 
 # Load bundles from external repos
+antigen bundle jonmosco/kube-ps1
+antigen bundle reegnz/jq-zsh-plugin
+antigen bundle unixorn/kubectx-zshplugin
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-syntax-highlighting
