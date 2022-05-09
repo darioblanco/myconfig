@@ -59,6 +59,7 @@ packages=(
   ruby
   shellcheck
   terraformer
+  tflint
   thefuck
   tmux
   tree
