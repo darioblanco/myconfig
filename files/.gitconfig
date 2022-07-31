@@ -25,7 +25,7 @@
     rgrep = !git grep
     diffc = diff --cached
     unstage = reset HEAD
-    clearbranches = !git branch --merged master | grep -v 'master$' | xargs git branch -d
-    delete-merged-branches = "!git co master && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+    clearbranches = !git branch --merged main | grep -v 'main$' | xargs git branch -d
+    delete-merged-branches = "!git co main && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
     logl = log --oneline
     ec = config --global -e
