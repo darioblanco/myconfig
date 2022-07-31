@@ -11,8 +11,9 @@ source $(brew --prefix)/share/antigen/antigen.zsh
 # Load Antigen configurations
 antigen init ~/.antigenrc
 
-# Load Kubectl autocompletion
+# Load autocompletions
 source <(kubectl completion zsh)
+source <(k3d completion zsh)
 
 # iTerm bindings
 # changes hex 0x15 to delete everything to the left of the cursor, rather than the whole line
@@ -23,25 +24,30 @@ bindkey "^X\\x7f" backward-kill-line
 bindkey "^X^_" redo
 
 # Git Conventional Commits
-function gc() {
-if [ -z "$3" ]
-  then
-    git commit -m "$1: $2"
-  else
-    git commit -m "$1($2): $3"
+#   Examples:
+#     `git style "remove trailing whitespace"` -> `git commit -m "style: remove trailing whitespace"`
+#     `git fix -s "router" "correct redirect link"` -> `git commit -m "fix(router): correct redirect link"`
+_register() {
+  if ! git config --global --get-all alias.$1 &>/dev/null; then
+    git config --global alias.$1 '!a() { if [[ "$1" == "-s" || "$1" == "--scope" ]]; then git commit -m "'$1'(${2}): ${@:3}"; else git commit -m "'$1': ${@}"; fi }; a'
   fi
 }
-alias gitrefactor="gc refactor"
-alias gittest="gc test"
-alias gitfix="gc fix"
-alias gitfeat="gc feat"
-alias gitci="gc ci"
-alias gitchore="gc chore"
-alias gitbuild="gc build"
-if [ -x "$(command -v exa)" ]; then
-    alias ls="exa"
-    alias la="exa --long --all --group"
-fi
+git_aliases=(
+  'build'
+  'chore'
+  'ci'
+  'docs'
+  'feat'
+  'fix'
+  'perf'
+  'refactor'
+  'revert'
+  'style'
+  'test'
+)
+for git_alias in "${git_aliases[@]}"; do
+  _register $git_alias
+done
 
 # Locales
 export LC_ALL=en_US.UTF-8

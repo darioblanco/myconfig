@@ -44,11 +44,11 @@ packages=(
   jq
   jsonnet-bundler
   jsonnet
+  k3d
   kubectx
   kubernetes-cli
   kustomize
   markdown
-  minikube
   nmap
   n
   openjdk
