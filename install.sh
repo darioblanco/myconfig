@@ -17,7 +17,6 @@ taps=(
   homebrew/cask
   homebrew/cask-fonts
   homebrew/core
-  pulumi/tap
   romkatv/powerlevel10k
   vmware-tanzu/carvel
 )
@@ -49,7 +48,9 @@ packages=(
   kubernetes-cli
   kustomize
   markdown
+  minikube
   nmap
+  n
   openjdk
   openssl
   pipenv
@@ -63,12 +64,10 @@ packages=(
   thefuck
   tmux
   tree
-  vault
   vim
   watch
   wget
   yamllint
-  yarn
   yq
   ytt
   zsh
@@ -127,6 +126,7 @@ apps=(
   tunnelblick
   visual-studio-code
   vlc
+  warp
   whatsapp
   zoom
 )
@@ -139,10 +139,6 @@ python_packages=(
 ruby_gems=(
   bundler
   rake
-)
-
-go_libraries=(
-  github.com/brancz/gojsontoyaml
 )
 
 function install_xcode_clt() {
@@ -171,7 +167,7 @@ function install_homebrew() {
     print_yellow "Homebrew already installed. Getting updates and package upgrades..."
     brew update
     brew upgrade
-    brew doctor
+    # brew doctor
   else
     print_blue "Installing homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -226,12 +222,6 @@ function install_macos_apps() {
   install_brew_casks "${apps[@]}"
 }
 
-function install_go_libraries() {
-  print_blue "Installing Go libraries..."
-  go get "${go_libraries[@]}"
-  export PATH
-}
-
 function install_python_packages() {
   if pip3 freeze | grep -w virtualenv > /dev/null; then
     print_yellow "Essential python packages are already installed"
@@ -258,12 +248,8 @@ function main() {
   install_fonts
   install_quicklook_plugins
   install_macos_apps
-  # TODO - Fix "'go get' is no longer supported outside a module"
-  # install_go_libraries
   install_python_packages
   install_ruby_gems
-  # Install nvm
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
   print_green "Installation successful"
 }
 
