@@ -35,5 +35,12 @@ antigen bundle zsh-navigation-tools
 # Select theme
 antigen theme romkatv/powerlevel10k
 
+# Load bundles from external repos
+antigen bundle reegnz/jq-zsh-plugin
+antigen bundle unixorn/kubectx-zshplugin
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-syntax-highlighting # Must be the last bundle
+
 # Tell Antigen that you're done
 antigen apply

@@ -45,6 +45,7 @@ packages=(
   jsonnet-bundler
   jsonnet
   k3d
+  kube-ps1
   kubectx
   kubernetes-cli
   kustomize
