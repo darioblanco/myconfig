@@ -54,6 +54,7 @@ packages=(
   openjdk
   openssl
   pipenv
+  podman
   protobuf
   python3
   romkatv/powerlevel10k/powerlevel10k
@@ -132,6 +133,7 @@ apps=(
 )
 
 python_packages=(
+  podman-compose
   virtualenv
   virtualenvwrapper
 )
