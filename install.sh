@@ -45,13 +45,15 @@ function install_python_packages() {
 }
 
 function install_rvm_ruby_and_gems() {
+	print_blue "Installing Ruby packages..."
 	if [[ $(gem list | grep -e bundler -c) -ge 1 ]]; then
 		print_yellow "Ruby bundler is already installed"
 	else
-		print_blue "Installing Ruby gems (requires admin password)..."
+		print_blue "Installing Ruby bundler..."
 		gem install bundler
 	fi
 	bundle install --quiet
+	print_green "Essential Ruby packages installed successfully"
 }
 
 function install_node() {
@@ -62,6 +64,21 @@ function install_node() {
 		sudo n latest
 		print_green "Latest node version installed successfully"
 	fi
+}
+
+function install_rust() {
+	if hash rustup &>/dev/null; then
+		print_yellow "Rust already installed"
+	else
+		print_blue "Installing Rust..."
+		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+		print_green "Rust installed successfully"
+	fi
+	print_blue "Checking for Rust updates..."
+	rustup -q update
+	print_blue "Installing essential Rust components..."
+	rustup component add clippy rustfmt
+	print_green "Rust components installed successfully"
 }
 
 function configure_zsh() {
@@ -195,6 +212,7 @@ function main() {
 	install_python_packages
 	install_rvm_ruby_and_gems
 	install_node
+	install_rust
 
 	configure_zsh
 	configure_ssh
