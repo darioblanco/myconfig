@@ -14,8 +14,6 @@ The scripts are tested and optimized for macOS Big Sur 11.2.3.
 ## Components
 
 - `install.sh`: install essential packages, fonts, programming language dependencies and macOS applications
-- `configure.sh`: copy configuration files (`./files/*`) and define development environment
-- `sync.sh`: clone and pull Github repository for the currently authenticated user
 - `utils.sh`: common functions used in the bootstrap scripts
 
 ## Run
@@ -36,39 +34,4 @@ To install packages:
 make install
 ```
 
-Sudo password might be prompted, in order to install python/ruby packages.
-
-### Configuration
-
-To configure the development environment:
-
-```sh
-make configure
-```
-
-The script will prompt the powerlevel10k configurator if it is the first time you
-define the zsh theme.
-
-If you have no `.ssh` folder, it will prompt you to set a passphrase for the newly created
-SSH key pair.
-
-To finally apply the iTerm configuration, you need to set the `Dario` profile as default
-in Preferences > Profile > Other Actions
-
-### Synchronization
-
-To sync only Github repositories
-
-```sh
-make sync
-```
-
-You will be prompted to log into your Github account the first time the script is run.
-
-### All
-
-This basically runs all the previously defined steps, in order.
-
-```sh
-make all
-```
+Sudo password might be prompted (for instance, to install `n` to manage `node` versions).

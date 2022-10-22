@@ -1,0 +1,4 @@
+bcrypt
+podman-compose
+virtualenv
+virtualenvwrapper

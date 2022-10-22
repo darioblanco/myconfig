@@ -1,10 +1,4 @@
-all: install configure sync
+all: install
 
 install:
 	./install.sh
-
-configure:
-	./configure.sh
-
-sync:
-	./sync.sh
