@@ -9,29 +9,18 @@ Even if applying it will not destroy your system, applications installed with th
 might not be what you need, or you could misconfigure your current environment.
 I suggest you alter the configuration files in a fork from this repo.
 
-The scripts are tested and optimized for macOS Big Sur 11.2.3.
+## Bootstrap your Mac
+
+Steps to be done in a brand new Macbook (tested with `macOS Ventura`):
+
+1. Run `git --version` in a Terminal. There will be a prompt to install the Command Line Developer Tools.
+2. Configure your SSH key in `~/.ssh` or your PAT if you will clone via HTTPs.
+3. `git clone git@github.com:darioblanco/myconfig.git`
+4. `cd myconfig`
+5. `make install`. Sudo password might be prompted to install certain tools.
+
 
 ## Components
 
-- `install.sh`: install essential packages, fonts, programming language dependencies and macOS applications
-- `utils.sh`: common functions used in the bootstrap scripts
-
-## Run
-
-Clone the repo
-
-```sh
-git clone https://github.com/darioblanco/myconfig
-```
-
-To bootstrap your macOS machine
-
-### Installation
-
-To install packages:
-
-```sh
-make install
-```
-
-Sudo password might be prompted (for instance, to install `n` to manage `node` versions).
+- `install.sh`: install essential packages, fonts, programming language dependencies and macOS applications.
+- `utils.sh`: common functions used in the bootstrap scripts.

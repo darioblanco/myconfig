@@ -31,6 +31,8 @@ function install_homebrew() {
 	else
 		print_blue "Installing homebrew..."
 		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zprofile
+		eval "$(/opt/homebrew/bin/brew shellenv)"
 		brew update
 		print_green "Homebrew installed successfully"
 	fi
@@ -44,18 +46,6 @@ function install_python_packages() {
 	print_green "Essential Python packages installed successfully"
 }
 
-function install_rvm_ruby_and_gems() {
-	print_blue "Installing Ruby packages..."
-	if [[ $(gem list | grep -e bundler -c) -ge 1 ]]; then
-		print_yellow "Ruby bundler is already installed"
-	else
-		print_blue "Installing Ruby bundler..."
-		gem install bundler
-	fi
-	bundle install --quiet
-	print_green "Essential Ruby packages installed successfully"
-}
-
 function install_node() {
 	if hash node &>/dev/null; then
 		print_yellow "Node already installed"
@@ -67,6 +57,7 @@ function install_node() {
 }
 
 function install_rust() {
+	export PATH="$HOME/.cargo/bin:$PATH"
 	if hash rustup &>/dev/null; then
 		print_yellow "Rust already installed"
 	else
@@ -86,7 +77,7 @@ function configure_zsh() {
 		print_blue "Configuring zsh + and configure oh-my-zsh and its bundles via antigen..."
 		cp files/.zshrc ~/.zshrc
 		cp files/.antigenrc ~/.antigenrc
-		chsh -s /bin/zshrc
+		chsh -s /bin/zsh
 	else
 		print_yellow "zsh + antigen + oh my zsh already installed"
 	fi
@@ -97,6 +88,7 @@ function configure_iterm() {
 	if [[ $configure_iterm =~ ^[yY] ]]; then
 		if [[ ! -f ~/Library/Application\ Support/iTerm2/DynamicProfiles/iTermProfiles.json ]]; then
 			print_blue "Copying iTerm2 profiles..."
+			mkdir -p ~/Library/Application\ Support/iTerm2/DynamicProfiles/
 			cp files/iTermProfiles.json ~/Library/Application\ Support/iTerm2/DynamicProfiles/
 		else
 			print_yellow "iTerm2 custom profile is already installed"
@@ -210,7 +202,6 @@ function main() {
 	install_xcode_clt
 	install_homebrew
 	install_python_packages
-	install_rvm_ruby_and_gems
 	install_node
 	install_rust
 
