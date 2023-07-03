@@ -31,7 +31,7 @@ function install_homebrew() {
 	else
 		print_blue "Installing homebrew..."
 		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-		(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zprofile
+		(echo; echo "eval \"$(/opt/homebrew/bin/brew shellenv)\"") >> ~/.zprofile
 		eval "$(/opt/homebrew/bin/brew shellenv)"
 		brew update
 		print_green "Homebrew installed successfully"
