@@ -1,3 +1,0 @@
-bcrypt
-podman-compose
-poetry

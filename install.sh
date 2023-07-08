@@ -40,19 +40,14 @@ function install_homebrew() {
 	print_green "Homebrew apps installed successfully"
 }
 
-function install_python_packages() {
-	print_blue "Installing Python packages..."
-	pip3 install -r "${cwd}/requirements.txt" --quiet
-	print_green "Essential Python packages installed successfully"
-}
-
-function install_node() {
-	if hash node &>/dev/null; then
-		print_yellow "Node already installed"
+function install_python() {
+	if hash python &>/dev/null; then
+		print_yellow "Default Python binary already configured."
 	else
-		print_blue "Installing latest node version (requires admin password)..."
-		sudo n latest
-		print_green "Latest node version installed successfully"
+		print_blue "Configuring Python binary from Python3 (requires sudo)..."
+		# Symlink python to python3 so poetry can get the proper binary
+		sudo ln -s /opt/homebrew/bin/python3 /opt/homebrew/bin/python
+		print_green "Python binary configured successfully"
 	fi
 }
 
@@ -201,8 +196,7 @@ function main() {
 
 	install_xcode_clt
 	install_homebrew
-	install_python_packages
-	install_node
+	install_python
 	install_rust
 
 	configure_zsh
