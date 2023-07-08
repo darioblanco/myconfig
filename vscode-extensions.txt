@@ -19,6 +19,7 @@ ms-vscode-remote.remote-containers
 ms-vscode.atom-keybindings
 ms-vscode.makefile-tools
 ms-vscode.sublime-keybindings
+ninoseki.vscode-pylens
 redhat.vscode-yaml
 rust-lang.rust-analyzer
 streetsidesoftware.code-spell-checker
