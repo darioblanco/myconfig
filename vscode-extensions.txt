@@ -1,5 +1,6 @@
 4ops.terraform
 alefragnani.project-manager
+bungcip.better-toml
 DavidAnson.vscode-markdownlint
 dbaeumer.vscode-eslint
 eamodio.gitlens
