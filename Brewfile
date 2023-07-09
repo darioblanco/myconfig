@@ -1,4 +1,5 @@
 # Taps
+tap "fluxcd/tap"
 tap "hashicorp/tap"
 tap "helm/tap"
 tap "homebrew/cask-fonts"
@@ -15,6 +16,7 @@ brew "bcrypt"
 brew "curl"
 brew "direnv"
 brew "exa"
+brew "flux"
 brew "gettext"
 brew "gh"
 brew "git"
