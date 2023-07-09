@@ -17,8 +17,8 @@
 [alias]
     co = checkout
     cob = checkout -b
-    ci = commit -m
-    cia = commit -am
+    cim = commit -m
+    ciam = commit -am
     amend = commit -a --amend
     st = status
     graph = log --all --graph --decorate --oneline -n30
