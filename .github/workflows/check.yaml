@@ -10,10 +10,10 @@ jobs:
     name: shell
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Run shellcheck
-      uses: ludeeus/action-shellcheck@master
-      env:
-        SHELLCHECK_OPTS: -e SC1091
-      with:
-        ignore: files
+      - uses: actions/checkout@v2
+      - name: Run shellcheck
+        uses: ludeeus/action-shellcheck@master
+        env:
+          SHELLCHECK_OPTS: -e SC1091
+        with:
+          ignore: files

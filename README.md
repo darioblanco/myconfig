@@ -19,8 +19,13 @@ Steps to be done in a brand new Macbook (tested with `macOS Ventura`):
 4. `cd myconfig`
 5. `make install`. Sudo password might be prompted to install certain tools.
 
-
 ## Components
 
 - `install.sh`: install essential packages, fonts, programming language dependencies and macOS applications.
 - `utils.sh`: common functions used in the bootstrap scripts.
+
+## Development
+
+To develop over this repository, run `make init` to see if you satisfy all the requirements:
+
+- `prettier` is needed for autoformatting JSON and YAML files. You can install it in MacOS with `brew install prettier`.

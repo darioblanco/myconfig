@@ -15,6 +15,10 @@ antigen init ~/.antigenrc
 source <(kubectl completion zsh)
 source <(k3d completion zsh)
 
+# Load google cloud client requirements
+source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+
 # iTerm bindings
 # changes hex 0x15 to delete everything to the left of the cursor, rather than the whole line
 bindkey "^U" backward-kill-line

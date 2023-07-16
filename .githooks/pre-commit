@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo "Running pre-commit hook: make format"
+
+make format
+
+echo "Files automatically formatted."
+exit 0

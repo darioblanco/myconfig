@@ -1,31 +1,33 @@
 [user]
-    name = Darío Blanco
-    email = dblancoit@gmail.com
+	name = Darío Blanco
+	email = dblancoit@gmail.com
 [github]
-    user = darioblanco
-    email = dblancoit@gmail.com
+	user = darioblanco
+	email = dblancoit@gmail.com
 [color]
-    pager = true
-    ui = auto
+	pager = true
+	ui = auto
 [core]
-    pager = less -FRSX
-    editor = vi
+	pager = less -FRSX
+	editor = vi
 [web]
 	browser = google-chrome
 [credential]
-    helper = osxkeychain
+	helper = osxkeychain
+[init]
+	defaultBranch = main
 [alias]
-    co = checkout
-    cob = checkout -b
-    cim = commit -m
-    ciam = commit -am
-    amend = commit -a --amend
-    st = status
-    graph = log --all --graph --decorate --oneline -n30
-    rgrep = !git grep
-    diffc = diff --cached
-    unstage = reset HEAD
-    clearbranches = !git branch --merged main | grep -v 'main$' | xargs git branch -d
-    delete-merged-branches = "!git co main && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-    logl = log --oneline
-    ec = config --global -e
+	co = checkout
+	cob = checkout -b
+	cim = commit -m
+	ciam = commit -am
+	amend = commit -a --amend
+	st = status
+	graph = log --all --graph --decorate --oneline -n30
+	rgrep = !git grep
+	diffc = diff --cached
+	unstage = reset HEAD
+	clearbranches = !git branch --merged main | grep -v 'main$' | xargs git branch -d
+	delete-merged-branches = "!git co main && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+	logl = log --oneline
+	ec = config --global -e
