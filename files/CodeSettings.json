@@ -36,5 +36,8 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "window.closeWhenEmpty": true,
   "window.zoomLevel": 1,
-  "workbench.editor.enablePreview": false
+  "workbench.editor.enablePreview": false,
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  }
 }

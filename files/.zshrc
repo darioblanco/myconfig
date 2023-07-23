@@ -53,6 +53,9 @@ for git_alias in "${git_aliases[@]}"; do
   _register $git_alias
 done
 
+# Docker to podman
+alias docker=podman
+
 # Locales
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
