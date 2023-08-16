@@ -1,6 +1,6 @@
 4ops.terraform
 alefragnani.project-manager
-bungcip.better-toml
+bierner.markdown-mermaid
 DavidAnson.vscode-markdownlint
 dbaeumer.vscode-eslint
 eamodio.gitlens
@@ -24,5 +24,6 @@ ninoseki.vscode-pylens
 redhat.vscode-yaml
 rust-lang.rust-analyzer
 streetsidesoftware.code-spell-checker
+tamasfe.even-better-toml
 timonwong.shellcheck
 yzhang.markdown-all-in-one
