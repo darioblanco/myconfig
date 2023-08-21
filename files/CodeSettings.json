@@ -37,7 +37,12 @@
   "window.closeWhenEmpty": true,
   "window.zoomLevel": 1,
   "workbench.editor.enablePreview": false,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
   "[rust]": {
-    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
   }
 }
