@@ -67,6 +67,12 @@ function install_rust() {
 	print_green "Rust components installed successfully"
 }
 
+function configure_docker() {
+	colima start --runtime docker
+	mkdir -p ~/.docker/cli-plugins
+	ln -sfn /opt/homebrew/opt/docker-buildx/bin/docker-buildx ~/.docker/cli-plugins/docker-buildx
+}
+
 function configure_zsh() {
 	if [[ ! -f ~/.zshrc ]]; then
 		print_blue "Configuring zsh + and configure oh-my-zsh and its bundles via antigen..."
@@ -203,6 +209,7 @@ function main() {
 	configure_ssh
 	configure_vim
 	configure_git
+	configure_docker
 	configure_iterm
 	configure_vscode
 	configure_macos_defaults

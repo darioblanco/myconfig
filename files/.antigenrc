@@ -5,8 +5,6 @@ antigen use oh-my-zsh
 antigen bundle alias-finder
 antigen bundle brew
 antigen bundle command-not-found
-antigen bundle docker
-antigen bundle docker-compose
 antigen bundle gcloud
 antigen bundle gem
 antigen bundle git
@@ -26,7 +24,6 @@ antigen bundle thefuck
 antigen bundle tmux
 antigen bundle urltools
 antigen bundle virtualenv
-antigen bundle yarn
 antigen bundle zsh-interactive-cd
 antigen bundle zsh-navigation-tools
 

@@ -1,4 +1,3 @@
-4ops.terraform
 alefragnani.project-manager
 bierner.markdown-mermaid
 DavidAnson.vscode-markdownlint
@@ -9,7 +8,6 @@ esbenp.prettier-vscode
 GitHub.copilot
 GitHub.copilot-chat
 golang.go
-hashicorp.terraform
 humao.rest-client
 kumar-harsh.graphql-for-vscode
 mikestead.dotenv

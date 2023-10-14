@@ -53,8 +53,8 @@ for git_alias in "${git_aliases[@]}"; do
   _register $git_alias
 done
 
-# Docker to podman
-alias docker=podman
+# Docker
+export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
 
 # Locales
 export LC_ALL=en_US.UTF-8
@@ -62,8 +62,11 @@ export LANG=en_US.UTF-8
 
 # Path modification
 export PATH="/opt/homebrew/bin:$PATH"
-export GOPATH="$HOME/go"
-PATH="$GOPATH/bin:$PATH"
+export PATH="${HOME}/fvm/default/bin:$PATH"
+export PATH="${HOME}/Library/Android/sdk/cmdline-tools/latest/bin:${HOME}/Library/Android/sdk/emulator/bin64:${HOME}/Library/Android/sdk/platform-tools:${PATH}"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+export GEM_HOME=$HOME/.gem
+export PATH=$GEM_HOME/bin:$PATH
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
