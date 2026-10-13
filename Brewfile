@@ -82,9 +82,17 @@ brew "fastlane"
 cask "android-studio"
 
 # ── Editors & AI ──────────────────────────────────────────────────────────────
+# Claude Code itself uses Anthropic's native installer (auto-updates); see bootstrap.sh.
+cask "codex"
+brew "pi-coding-agent"
+cask "claude"
 cask "visual-studio-code"
 cask "zed"
-cask "claude"
+# Language servers for the Claude Code LSP plugins (rust-analyzer comes from rustup).
+brew "pyright"
+brew "typescript-language-server"
+brew "jdtls"
+brew "gopls"
 
 # ── Apps ──────────────────────────────────────────────────────────────────────
 cask "bitwarden"

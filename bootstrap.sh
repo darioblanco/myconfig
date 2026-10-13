@@ -38,6 +38,17 @@ mise install --yes
 step "gcloud components"
 gcloud components install gke-gcloud-auth-plugin -q
 
+step "Claude Code"
+export PATH="$HOME/.local/bin:$PATH"
+if ! command -v claude >/dev/null 2>&1; then
+	curl -fsSL https://claude.ai/install.sh | bash
+fi
+step "Claude Code plugins"
+grep -vE '^\s*(#|$)' "$repo/claude/plugins.txt" | while read -r plugin marketplace; do
+	claude plugin marketplace add "$marketplace" >/dev/null 2>&1 || true
+	claude plugin install "$plugin" >/dev/null && echo "  $plugin"
+done
+
 step "Python (uv)"
 uv python install
 

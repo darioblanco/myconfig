@@ -19,5 +19,7 @@ This repo bootstraps the owner's macOS machines. It is **public**.
   go, java), uv (python), rustup (rust), fvm (flutter), tenv (terraform).
 - `home/` is the chezmoi source (`.chezmoiroot`). `dot_` → `.`, `private_` → mode 0600/0700,
   `.tmpl` → rendered with the chezmoi data.
+- Claude Code plugins live in `claude/plugins.txt`. Add one only if it earns its context cost;
+  avoid plugins whose hooks call a model on every turn.
 - After changing anything under `home/`, run `chezmoi diff` and then `chezmoi apply`.
 - Run `make check` before committing. Commits follow Conventional Commits.

@@ -38,6 +38,7 @@ Steps that need an Apple ID, sudo or a GUI, in order:
 | `bootstrap.sh` | Installs Homebrew, the Brewfile, dotfiles and toolchains |
 | `home/` | chezmoi source for `$HOME` (zsh, git, ssh, Ghostty, Starship, mise, Atuin) |
 | `macos/defaults.sh` | Finder, Dock, keyboard and trackpad defaults |
+| `claude/plugins.txt` | Claude Code plugins (kept small: each one costs context) |
 | `macos/system.sh` | One-time sudo setup: Xcode selection, container DNS, machine name |
 
 ## Toolchain choices
@@ -52,6 +53,8 @@ Steps that need an Apple ID, sudo or a GUI, in order:
 | Terraform / OpenTofu | `tenv` (per-project `.terraform-version`) |
 | Containers | Apple `container` + `container-compose`; defaults in `~/.config/container/config.toml` |
 | Kubernetes | kubectl + kubecolor, k9s, kubectx/kubens, stern, krew, Freelens |
+| Coding agents | Claude Code (native installer), Codex, pi; plugins in `claude/plugins.txt` |
+| Agent sessions | Ghostty + herdr (`herdr integration install claude`), mosh for phone access |
 
 ## Agentic development with Ghostty
 
