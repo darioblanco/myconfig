@@ -84,6 +84,30 @@ Day to day, use **Amphetamine** so you decide each time:
 overriding Amphetamine, until `make sleep`. Either way, don't leave it awake in a closed bag:
 it keeps running hot until the battery dies.
 
+## Security for agentic development
+
+Coding agents run as you, read untrusted content (READMEs, issues, web pages, dependencies) and
+can reach the network. The setup removes what they could leak and limits where data can go:
+
+- **No keys on disk.** SSH keys are created in the Secure Enclave with Secretive, one set per
+  device, never exported. Remote Login accepts public keys only (`make system`).
+- **No long-lived cloud keys.** Prefer `gcloud auth login` and service-account impersonation over
+  downloaded service-account key files. Kubernetes uses the GKE auth plugin (short-lived tokens).
+- **Claude Code sandbox** (`home/dot_claude/modify_settings.json`, merged into
+  `~/.claude/settings.json`):
+  - shell commands can't read credential paths (`~/.ssh`, `~/.config/gcloud`, `~/.kube`, `gh`,
+    shell history, keychains) and Claude's file tools are denied the same paths plus `.env` files;
+  - outbound traffic goes through an allowlist of package registries and GitHub; in auto mode any
+    other host needs the classifier's approval per command;
+  - destructive infrastructure commands (`terraform apply`, `kubectl delete`, force pushes…)
+    always ask, even in auto mode;
+  - tools that can't run sandboxed (`gh`, `gcloud`, `terraform`, git network commands, Apple
+    `container`) are excluded and go through the normal permission flow instead.
+- **Codex** keeps its own default sandbox. **pi** has none: use it for trusted work only.
+- **Little Snitch** alerts on new outbound connections from any process.
+
+Use `/sandbox` inside Claude Code to inspect or adjust the policy for a session.
+
 ## Maintenance
 
 ```sh
