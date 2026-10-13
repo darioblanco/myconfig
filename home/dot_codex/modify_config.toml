@@ -1,0 +1,9 @@
+#!/bin/sh
+# chezmoi modify script: Codex (and its desktop app) owns ~/.codex/config.toml, so only make sure
+# it logs in with a ChatGPT subscription, never an API key. Top-level keys must precede tables.
+input="$(cat)"
+if printf '%s\n' "$input" | grep -q '^forced_login_method'; then
+	printf '%s\n' "$input"
+else
+	printf 'forced_login_method = "chatgpt"\n%s\n' "$input"
+fi

@@ -1,0 +1,9 @@
+# Private hosts live in ~/.ssh/config.d/ (not tracked).
+Include ~/.ssh/config.d/*
+
+# Keys live in the Secure Enclave via Secretive (one set per device, never exported).
+Match host * exec "test -S ~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"
+	IdentityAgent ~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+
+Host *
+	ServerAliveInterval 60

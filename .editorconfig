@@ -1,28 +1,20 @@
 root = true
 
 [*]
-indent_style = tab
-indent_size = 4
-tab_width = 4
-end_of_line = lf
 charset = utf-8
-trim_trailing_whitespace = true
+end_of_line = lf
 insert_final_newline = true
-
-[{*.gyp,*.md,*.json,*.tf,*.tpl,*.yml,*.yaml}]
+trim_trailing_whitespace = true
 indent_style = space
 indent_size = 2
 
-[{*.py,*.asm}]
-indent_style = space
+[{*.sh,Makefile}]
+indent_style = tab
+indent_size = 4
 
-[*.asm]
-indent_size = 8
+[{home/dot_config/git/**,home/dot_local/bin/**,home/dot_claude/modify_*,home/dot_codex/modify_*}]
+indent_style = tab
+indent_size = 4
 
-[{*.md,*.tsv}]
+[*.md]
 trim_trailing_whitespace = false
-
-[{*.c,*.cc,*.h,*.hh,*.cpp,*.hpp,*.m,*.mm,*.mpp,*.js,*.java,*.go,*.rs,*.php,*.ng,*.jsx,*.ts,*.d,*.cs,*.swift}]
-curly_bracket_next_line = false
-spaces_around_operators = true
-spaces_around_brackets = outside

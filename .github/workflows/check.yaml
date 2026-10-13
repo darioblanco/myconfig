@@ -2,18 +2,56 @@ name: check
 
 on:
   push:
-    branch:
-      - master
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
 
 jobs:
-  shell:
-    name: shell
+  macos:
+    # Lint, then exercise the parts of the bootstrap that can run on a clean macOS runner.
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: install tools
+        run: brew install chezmoi jq shfmt shellcheck actionlint
+      - name: lint
+        run: make lint
+      - name: Brewfile parses
+        run: brew bundle list --file=Brewfile --all >/dev/null
+      - name: dotfiles render
+        run: |
+          chezmoi init --apply --dry-run --source "$PWD" \
+            --promptString "Full name for git commits=CI" \
+            --promptString "Personal git email=ci" \
+            --promptString "Work git email (leave empty to skip)=work" \
+            --promptString "Directory holding work repos=/tmp/work"
+      - name: Claude settings merge keeps existing keys
+        run: |
+          echo '{"enabledPlugins":{"a@b":true},"hooks":{"SessionStart":[]}}' |
+            sh home/dot_claude/modify_settings.json |
+            jq -e '.enabledPlugins["a@b"] and .sandbox.enabled and (.hooks | has("SessionStart"))
+                   and .attribution.commit == ""'
+      - name: Claude settings merge is idempotent
+        run: |
+          once=$(echo '{}' | sh home/dot_claude/modify_settings.json)
+          twice=$(echo "$once" | sh home/dot_claude/modify_settings.json)
+          [ "$once" = "$twice" ]
+
+  privacy:
+    # This repo is public: fail if anything that looks like an email or a secret sneaks in.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Run shellcheck
-        uses: ludeeus/action-shellcheck@master
-        env:
-          SHELLCHECK_OPTS: -e SC1091
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ignore: files
+          fetch-depth: 0
+      - name: no email addresses
+        run: |
+          if git grep -nIE '[[:alnum:]._%+-]+@[[:alnum:].-]+\.[[:alpha:]]{2,}' -- . ':!LICENSE'; then
+            echo "::error::Email-like strings found. Keep personal data in chezmoi prompts or untracked local files."
+            exit 1
+          fi
+      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

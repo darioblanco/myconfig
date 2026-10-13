@@ -1,0 +1,45 @@
+# Ghostty — reload with cmd+shift+, ; list options with `ghostty +show-config --default --docs`
+
+# ── Look ──────────────────────────────────────────────────────────────────────
+font-family = JetBrainsMono Nerd Font
+font-size = 14
+theme = dark:Catppuccin Mocha,light:Catppuccin Latte
+window-padding-x = 8
+window-padding-y = 6
+window-padding-balance = true
+macos-titlebar-style = tabs
+unfocused-split-opacity = 0.8
+cursor-style = bar
+
+# ── Behaviour ─────────────────────────────────────────────────────────────────
+macos-option-as-alt = left
+window-save-state = always
+copy-on-select = clipboard
+confirm-close-surface = true
+mouse-hide-while-typing = true
+shell-integration-features = cursor,sudo,title,ssh-terminfo
+# Agents are chatty: keep ~100 MB of scrollback per surface.
+scrollback-limit = 100000000
+
+# ── Notifications (agents finishing / waiting for input) ──────────────────────
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = bell,notify
+notify-on-command-finish-after = 30s
+bell-features = system,attention,title
+
+# ── Quick terminal: system-wide drop-down (needs Accessibility permission) ────
+quick-terminal-position = top
+quick-terminal-size = 45%
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+
+# ── Splits (one agent per pane) ───────────────────────────────────────────────
+# Defaults kept: cmd+d split right, cmd+shift+d split down, cmd+shift+enter zoom.
+keybind = cmd+alt+h=goto_split:left
+keybind = cmd+alt+j=goto_split:down
+keybind = cmd+alt+k=goto_split:up
+keybind = cmd+alt+l=goto_split:right
+keybind = cmd+ctrl+h=resize_split:left,40
+keybind = cmd+ctrl+j=resize_split:down,40
+keybind = cmd+ctrl+k=resize_split:up,40
+keybind = cmd+ctrl+l=resize_split:right,40
+keybind = cmd+ctrl+e=equalize_splits

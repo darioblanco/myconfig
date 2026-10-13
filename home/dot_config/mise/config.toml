@@ -1,0 +1,11 @@
+# Global defaults. Projects override with their own mise.toml / .nvmrc / .tool-versions.
+# Python is managed by uv, Rust by rustup, Flutter by fvm, Terraform by tenv.
+# Tools only one repo needs (sops, hcloud, flux…) belong in that repo's mise.toml, not here.
+[tools]
+node = "lts"
+pnpm = "latest"   # pnpm honors each repo's `packageManager` field
+go = "latest"
+java = "temurin-17"   # Android Gradle Plugin / Flutter Android builds
+
+[settings]
+idiomatic_version_file_enable_tools = ["node", "go", "java"]

@@ -1,0 +1,21 @@
+export LANG=en_US.UTF-8
+export EDITOR=nvim
+export VISUAL=nvim
+
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+
+# Homebrew is on PATH here too, so non-interactive SSH commands (mosh-server) find it.
+typeset -U path
+path=(
+  "$HOME/.local/bin"
+  /opt/homebrew/bin
+  /opt/homebrew/sbin
+  /opt/homebrew/opt/rustup/bin
+  "$HOME/.cargo/bin"
+  "$HOME/fvm/default/bin"
+  "$HOME/.pub-cache/bin"
+  "$ANDROID_HOME/platform-tools"
+  "$ANDROID_HOME/emulator"
+  "$ANDROID_HOME/cmdline-tools/latest/bin"
+  $path
+)

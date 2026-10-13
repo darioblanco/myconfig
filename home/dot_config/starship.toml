@@ -1,0 +1,34 @@
+"$schema" = "https://starship.rs/config-schema.json"
+add_newline = false
+command_timeout = 1000
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[directory]
+truncation_length = 4
+truncate_to_repo = false
+
+[git_status]
+style = "bold yellow"
+
+[cmd_duration]
+min_time = 3_000
+
+# Always show which cluster kubectl talks to; prod contexts in red.
+[kubernetes]
+disabled = false
+format = '[⎈ $context( \($namespace\))]($style) '
+contexts = [
+  { context_pattern = ".*prod.*", style = "bold red" },
+]
+
+[gcloud]
+disabled = true
+
+[aws]
+disabled = true
+
+[terraform]
+format = '[󱁢 $workspace]($style) '

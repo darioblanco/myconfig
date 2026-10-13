@@ -1,0 +1,130 @@
+#!/bin/sh
+# chezmoi modify script: merges this policy into ~/.claude/settings.json and keeps everything else
+# that Claude Code, plugins and herdr write there. Arrays are unioned in order, so local
+# additions survive and re-applying is a no-op.
+#
+# Goal: agents can run in auto mode without being able to read credentials or send data to
+# arbitrary hosts. See the "Security" section of the README for the reasoning.
+input="$(cat)"
+[ -n "$input" ] || input='{}'
+
+# Credential and private-data paths, listed once. Each becomes a sandbox read block and a deny
+# rule for Claude's file tools. A trailing slash marks a directory.
+secrets='[
+  "~/.ssh/", "~/.gnupg/", "~/.config/gcloud/", "~/.kube/", "~/.config/gh/", "~/.docker/",
+  "~/.aws/", "~/.azure/", "~/.terraform.d/", "~/.terraformrc", "~/.npmrc", "~/.pypirc",
+  "~/.netrc", "~/.git-credentials", "~/.cargo/credentials.toml", "~/.gradle/gradle.properties",
+  "~/.m2/settings.xml", "~/.config/sops/", "~/.android/adbkey",
+  "~/.codex/auth.json", "~/.pi/agent/auth.json", "~/.claude.json",
+  "~/.claude/projects/", "~/.codex/sessions/", "~/.config/chezmoi/",
+  "~/.zsh_history", "~/.local/share/atuin/",
+  "~/Library/Keychains/", "~/Library/Cookies/", "~/Library/Application Support/Bitwarden/",
+  "~/Library/Application Support/Google/Chrome/", "~/Library/Application Support/Firefox/",
+  "~/Library/Application Support/Slack/", "~/Library/Application Support/Signal/",
+  "~/Library/Application Support/discord/"
+]'
+
+policy='{
+  "attribution": { "commit": "", "pr": "", "sessionUrl": false },
+
+  "forceLoginMethod": "claudeai",
+
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+
+    "excludedCommands": [
+      "gh *", "gcloud *", "terraform *",
+      "git fetch *", "git pull *", "git push *",
+      "kubectl *", "kubecolor *", "helm *", "stern *",
+      "container *", "container-compose *",
+      "pnpm install*", "pnpm i *", "pnpm add *", "pnpm update*", "pnpm up *", "pnpm remove *"
+    ],
+
+    "filesystem": {
+      "allowWrite": [
+        "~/Library/pnpm", "~/Library/Caches/pnpm", "~/.npm", "~/.cache/uv", "~/.pub-cache",
+        "~/go/pkg/mod", "~/.cargo/registry", "~/.cargo/git", "~/.gradle/caches",
+        "~/Library/Caches/CocoaPods"
+      ]
+    },
+
+    "credentials": {
+      "envVars": [
+        { "name": "GITHUB_TOKEN", "mode": "deny" }, { "name": "GH_TOKEN", "mode": "deny" },
+        { "name": "NPM_TOKEN", "mode": "deny" }, { "name": "ANTHROPIC_API_KEY", "mode": "deny" },
+        { "name": "OPENAI_API_KEY", "mode": "deny" },
+        { "name": "CLOUDSDK_AUTH_ACCESS_TOKEN", "mode": "deny" },
+        { "name": "GOOGLE_APPLICATION_CREDENTIALS", "mode": "deny" }
+      ]
+    },
+
+    "network": {
+      "allowLocalBinding": true,
+      "allowMachLookup": ["com.apple.coresimulator.*"],
+      "allowedDomains": [
+        "github.com", "*.github.com", "*.githubusercontent.com",
+        "registry.npmjs.org", "*.npmjs.org", "registry.yarnpkg.com",
+        "pypi.org", "files.pythonhosted.org",
+        "pub.dev",
+        "proxy.golang.org", "sum.golang.org",
+        "crates.io", "index.crates.io", "static.crates.io",
+        "repo.maven.apache.org", "repo1.maven.org", "plugins.gradle.org", "services.gradle.org",
+        "dl.google.com", "maven.google.com",
+        "cdn.cocoapods.org",
+        "registry.terraform.io", "releases.hashicorp.com"
+      ]
+    }
+  },
+
+  "permissions": {
+    "deny": [
+      "Read(//**/.env)", "Read(//**/.env.local)", "Read(//**/.env.*.local)",
+      "Read(//**/.env.production)", "Read(//**/*service-account*.json)",
+      "Read(//**/*credentials*.json)", "Read(//**/key.properties)", "Read(//**/*.jks)",
+      "Read(//**/*.keystore)", "Read(//**/*.p8)",
+      "Edit(~/.local/bin/**)", "Edit(~/.zshrc*)", "Edit(~/.zshenv)", "Edit(~/.zprofile)",
+      "Edit(~/.config/git/**)",
+      "Bash(gh gist *)", "Bash(gh ssh-key *)", "Bash(gh gpg-key *)", "Bash(gh auth token*)",
+      "Bash(gh alias set *)", "Bash(gh extension install *)",
+      "Bash(tailscale *)", "Bash(*Tailscale.app*)"
+    ],
+    "ask": [
+      "Bash(terraform apply*)", "Bash(terraform destroy*)", "Bash(terraform import*)",
+      "Bash(kubectl apply*)", "Bash(kubectl delete*)", "Bash(kubectl patch*)", "Bash(kubectl edit*)",
+      "Bash(kubectl scale*)", "Bash(kubectl rollout*)", "Bash(helm install*)", "Bash(helm upgrade*)",
+      "Bash(helm uninstall*)", "Bash(gcloud * delete*)", "Bash(gcloud * create*)",
+      "Bash(kubectl exec*)", "Bash(kubectl cp*)", "Bash(kubectl create*)", "Bash(kubectl run*)",
+      "Bash(kubectl replace*)", "Bash(kubectl drain*)", "Bash(kubectl set*)",
+      "Bash(kubectl port-forward*)", "Bash(kubectl *--kubeconfig*)",
+      "Bash(kubecolor apply*)", "Bash(kubecolor delete*)", "Bash(kubecolor patch*)",
+      "Bash(kubecolor edit*)", "Bash(kubecolor scale*)", "Bash(kubecolor rollout*)",
+      "Bash(kubecolor exec*)", "Bash(kubecolor *--kubeconfig*)",
+      "Bash(helm rollback*)", "Bash(helm plugin *)",
+      "Bash(gcloud secrets *)", "Bash(gcloud auth print-*)", "Bash(gcloud storage cp*)",
+      "Bash(gcloud compute ssh*)",
+      "Bash(gh api *-X *)", "Bash(gh api *--method *)", "Bash(gh api *--input*)",
+      "Bash(gh secret *)", "Bash(gh repo create*)", "Bash(gh release upload*)",
+      "Bash(container run *-v *)", "Bash(container run *--volume*)", "Bash(container run *--mount*)",
+      "Bash(pnpm publish*)", "Bash(npm publish*)",
+      "Bash(git * --upload-pack*)", "Bash(git * --receive-pack*)", "Bash(git *ext::*)",
+      "Bash(git push --delete*)", "Bash(git push *:*)",
+      "Bash(git push *--force*)", "Bash(git push * -f*)", "Bash(git push *+*)"
+    ]
+  }
+}'
+
+jq=$(command -v jq || echo /opt/homebrew/bin/jq)
+# shellcheck disable=SC2016 # jq string interpolation, not shell
+printf '%s' "$input" | "$jq" --argjson policy "$policy" --argjson secrets "$secrets" '
+  def merge($b):
+    if (type == "object") and ($b | type == "object") then
+      reduce ($b | keys_unsorted[]) as $k (.; .[$k] = (.[$k] | merge($b[$k])))
+    elif (type == "array") and ($b | type == "array") then
+      reduce $b[] as $x (.; if index([$x]) then . else . + [$x] end)
+    else $b end;
+  ($policy
+    | .sandbox.filesystem.denyRead = [$secrets[] | rtrimstr("/")]
+    | .permissions.deny = [$secrets[] | if endswith("/") then "Read(\(.)**)" else "Read(\(.))" end]
+        + .permissions.deny) as $full
+  | merge($full)'
