@@ -19,14 +19,20 @@ its exact commands for formatting, linting, type checks and tests.
 ## Tests
 - Design code to be easy to test: logic separate from I/O, dependencies passed in at the
   boundaries, small units. Hard-to-test code is a design problem, not a testing one.
-- Every behaviour change ships with its tests in the same change. Test-first is the default when
-  the behaviour is clear; writing the code first is fine while exploring, as long as the tests
-  exist before you're done. Bug fixes always start with a test that reproduces the bug.
-- Prove each new test can fail: it must fail when the behaviour is missing or broken.
+- Every behaviour change ships with its tests in the same change. Work from a short test list,
+  one behaviour at a time. Test-first is the default when the behaviour is clear; writing the
+  code first is fine while exploring, as long as the tests exist before you're done. Bug fixes
+  always start with a test that reproduces the bug.
+- Prove each new test can fail: show it failing on an assertion before the code exists, or break
+  the behaviour briefly and watch it fail.
+- Test behaviour through public interfaces. Mock only at real boundaries (network, clock,
+  filesystem, third-party APIs). Tests are deterministic: no sleeps, real time or unseeded
+  randomness.
 - Coverage stays at 100%. Exclude only single lines, each with an inline reason. Never lower the
-  threshold, or delete, skip or weaken tests to get green; test behaviour, not mocks.
-- Before saying you're done, run the repo's format, lint, type-check and test commands, and
-  report what ran and the result. Output should be clean: no new warnings.
+  threshold, or delete, skip or weaken tests to get green.
+- Run targeted tests while working. Before saying you're done, run the repo's format, lint,
+  type-check, full test and coverage commands, and report what ran and the result. Output
+  should be clean: no new warnings.
 
 ## Review
 - Before opening a PR, review the diff with the native tool (`/code-review` in Claude Code,

@@ -16,7 +16,7 @@ small once you do.
   trace. Read the error message completely; it often names the cause.
 - If it only fails sometimes, find what varies (timing, ordering, data, environment) and
   make it fail reliably before going further.
-- Capture the reproduction as a failing test when you can (see the `tdd` skill).
+- Capture the reproduction as a failing test when you can.
 
 ## 2. Locate
 

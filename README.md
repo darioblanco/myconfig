@@ -59,7 +59,8 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 
 - **Shared rules and skills.** `~/.agents/AGENTS.md` holds personal engineering rules (design
   first, TDD with 100% coverage, dependency checks, safety, git) and `~/.agents/skills` holds
-  personal skills (`tdd`, `plan-architecture`, `dependency-check`, `systematic-debugging`).
+  personal skills for occasional procedures (`plan-architecture`, `dependency-check`,
+  `systematic-debugging`).
   Codex reads both natively; pi reads the skills natively and the rules through
   `~/.pi/agent/AGENTS.md`; Claude Code reads them through `~/.claude/CLAUDE.md` and one
   `~/.claude/skills/<name>` symlink per skill. Review uses the native `/code-review` (Claude

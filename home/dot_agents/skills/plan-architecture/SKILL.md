@@ -40,5 +40,5 @@ repository keeps plans.
 
 ## After approval
 
-Implement step by step with the `tdd` skill. If reality contradicts the plan, stop and say what
+Implement step by step, each step with its tests. If reality contradicts the plan, stop and say what
 changed instead of silently diverging.
