@@ -23,8 +23,13 @@ long-lived branches.
   pass rate and reruns from recent history.
 - **CD.** How releases happen (manual steps, approvals, scripts), frequency, and rollback.
 - **Environments.** Which exist, how close staging is to production, how test data is handled.
+  Ephemeral preview environments per PR (created on open, destroyed on merge) are a strong green
+  flag: they replace a shared staging branch and let every change be tested in isolation.
 - **Infrastructure as code.** Coverage of the real infrastructure, drift, who can apply it.
-- **Change safety.** Feature flags, database migration practice, backwards compatibility.
+- **Change safety.** Feature flags, and database migrations that are backwards compatible
+  (expand, then contract) so any deploy can be rolled back without restoring data. Migrations
+  that only work with a coordinated, all-at-once release are a red flag and often the real
+  reason behind staging branches and release days.
 
 ## Operations
 

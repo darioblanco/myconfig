@@ -36,7 +36,8 @@ Rate each green / amber / red with a confidence level.
    within a working day.
 2. **Streamlined delivery.** Trunk-based development with short-lived branches; every merge to
    main releasable; one artifact promoted through environments; feature flags instead of
-   long-lived branches; frequent deploys. Environment branches (`develop`, `staging`) and
+   long-lived branches; backwards-compatible migrations; frequent deploys. Ephemeral preview
+   environments per PR are a strong positive sign. Environment branches (`develop`, `staging`) and
    GitFlow are a red flag, except release branches for multi-version software and mobile
    app-store releases.
 3. **CI as the gate.** Nothing merges red; flaky tests are fixed or removed, not rerun.
