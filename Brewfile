@@ -18,6 +18,8 @@ brew "fd"
 brew "git-delta"         # git diffs
 brew "lazygit"
 brew "yazi"              # file manager
+brew "herdr"             # agent-aware terminal multiplexer (runs inside Ghostty)
+brew "mosh"              # roaming SSH for phone access (Termius)
 brew "tmux"              # durable sessions (used by pulpo)
 brew "neovim"
 brew "tlrc"              # tldr pages

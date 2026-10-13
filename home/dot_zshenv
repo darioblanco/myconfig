@@ -8,6 +8,8 @@ export ANDROID_HOME="$HOME/Library/Android/sdk"
 typeset -U path
 path=(
   "$HOME/.local/bin"
+  /opt/homebrew/bin   # also for non-interactive SSH (mosh-server)
+  /opt/homebrew/sbin
   "$HOME/.cargo/bin"
   "$HOME/fvm/default/bin"
   "$HOME/.pub-cache/bin"
