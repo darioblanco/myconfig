@@ -19,7 +19,6 @@ long-lived branches.
 - **Flow metrics.** Estimate from the history: deployment frequency, lead time from merge to
   production, change failure rate (reverts, hotfixes, rollbacks) and time to restore. These are
   the DORA metrics; elite teams deploy on demand with lead times under a day.
-
 - **CI.** What runs on every change (build, lint, tests, coverage, security scans); duration;
   pass rate and reruns from recent history.
 - **CD.** How releases happen (manual steps, approvals, scripts), frequency, and rollback.
