@@ -30,7 +30,7 @@ It is **public**. `CLAUDE.md` imports this file.
 | A language runtime or global tool version | `home/dot_config/mise/config.toml`. Python is `uv`, Rust is `rustup`, Flutter is `fvm`, Terraform is `tenv`, never Homebrew |
 | A dotfile in `$HOME` | `home/` (chezmoi source, see below) |
 | Claude Code settings (sandbox, permissions, attribution) | `home/dot_claude/modify_settings.json`. It merges keys into `~/.claude/settings.json`; never replace that file wholesale |
-| A personal agent rule | `home/dot_agents/AGENTS.md` (read by Claude Code, Codex and pi through symlinks). One line per recurring problem; keep it short |
+| A personal agent rule | `home/dot_agents/AGENTS.md` (read by Claude Code, Codex and pi through symlinks). Add a line only when an agent repeats a mistake, and only for what the harness (settings, sandbox, hooks) can't enforce and the models don't already do; one-off learnings belong in the agent's own memory |
 | A personal agent skill | `home/dot_agents/skills/<name>/SKILL.md`, plus `home/dot_claude/skills/symlink_<name>.tmpl` for Claude Code. Every description is in every session's context, so add one only when it earns it |
 | A Claude Code plugin | `claude/plugins.txt`. Add one only if it earns its context cost; avoid plugins whose hooks call a model on every turn |
 | A sudo or one-time system step | `macos/system.sh` |
