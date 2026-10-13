@@ -1,0 +1,7 @@
+#!/bin/sh
+# chezmoi modify script: merge our keys into ~/.claude/settings.json, keeping everything that
+# Claude Code, plugins and herdr write there.
+# No "Co-Authored-By: Claude" trailers, no "Generated with Claude Code" lines, no session links.
+input="$(cat)"
+[ -n "$input" ] || input='{}'
+printf '%s' "$input" | /opt/homebrew/bin/jq '.attribution = {"commit": "", "pr": "", "sessionUrl": false}'

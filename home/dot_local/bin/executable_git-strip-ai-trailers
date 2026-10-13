@@ -1,0 +1,9 @@
+#!/bin/sh
+# Global commit-msg hook (hook.strip-ai-trailers in ~/.config/git/config): removes AI attribution
+# from commit messages in every repo. Runs alongside each repo's own hooks.
+msg="$1"
+[ -f "$msg" ] || exit 0
+sed -i '' -E \
+	-e '/^[Cc]o-[Aa]uthored-[Bb]y:.*([Cc]laude|[Aa]nthropic|[Cc]odex|[Oo]pen[Aa][Ii]|[Cc]opilot)/d' \
+	-e '/Generated with \[?Claude Code/d' \
+	"$msg"

@@ -10,6 +10,10 @@
 [include]
 	# Machine-specific overrides (signing keys, etc.). Not tracked.
 	path = ~/.config/git/local
+# Strip AI co-author trailers from every commit, alongside each repo's own hooks (Git 2.54+).
+[hook "strip-ai-trailers"]
+	event = commit-msg
+	command = {{ .chezmoi.homeDir }}/.local/bin/git-strip-ai-trailers
 [init]
 	defaultBranch = main
 [core]
