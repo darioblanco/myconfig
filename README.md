@@ -135,6 +135,11 @@ can reach the network. The setup removes what they could leak and limits where d
     `container`) are excluded and go through the normal permission flow.
 - **No AI attribution.** Claude Code's attribution is off, and a global git commit-msg hook
   strips AI co-author trailers in every repository.
+- **Supply chain.** pnpm refuses versions younger than a day and blocks dependency install
+  scripts until approved (its defaults); package caches stay writable from the sandbox so
+  installs work there; this repo's GitHub Actions are pinned to commit SHAs and updated by
+  Dependabot after a 7-day cooldown; the agent rules require verifying package names, since
+  agents hallucinate them.
 - **Codex** keeps its own default sandbox. **pi** has none: use it for trusted work only.
 - **Little Snitch** alerts on new outbound connections from any process.
 

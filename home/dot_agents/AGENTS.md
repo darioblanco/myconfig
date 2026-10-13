@@ -33,6 +33,9 @@ repository's own commands for formatting, linting, type checks and tests.
 - Prefer the standard library or a few lines of code. Before adding a dependency, check that it
   is healthy (recent releases, active maintainers, adoption, license, advisories) and report
   what you found.
+- Verify the exact package name and publisher before installing: agents hallucinate names, and
+  attackers register them. Use the repo's lockfile and package manager; never approve new
+  install scripts or bypass a release-age cooldown without asking me.
 
 ## Safety
 - Test against local resources (containers, emulators, fakes). Never use staging or production

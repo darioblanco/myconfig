@@ -15,19 +15,19 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: shellcheck
         run: |
           # shellcheck disable=SC2086 # word-splitting the file list is intended
           shellcheck $SCRIPTS
       - name: actionlint
-        uses: raven-actions/actionlint@v2
+        uses: raven-actions/actionlint@3d39aea434753780c3b3d4a1a31c854b4dbf49d7 # v2.2.0
 
   macos:
     # Exercise the parts of the bootstrap that can run on a clean macOS runner.
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: install tools
         run: brew install chezmoi jq shfmt
       - name: shfmt
@@ -59,7 +59,7 @@ jobs:
     # This repo is public: fail if anything that looks like an email or a secret sneaks in.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
       - name: no email addresses
@@ -68,6 +68,6 @@ jobs:
             echo "::error::Email-like strings found. Keep personal data in chezmoi prompts or untracked local files."
             exit 1
           fi
-      - uses: gitleaks/gitleaks-action@v3
+      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

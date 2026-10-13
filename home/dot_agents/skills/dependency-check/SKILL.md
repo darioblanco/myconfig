@@ -37,7 +37,22 @@ gh api 'advisories?ecosystem=npm&affects=PACKAGE' --jq '.[] | "\(.severity) \(.s
 | License | Compatible (MIT, Apache-2.0, BSD, MPL…) | Missing, copyleft where we can't comply, or recently changed |
 | Security | Advisories fixed quickly, a security policy | Open unpatched advisories |
 | Supply chain | Signed releases or provenance, few transitive deps | Install scripts, many transitive deps, typo-squat-like names |
+| Publishing | Publishes from CI with provenance or trusted publishing | Recent maintainer or ownership change, release very different from its source tag |
 | Fit | Small surface, stable API, good docs | Pulls in a framework for one function |
+
+## Supply chain
+
+- **Is it the right package?** Check the exact name against the project's own docs or
+  repository link; agents hallucinate plausible names and attackers register them
+  ("slopsquatting"), and look-alike names imitate popular packages.
+- **How new is the version?** Prefer versions that have been public for a few days. pnpm
+  enforces this by default (`minimumReleaseAge`); for uv, `exclude-newer` does the same per
+  project. Most compromised releases are caught within hours to days.
+- **Does it run code on install?** List `preinstall`/`postinstall` scripts and native builds.
+  pnpm and Bun block them until approved; npm runs them unless `--ignore-scripts`.
+- **Is it pinned?** Exact versions in a committed lockfile, installed with the frozen or locked
+  mode (`pnpm install --frozen-lockfile`, `npm ci`, `uv sync --locked`); GitHub Actions pinned
+  to a commit SHA.
 
 ## Report
 

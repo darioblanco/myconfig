@@ -25,6 +25,11 @@ policy='{
     ],
 
     "filesystem": {
+      "allowWrite": [
+        "~/Library/pnpm", "~/Library/Caches/pnpm", "~/.npm", "~/.cache/uv", "~/.pub-cache",
+        "~/go/pkg/mod", "~/.cargo/registry", "~/.cargo/git", "~/.gradle/caches",
+        "~/Library/Caches/CocoaPods"
+      ],
       "denyRead": [
         "~/.ssh", "~/.gnupg", "~/.config/gcloud", "~/.kube", "~/.config/gh", "~/.docker",
         "~/.aws", "~/.azure", "~/.terraform.d", "~/.terraformrc", "~/.npmrc", "~/.pypirc",
