@@ -43,7 +43,9 @@ defaults write com.apple.screencapture location -string "$HOME/Pictures/Screensh
 
 # Reload input settings (trackpad, keyboard) without a logout, when the helper exists.
 activate=/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings
-[[ -x "$activate" ]] && "$activate" -u || true
+if [[ -x "$activate" ]]; then
+	"$activate" -u || true
+fi
 
 killall Finder Dock SystemUIServer 2>/dev/null || true
 echo "macOS defaults applied (some need a logout)."
