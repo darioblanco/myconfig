@@ -1,10 +1,9 @@
 # Private hosts live in ~/.ssh/config.d/ (not tracked).
 Include ~/.ssh/config.d/*
 
-# Use the Bitwarden desktop SSH agent when it is running.
-Match host * exec "test -S ~/.bitwarden-ssh-agent.sock"
-	IdentityAgent ~/.bitwarden-ssh-agent.sock
+# Keys live in the Secure Enclave via Secretive (one set per device, never exported).
+Match host * exec "test -S ~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"
+	IdentityAgent ~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
 
 Host *
-	AddKeysToAgent yes
 	ServerAliveInterval 60

@@ -96,6 +96,7 @@ brew "gopls"
 
 # ── Apps ──────────────────────────────────────────────────────────────────────
 cask "bitwarden"
+cask "secretive"        # SSH keys in the Secure Enclave
 cask "raycast"
 cask "tailscale-app"
 cask "logi-options+"

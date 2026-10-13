@@ -28,7 +28,11 @@ Steps that need an Apple ID, sudo or a GUI, in order:
 4. Android Studio: open it once and finish the setup wizard (installs the SDK and emulator and
    accepts the licenses), then `flutter doctor --android-licenses`.
 5. System Settings → General → Sharing → Remote Login, to reach the Mac over Tailscale with SSH.
-6. `make defaults` for Finder, Dock, keyboard and trackpad (three-finger drag). Log out and back in.
+   `make system` limits it to public keys. Add each device's public key to
+   `~/.ssh/authorized_keys` (one per line, `chmod 600`); it is not tracked here.
+6. SSH keys: open Secretive and create this Mac's keys (they never leave the Secure Enclave).
+   Add the public keys to GitHub and any servers. Use one key set per device.
+7. `make defaults` for Finder, Dock, keyboard and trackpad (three-finger drag). Log out and back in.
 
 ## Layout
 

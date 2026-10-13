@@ -38,4 +38,13 @@ if command -v container >/dev/null 2>&1; then
 	container system start --enable-kernel-install
 fi
 
+# Remote Login: public keys only (sshd uses the first value it reads, and 000- sorts first).
+sshd_conf=/etc/ssh/sshd_config.d/000-keys-only.conf
+if [[ ! -f "$sshd_conf" ]]; then
+	step "SSH server: keys only"
+	printf '%s\n' 'PasswordAuthentication no' 'KbdInteractiveAuthentication no' 'PermitRootLogin no' |
+		sudo tee "$sshd_conf" >/dev/null
+	sudo sshd -t
+fi
+
 step "Done."
