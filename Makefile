@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 SHELL := /usr/bin/env bash
 
-.PHONY: help install brew apply diff update defaults check
+.PHONY: help install system brew apply diff update defaults awake sleep check
 
 help: ## list available commands
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-12s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -24,8 +24,19 @@ update: ## upgrade packages and toolchains
 	rustup update
 	uv python upgrade
 
-defaults: ## apply macOS defaults
+system: ## one-time sudo setup: Xcode, container DNS (MACHINE_NAME=Name to rename the Mac)
+	./macos/system.sh
+
+defaults: ## apply macOS defaults (Finder, Dock, keyboard, trackpad)
 	./macos/defaults.sh
+
+awake: ## never sleep, even with the lid closed (for remote agent sessions)
+	sudo pmset -a disablesleep 1
+	@pmset -g | grep -i sleepdisabled
+
+sleep: ## restore normal sleep
+	sudo pmset -a disablesleep 0
+	@pmset -g | grep -i sleepdisabled
 
 check: ## lint scripts and configs
 	shellcheck bootstrap.sh macos/*.sh

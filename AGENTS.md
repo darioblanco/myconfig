@@ -9,7 +9,9 @@ This repo bootstraps the owner's macOS machines. It is **public**.
   prompts (`home/.chezmoi.toml.tmpl`) or untracked local files (`~/.zshrc.local`,
   `~/.config/git/local`, `~/.ssh/config.d/`). CI fails on anything email-like.
 - Keep every script idempotent and non-interactive except for chezmoi's first-run prompts.
-- Steps that need sudo, an Apple ID or a GUI are documented in the README, not scripted.
+- Steps that need an Apple ID or a GUI are documented in the README, not scripted. Steps that
+  only need sudo go in `macos/system.sh` (run by a human with `make system`); keep them
+  idempotent. Never run sudo yourself.
 
 ## How things fit
 

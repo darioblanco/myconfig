@@ -25,11 +25,21 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
-# Trackpad: tap to click, three-finger drag.
-defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
+# Trackpad: tap to click and three-finger drag (Accessibility > Pointer Control > Trackpad
+# Options > Dragging style). The dragging styles are exclusive, so plain tap-drag and drag lock
+# stay off, and the three-finger swipes move to four fingers to avoid clashing with the drag.
+for domain in com.apple.AppleMultitouchTrackpad com.apple.driver.AppleBluetoothMultitouch.trackpad; do
+	defaults write "$domain" Clicking -bool true
+	defaults write "$domain" TrackpadThreeFingerDrag -bool true
+	defaults write "$domain" Dragging -bool false
+	defaults write "$domain" DragLock -bool false
+	defaults write "$domain" TrackpadThreeFingerHorizSwipeGesture -int 0
+	defaults write "$domain" TrackpadThreeFingerVertSwipeGesture -int 0
+	defaults write "$domain" TrackpadFourFingerHorizSwipeGesture -int 2
+	defaults write "$domain" TrackpadFourFingerVertSwipeGesture -int 2
+done
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # Screenshots in ~/Pictures/Screenshots.
 mkdir -p "$HOME/Pictures/Screenshots"

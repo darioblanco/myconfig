@@ -1,0 +1,11 @@
+# Apple `container` defaults. Restart with `container system stop && container system start`.
+# The `test` domain must exist first: `sudo container system dns create test`.
+
+# Containers resolve each other by name (`<name>.test`, or the short name via the search domain).
+[dns]
+domain = "test"
+
+# Databases and JVM services (Keycloak, Mongo) need more than the 1 GB default.
+[container]
+cpus = 4
+memory = "2gb"

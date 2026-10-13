@@ -8,7 +8,11 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 2
 
-[{*.sh,Makefile,home/dot_config/git/*}]
+[{*.sh,Makefile}]
+indent_style = tab
+indent_size = 4
+
+[home/dot_config/git/**]
 indent_style = tab
 indent_size = 4
 
