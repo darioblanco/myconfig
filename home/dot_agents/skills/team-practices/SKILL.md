@@ -34,7 +34,11 @@ Rate each green / amber / red with a confidence level.
 
 1. **Review.** Every change reviewed; PRs small (under ~400 changed lines); first review
    within a working day.
-2. **Small batches.** Short-lived branches or trunk-based development; frequent deploys.
+2. **Streamlined delivery.** Trunk-based development with short-lived branches; every merge to
+   main releasable; one artifact promoted through environments; feature flags instead of
+   long-lived branches; frequent deploys. Environment branches (`develop`, `staging`) and
+   GitFlow are a red flag, except release branches for multi-version software and mobile
+   app-store releases.
 3. **CI as the gate.** Nothing merges red; flaky tests are fixed or removed, not rerun.
 4. **Tests.** Testable design; coverage enforced in CI (use the `test-suite` skill).
 5. **Shared ownership.** No critical area known by only one person; ownership files.
