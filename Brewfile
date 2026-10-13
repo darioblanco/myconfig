@@ -46,6 +46,7 @@ brew "yamllint"
 brew "graphviz"
 brew "nmap"
 brew "darioblanco/tap/pulpo"   # durable, metered coding-agent sessions
+brew "ccusage"            # Claude / Codex usage and cost reports
 
 # ── Containers ─────────────────────────────────────────────────────────────────
 brew "container"         # Apple's native Linux containers
