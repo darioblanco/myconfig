@@ -43,14 +43,14 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 | Area | Tools |
 |---|---|
 | Terminal | Ghostty, zsh + zinit, Starship, Atuin, zoxide, fzf, eza, bat, ripgrep, lazygit, yazi |
-| Agent sessions | herdr (agent-aware multiplexer inside Ghostty), mosh for phone access |
+| Agent sessions | herdr (agent-aware multiplexer inside Ghostty), pulpo (background agents), mosh |
 | Coding agents | Claude Code (native installer), Codex, pi; Claude plugins in `claude/plugins.txt` |
 | Node, Go, Java | `mise` (honors `.nvmrc`, `.go-version`, `mise.toml`) |
 | Python | `uv` |
 | Rust | `rustup` |
 | Flutter | `fvm` (per-project `.fvmrc`), Xcode, Android Studio, CocoaPods, fastlane |
 | Containers | Apple `container` + `container-compose`, defaults in `~/.config/container/config.toml` |
-| Kubernetes | kubectl + kubecolor, k9s, kubectx/kubens, stern, krew, helm, Freelens |
+| Kubernetes | kubectl + kubecolor, k9s, kubectx/kubens, stern, krew, helm |
 | Infrastructure | `tenv` (Terraform/OpenTofu per `.terraform-version`), gcloud |
 | Security | Secretive, Bitwarden, Little Snitch, Tailscale |
 
@@ -64,7 +64,9 @@ Then, in order (these need an Apple ID, sudo or a GUI):
   `cmd+shift+enter`. Long commands that finish in an unfocused pane send a notification.
   `` cmd+` `` toggles a system-wide quick terminal.
 - **From your phone.** Termius with Mosh enabled → `mosh <mac>` over Tailscale → `herdr`.
-- **Usage.** `ccusage` reports Claude and Codex token use and cost.
+- **Background agents.** [pulpo](https://github.com/darioblanco/pulpo) runs agents as durable
+  tmux sessions with budgets and schedules: `pulpo spawn <name> --workdir . -- claude -p "…"`.
+- **Usage.** `ccusage` (or `pulpo usage --scan`) reports token use and cost per agent and repo.
 
 ### Keeping the Mac awake
 

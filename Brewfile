@@ -20,7 +20,7 @@ brew "lazygit"
 brew "yazi"              # file manager
 brew "herdr"             # agent-aware terminal multiplexer (runs inside Ghostty)
 brew "mosh"              # roaming SSH for phone access (Termius)
-brew "tmux"              # durable sessions (used by pulpo)
+brew "tmux"              # session backend for pulpo
 brew "neovim"
 brew "tlrc"              # tldr pages
 brew "jq"
@@ -58,7 +58,6 @@ brew "krew"              # kubectl plugins
 brew "helm"
 brew "kubeconform"
 cask "gcloud-cli"
-cask "freelens"          # Kubernetes GUI (successor of Lens)
 
 # ── Mobile ─────────────────────────────────────────────────────────────────────
 brew "mas"
@@ -68,13 +67,11 @@ brew "fvm"               # flutter versions
 brew "cocoapods"
 cask "android-studio"
 
-# ── Editors & AI ──────────────────────────────────────────────────────────────
+# ── Coding agents ─────────────────────────────────────────────────────────────
 # Claude Code itself uses Anthropic's native installer (auto-updates); see bootstrap.sh.
 cask "codex"
 brew "pi-coding-agent"
 cask "claude"
-cask "visual-studio-code"
-cask "zed"
 # Language servers for the Claude Code LSP plugins (rust-analyzer comes from rustup).
 brew "pyright"
 brew "typescript-language-server"
@@ -102,13 +99,12 @@ cask "signal"
 cask "telegram"
 cask "whatsapp"
 cask "spotify"
-cask "plex"
+cask "plex"              # client only
 cask "steam"
 cask "battle-net"
 
 # ── Fonts ─────────────────────────────────────────────────────────────────────
 cask "font-jetbrains-mono-nerd-font"
-cask "font-fira-code-nerd-font"
 
 # ── Mac App Store ─────────────────────────────────────────────────────────────
 mas "Amphetamine", id: 937984704
