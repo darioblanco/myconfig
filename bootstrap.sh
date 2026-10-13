@@ -29,7 +29,7 @@ step "Dotfiles (chezmoi)"
 chezmoi init --apply --source="$repo"
 
 step "Rust"
-rustup default stable >/dev/null 2>&1 || rustup-init -y --no-modify-path
+rustup toolchain install stable --profile default
 rustup component add clippy rustfmt rust-analyzer
 
 step "mise tools (node, pnpm, bun, go, java)"

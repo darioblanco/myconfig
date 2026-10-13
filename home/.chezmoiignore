@@ -1,1 +1,3 @@
-README.md
+{{ if not .workEmail }}
+.config/git/work
+{{ end }}

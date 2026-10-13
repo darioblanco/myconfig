@@ -19,7 +19,7 @@ answers in `~/.config/chezmoi/chezmoi.toml`. **No personal data lives in this re
 Steps that need an Apple ID, sudo or a GUI, in order:
 
 1. `make brew` in a terminal, for casks shipped as `.pkg` (they prompt for your password), and
-   `sudo mas install 937984704` (Amphetamine) if the App Store install failed.
+   `mas install 937984704` (Amphetamine; mas asks for your password) if it failed.
 2. Xcode: `xcodes install <version> --experimental-unxip` (Apple ID + 2FA). Name the version;
    `--latest` can pick a release candidate.
 3. `make system` (sudo): selects the newest Xcode, accepts its license, downloads the iOS
@@ -66,9 +66,16 @@ Steps that need an Apple ID, sudo or a GUI, in order:
 
 ## Keeping the Mac awake for remote agents
 
-`make awake` disables sleep entirely, even with the lid closed and on battery, so agent sessions
-keep running and stay reachable over Tailscale. `make sleep` restores normal behaviour. Don't
-leave it awake in a closed bag: it keeps running hot until the battery dies.
+Day to day, use **Amphetamine** so you decide each time:
+
+1. Amphetamine menu → Settings → Sessions → Defaults: turn off "Allow system sleep when display
+   is closed" (Closed-Display Mode).
+2. Start a session (indefinitely, for a duration, or while an app such as `claude` runs) before
+   closing the lid. The Mac stays awake and reachable over Tailscale until the session ends.
+
+`make awake` is the blunt alternative: it disables sleep system-wide (`pmset disablesleep`),
+overriding Amphetamine, until `make sleep`. Either way, don't leave it awake in a closed bag:
+it keeps running hot until the battery dies.
 
 ## Maintenance
 

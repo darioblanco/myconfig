@@ -3,10 +3,10 @@ HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
 setopt extended_history hist_ignore_all_dups hist_ignore_space share_history
-setopt auto_cd interactive_comments no_beep
+setopt auto_cd interactive_comments no_beep extended_glob
 
 # ── Plugins (zinit, installed by Homebrew) ───────────────────────────────────
-source "$HOMEBREW_PREFIX/opt/zinit/zinit.zsh"
+source "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/zinit/zinit.zsh"
 
 # Selected oh-my-zsh pieces, without the framework.
 zinit snippet OMZL::git.zsh
@@ -15,16 +15,18 @@ zinit snippet OMZP::sudo            # Esc Esc prefixes the last command with sud
 zinit snippet OMZP::kubectl
 
 zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
-zinit light zdharma-continuum/fast-syntax-highlighting   # keep last
 
-# ── Completion ────────────────────────────────────────────────────────────────
-fpath=("$HOMEBREW_PREFIX/share/zsh/site-functions" $fpath)
+# ── Completion (compinit before fzf-tab, which must precede widget-wrapping plugins) ──
+fpath=("${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh/site-functions" $fpath)
 autoload -Uz compinit
 # Rebuild the completion dump at most once a day.
 if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then compinit; else compinit -C; fi
 zinit cdreplay -q
+
+zinit light Aloxaf/fzf-tab
+zinit light zsh-users/zsh-autosuggestions
+zinit light zdharma-continuum/fast-syntax-highlighting   # keep last
+
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 

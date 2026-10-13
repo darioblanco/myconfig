@@ -12,7 +12,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: shellcheck
         run: shellcheck bootstrap.sh macos/*.sh
       - name: actionlint
@@ -22,7 +22,7 @@ jobs:
     # This repo is public: fail if anything that looks like an email or a secret sneaks in.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: no email addresses
@@ -31,6 +31,6 @@ jobs:
             echo "::error::Email-like strings found. Keep personal data in chezmoi prompts or untracked local files."
             exit 1
           fi
-      - uses: gitleaks/gitleaks-action@v2
+      - uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

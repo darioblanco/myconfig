@@ -21,7 +21,7 @@ if [[ -n "$xcode" ]]; then
 		sudo xcode-select -s "$xcode"
 	fi
 	sudo xcodebuild -license accept
-	xcodebuild -runFirstLaunch
+	sudo xcodebuild -runFirstLaunch
 	if ! xcrun simctl list runtimes | grep -q '^iOS'; then
 		xcodebuild -downloadPlatform iOS
 	fi

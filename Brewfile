@@ -114,4 +114,3 @@ cask "font-fira-code-nerd-font"
 
 # ── Mac App Store ─────────────────────────────────────────────────────────────
 mas "Amphetamine", id: 937984704
-mas "Xcode", id: 497799835
