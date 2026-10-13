@@ -14,6 +14,7 @@ xcode-select --install          # Command Line Tools
 git clone https://github.com/darioblanco/myconfig ~/Code/darioblanco/myconfig
 cd ~/Code/darioblanco/myconfig
 make install                    # Homebrew, Brewfile, dotfiles, toolchains, Claude Code + plugins
+                                # (asks for your password once, to install Homebrew)
 ```
 
 On first run, chezmoi asks for your name, personal and work emails and the directory that holds
@@ -48,7 +49,7 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 | Node, Go, Java | `mise` (honors `.nvmrc`, `.go-version`, `mise.toml`) |
 | Python | `uv` |
 | Rust | `rustup` |
-| Flutter | `fvm` (per-project `.fvmrc`), Xcode, Android Studio, CocoaPods, fastlane |
+| Flutter | `fvm` (per-project `.fvmrc`, global stable), Xcode, Android Studio, CocoaPods |
 | Containers | Apple `container` + `container-compose`, defaults in `~/.config/container/config.toml` |
 | Kubernetes | kubectl + kubecolor, k9s, kubectx/kubens, stern, krew, helm |
 | Infrastructure | `tenv` (Terraform/OpenTofu per `.terraform-version`), gcloud |

@@ -18,16 +18,28 @@ policy='{
     "excludedCommands": [
       "gh *", "gcloud *", "terraform *",
       "git fetch *", "git pull *", "git push *",
+      "kubectl *", "kubecolor *", "helm *", "stern *",
       "container *", "container-compose *"
     ],
 
     "filesystem": {
       "denyRead": [
         "~/.ssh", "~/.gnupg", "~/.config/gcloud", "~/.kube", "~/.config/gh", "~/.docker",
-        "~/.aws", "~/.azure", "~/.terraform.d", "~/.npmrc", "~/.pypirc", "~/.netrc",
-        "~/.git-credentials", "~/.codex/auth.json", "~/.pi/agent/auth.json",
+        "~/.aws", "~/.azure", "~/.terraform.d", "~/.terraformrc", "~/.npmrc", "~/.pypirc",
+        "~/.netrc", "~/.git-credentials", "~/.cargo/credentials.toml", "~/.gradle/gradle.properties",
+        "~/.codex/auth.json", "~/.pi/agent/auth.json",
         "~/.zsh_history", "~/.local/share/atuin",
         "~/Library/Keychains", "~/Library/Application Support/Bitwarden"
+      ]
+    },
+
+    "credentials": {
+      "envVars": [
+        { "name": "GITHUB_TOKEN", "mode": "deny" }, { "name": "GH_TOKEN", "mode": "deny" },
+        { "name": "NPM_TOKEN", "mode": "deny" }, { "name": "ANTHROPIC_API_KEY", "mode": "deny" },
+        { "name": "OPENAI_API_KEY", "mode": "deny" },
+        { "name": "CLOUDSDK_AUTH_ACCESS_TOKEN", "mode": "deny" },
+        { "name": "GOOGLE_APPLICATION_CREDENTIALS", "mode": "deny" }
       ]
     },
 
@@ -52,19 +64,23 @@ policy='{
   "permissions": {
     "deny": [
       "Read(~/.ssh/**)", "Read(~/.gnupg/**)", "Read(~/.config/gcloud/**)", "Read(~/.kube/**)",
-      "Read(~/.config/gh/**)", "Read(~/.docker/**)", "Read(~/.aws/**)", "Read(~/.terraform.d/**)",
-      "Read(~/.npmrc)", "Read(~/.pypirc)", "Read(~/.netrc)", "Read(~/.git-credentials)",
-      "Read(~/.codex/auth.json)", "Read(~/.pi/agent/auth.json)",
+      "Read(~/.config/gh/**)", "Read(~/.docker/**)", "Read(~/.aws/**)", "Read(~/.azure/**)",
+      "Read(~/.terraform.d/**)", "Read(~/.terraformrc)", "Read(~/.npmrc)", "Read(~/.pypirc)",
+      "Read(~/.netrc)", "Read(~/.git-credentials)", "Read(~/.cargo/credentials.toml)",
+      "Read(~/.gradle/gradle.properties)", "Read(~/.codex/auth.json)", "Read(~/.pi/agent/auth.json)",
       "Read(~/.zsh_history)", "Read(~/.local/share/atuin/**)",
-      "Read(**/.env)", "Read(**/.env.local)", "Read(**/.env.*.local)", "Read(**/.env.production)",
-      "Read(**/*service-account*.json)", "Read(**/*credentials*.json)"
+      "Read(~/Library/Keychains/**)", "Read(~/Library/Application Support/Bitwarden/**)",
+      "Read(//**/.env)", "Read(//**/.env.local)", "Read(//**/.env.*.local)",
+      "Read(//**/.env.production)", "Read(//**/*service-account*.json)",
+      "Read(//**/*credentials*.json)", "Read(//**/key.properties)", "Read(//**/*.jks)",
+      "Read(//**/*.keystore)", "Read(//**/*.p8)"
     ],
     "ask": [
       "Bash(terraform apply*)", "Bash(terraform destroy*)", "Bash(terraform import*)",
       "Bash(kubectl apply*)", "Bash(kubectl delete*)", "Bash(kubectl patch*)", "Bash(kubectl edit*)",
       "Bash(kubectl scale*)", "Bash(kubectl rollout*)", "Bash(helm install*)", "Bash(helm upgrade*)",
       "Bash(helm uninstall*)", "Bash(gcloud * delete*)", "Bash(gcloud * create*)",
-      "Bash(git push --force*)", "Bash(git push -f*)"
+      "Bash(git push *--force*)", "Bash(git push * -f*)", "Bash(git push *+*)"
     ]
   }
 }'

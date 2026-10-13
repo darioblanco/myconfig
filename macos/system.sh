@@ -31,7 +31,7 @@ fi
 
 if command -v container >/dev/null 2>&1; then
 	step "container DNS domain"
-	if ! container system dns ls | grep -qx test; then
+	if ! container system dns ls -q | grep -qx test; then
 		sudo container system dns create test
 	fi
 	container system stop >/dev/null 2>&1 || true

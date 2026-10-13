@@ -1,5 +1,6 @@
 .DEFAULT_GOAL := help
 SHELL := /usr/bin/env bash
+SCRIPTS := bootstrap.sh macos/*.sh home/dot_local/bin/executable_* home/dot_claude/modify_*
 
 .PHONY: help install system brew apply diff update defaults awake sleep check
 
@@ -39,7 +40,7 @@ sleep: ## restore normal sleep
 	@pmset -g | grep -i sleepdisabled
 
 check: ## lint scripts and configs
-	shellcheck bootstrap.sh macos/*.sh
-	shfmt -d bootstrap.sh macos/*.sh
+	shellcheck $(SCRIPTS)
+	shfmt -d $(SCRIPTS)
 	actionlint
 	ghostty +validate-config --config-file=home/dot_config/ghostty/config

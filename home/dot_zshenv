@@ -11,6 +11,7 @@ path=(
   "$HOME/.local/bin"
   /opt/homebrew/bin
   /opt/homebrew/sbin
+  /opt/homebrew/opt/rustup/bin
   "$HOME/.cargo/bin"
   "$HOME/fvm/default/bin"
   "$HOME/.pub-cache/bin"

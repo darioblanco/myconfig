@@ -8,15 +8,52 @@ on:
 permissions:
   contents: read
 
+env:
+  SCRIPTS: bootstrap.sh macos/*.sh home/dot_local/bin/executable_* home/dot_claude/modify_*
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - name: shellcheck
-        run: shellcheck bootstrap.sh macos/*.sh
+        run: |
+          # shellcheck disable=SC2086 # word-splitting the file list is intended
+          shellcheck $SCRIPTS
       - name: actionlint
         uses: raven-actions/actionlint@v2
+
+  macos:
+    # Exercise the parts of the bootstrap that can run on a clean macOS runner.
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v7
+      - name: install tools
+        run: brew install chezmoi jq shfmt
+      - name: shfmt
+        run: |
+          # shellcheck disable=SC2086 # word-splitting the file list is intended
+          shfmt -d $SCRIPTS
+      - name: Brewfile parses
+        run: brew bundle list --file=Brewfile --all >/dev/null
+      - name: dotfiles render
+        run: |
+          chezmoi init --apply --dry-run --source "$PWD" \
+            --promptString "Full name for git commits=CI" \
+            --promptString "Personal git email=ci" \
+            --promptString "Work git email (leave empty to skip)=work" \
+            --promptString "Directory holding work repos=/tmp/work"
+      - name: Claude settings merge keeps existing keys
+        run: |
+          echo '{"enabledPlugins":{"a@b":true},"hooks":{"SessionStart":[]}}' |
+            sh home/dot_claude/modify_settings.json |
+            jq -e '.enabledPlugins["a@b"] and .sandbox.enabled and (.hooks | has("SessionStart"))
+                   and .attribution.commit == ""'
+      - name: Claude settings merge is idempotent
+        run: |
+          once=$(echo '{}' | sh home/dot_claude/modify_settings.json)
+          twice=$(echo "$once" | sh home/dot_claude/modify_settings.json)
+          [ "$once" = "$twice" ]
 
   privacy:
     # This repo is public: fail if anything that looks like an email or a secret sneaks in.

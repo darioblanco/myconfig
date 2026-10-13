@@ -14,7 +14,8 @@ It is **public**. `CLAUDE.md` imports this file.
 - **No AI attribution.** No `Co-Authored-By` trailers or "Generated with" lines in commits or
   PRs. A global commit-msg hook strips them anyway.
 - **No sudo.** Steps that need sudo go in `macos/system.sh`, which a human runs with
-  `make system`. Steps that need an Apple ID or a GUI are documented in the README.
+  `make system`; the only other exception is `bootstrap.sh` asking once to install Homebrew.
+  Steps that need an Apple ID or a GUI are documented in the README.
 - **Idempotent and non-interactive.** Every script must be safe to re-run and must not prompt,
   except chezmoi's first-run questions and the sudo password in `macos/system.sh`.
 - **Don't weaken the security policy** in `home/dot_claude/modify_settings.json` (sandbox,
@@ -53,6 +54,8 @@ brew bundle check --file=Brewfile
 - After editing `home/dot_claude/modify_settings.json`, run
   `sh home/dot_claude/modify_settings.json < ~/.claude/settings.json | jq .` and check that the
   other keys (plugins, hooks) survive, and that `chezmoi status` is clean after applying.
+  The merge only adds: when you remove or rename a rule, also delete the old entry from
+  `~/.claude/settings.json` on this machine.
 - After editing zsh files, `zsh -i -c exit` must print nothing and start in well under a second.
 - Search the diff for personal data before every commit.
 

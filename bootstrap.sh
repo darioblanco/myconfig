@@ -6,6 +6,12 @@ set -euo pipefail
 
 repo="$(cd "$(dirname "$0")" && pwd)"
 step() { printf '\n\033[1;34m==> %s\033[0m\n' "$*"; }
+# Run a step only if its tool exists, so one failed Brewfile entry doesn't stop the rest.
+have() {
+	command -v "$1" >/dev/null 2>&1 && return 0
+	echo "  skipped: $1 is not installed"
+	return 1
+}
 
 step "Command Line Tools"
 if ! xcode-select -p >/dev/null 2>&1; then
@@ -16,41 +22,61 @@ fi
 
 step "Homebrew"
 if ! command -v brew >/dev/null 2>&1; then
+	# The installer needs sudo but can't prompt in NONINTERACTIVE mode: ask once up front.
+	sudo -v
 	NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 eval "$(/opt/homebrew/bin/brew shellenv)"
+# rustup is keg-only, and Claude Code installs to ~/.local/bin.
+export PATH="/opt/homebrew/opt/rustup/bin:$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
 
 step "Brewfile"
 brew tap darioblanco/tap && brew trust darioblanco/tap
-# Casks shipped as .pkg ask for sudo; a failure here should not stop the rest.
-brew bundle --file="$repo/Brewfile" || echo "Some Brewfile entries failed; re-run 'make brew' in a terminal."
+# Upgrades belong to `make update`. Casks shipped as .pkg ask for sudo, so a failure here
+# should not stop the rest.
+brew bundle --no-upgrade --file="$repo/Brewfile" ||
+	echo "Some Brewfile entries failed; re-run 'make brew' in a terminal."
 
 step "Dotfiles (chezmoi)"
 chezmoi init --apply --source="$repo"
+# Clone the zsh plugins now instead of on the first interactive shell.
+zsh -ic exit >/dev/null 2>&1 || true
 
 step "Rust"
-rustup toolchain install stable --profile default
-rustup component add clippy rustfmt rust-analyzer
+if have rustup; then
+	rustup toolchain install stable --profile default
+	rustup component add clippy rustfmt rust-analyzer
+fi
 
 step "mise tools (node, pnpm, bun, go, java)"
-mise install --yes
+if have mise; then mise install --yes; fi
+
+step "Flutter (fvm)"
+if have fvm; then
+	fvm install stable --setup
+	fvm global stable
+fi
+
+step "Python (uv)"
+if have uv; then uv python install; fi
 
 step "gcloud components"
-gcloud components install gke-gcloud-auth-plugin -q
+if have gcloud; then gcloud components install gke-gcloud-auth-plugin -q; fi
 
 step "Claude Code"
-export PATH="$HOME/.local/bin:$PATH"
 if ! command -v claude >/dev/null 2>&1; then
 	curl -fsSL https://claude.ai/install.sh | bash
 fi
+
 step "Claude Code plugins"
 grep -vE '^\s*(#|$)' "$repo/claude/plugins.txt" | while read -r plugin marketplace; do
 	claude plugin marketplace add "$marketplace" >/dev/null 2>&1 || true
-	claude plugin install "$plugin" >/dev/null && echo "  $plugin"
+	if claude plugin install "$plugin" >/dev/null 2>&1; then
+		echo "  $plugin"
+	else
+		echo "  FAILED: $plugin"
+	fi
 done
-
-step "Python (uv)"
-uv python install
 
 if [[ "${1:-}" == "--defaults" ]]; then
 	step "macOS defaults"
