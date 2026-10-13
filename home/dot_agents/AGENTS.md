@@ -5,9 +5,11 @@ and it is where the project's commands live: read it (or the README and Makefile
 its exact commands for formatting, linting, type checks and tests.
 
 ## Working style
-- Routine changes: just do them. New features, new modules or boundaries, or changes across
-  several files: first write a short plan (approach, boundaries, failure modes, test strategy)
-  and wait for my OK.
+- Routine changes: just do them. New features, new modules, changes that cross a module boundary
+  or add a public interface: first write a short plan (approach, boundaries, failure modes, test
+  strategy) and stop for my OK, using plan mode where the tool has one. In non-interactive runs
+  (`claude -p`, `codex exec`, background agents) put the plan at the top of your output and
+  proceed.
 - Make the smallest change that solves the problem, in the style of the surrounding code. No
   unrequested features, no new abstraction without a second real use, no compatibility shims or
   fallbacks unless I ask.
@@ -24,8 +26,10 @@ its exact commands for formatting, linting, type checks and tests.
   report what ran and the result. Output should be clean: no new warnings.
 
 ## Review
-- Before opening a PR, review the diff with the native tools (`/code-review` in Claude Code,
-  `codex review` in Codex). For risky changes, also have the other agent review it.
+- Before opening a PR, review the diff with the native tool (`/code-review` in Claude Code,
+  `/review` in Codex). For risky changes (auth, data migrations, infrastructure), get a second
+  review from the other model: `codex review` from Claude Code, `claude -p /code-review` from
+  Codex.
 
 ## Dependencies
 - Prefer the standard library or a few lines of code. Before adding a dependency, check that it
@@ -49,3 +53,4 @@ its exact commands for formatting, linting, type checks and tests.
 
 ## Keeping this file useful
 - When an agent repeats a mistake, add one line here or in the repo's AGENTS.md to prevent it.
+  One-off learnings belong in the agent's own memory, not here, so this file stays short.

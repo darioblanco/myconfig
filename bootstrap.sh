@@ -80,7 +80,13 @@ done
 
 step "herdr agent status"
 if have herdr; then
-	for agent in claude codex; do herdr integration install "$agent" >/dev/null && echo "  $agent"; done
+	for agent in claude codex pi; do
+		if herdr integration install "$agent" >/dev/null 2>&1; then
+			echo "  $agent"
+		else
+			echo "  FAILED: $agent"
+		fi
+	done
 fi
 
 if [[ "${1:-}" == "--defaults" ]]; then

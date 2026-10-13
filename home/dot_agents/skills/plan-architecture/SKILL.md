@@ -1,13 +1,14 @@
 ---
 name: plan-architecture
-description: Write a design plan before building something non-trivial. Use for new features, new services or modules, changes that cross module boundaries or touch several files, data model or API changes, and whenever someone asks to plan, design or architect something.
+description: Write a design plan before building something non-trivial. Use for new features, new services or modules, changes that cross a module boundary or add a public interface, data model or API changes, and whenever someone asks to plan, design or architect something.
 ---
 
 # Architecture plan
 
 The goal is to make the important decisions explicit and cheap to change before any code
-exists, and to agree on them. This skill defines what a plan contains; use the tool's plan mode
-(or simply stop and wait) for the approval step.
+exists, and to agree on them. This skill defines what a plan contains. For approval, present the
+plan and stop (plan mode where the tool has one); in non-interactive runs, put the plan at the
+top of the output and proceed.
 
 ## Before writing
 

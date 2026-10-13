@@ -1,5 +1,7 @@
 ---
 name: systematic-debugging
+metadata:
+  inspired-by: obra/superpowers systematic-debugging (MIT)
 description: Find the root cause of a bug, failing test, crash, flaky behaviour or unexpected output before changing code. Use whenever something doesn't work as expected, especially after a first fix attempt failed.
 ---
 
@@ -42,5 +44,3 @@ small once you do.
 After three fixes that didn't hold, stop: the problem is probably in the design, not the
 line you're looking at. Summarise what you tried, what you learned and what you suspect, and
 ask before going further.
-
-Inspired by the `systematic-debugging` skill in obra/superpowers (MIT).

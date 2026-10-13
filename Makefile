@@ -44,3 +44,4 @@ check: ## lint scripts and configs
 	shfmt -d $(SCRIPTS)
 	actionlint
 	ghostty +validate-config --config-file=home/dot_config/ghostty/config
+	claude plugin validate home/dot_agents/skills

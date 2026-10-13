@@ -11,8 +11,8 @@ needed at all: the standard library or a few lines of our own code often beat a 
 ## Gather the facts
 
 Use the package registry (npm, PyPI, pub.dev, crates.io, Maven Central, Go proxy) for releases
-and downloads, and the source repository for activity. For GitHub repositories, run each `gh`
-command on its own (not inside a pipe or loop), for example:
+and downloads, and the source repository for activity. For GitHub repositories (in sandboxes,
+`gh` may only have credentials when run as a plain top-level command), for example:
 
 ```sh
 gh api repos/OWNER/REPO --jq '{stars: .stargazers_count, pushed: .pushed_at, archived, license: .license.spdx_id, open_issues: .open_issues_count}'
@@ -20,8 +20,11 @@ gh release list -R OWNER/REPO --limit 5
 gh api 'repos/OWNER/REPO/contributors?per_page=10' --jq '.[] | "\(.login) \(.contributions)"'
 gh issue list -R OWNER/REPO --state open --limit 10
 gh pr list -R OWNER/REPO --state merged --limit 10
-gh api repos/OWNER/REPO/security-advisories --jq '.[] | "\(.severity) \(.summary)"'
+# Advisories against the package (ecosystem: npm, pip, pub, rubygems, go, rust, maven…)
+gh api 'advisories?ecosystem=npm&affects=PACKAGE' --jq '.[] | "\(.severity) \(.summary) \(.vulnerabilities[0].vulnerable_version_range)"'
 ```
+
+[osv.dev](https://osv.dev) covers the same advisories across ecosystems.
 
 ## Criteria
 

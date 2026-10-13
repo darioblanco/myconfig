@@ -60,8 +60,10 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 - **Shared rules and skills.** `~/.agents/AGENTS.md` holds personal engineering rules (design
   first, TDD with 100% coverage, dependency checks, safety, git) and `~/.agents/skills` holds
   personal skills (`tdd`, `plan-architecture`, `dependency-check`, `systematic-debugging`).
-  Codex and pi read both natively; Claude Code reads them through `~/.claude/CLAUDE.md` and
-  `~/.claude/skills` symlinks. Review uses the native `/code-review` and `codex review`.
+  Codex reads both natively; pi reads the skills natively and the rules through
+  `~/.pi/agent/AGENTS.md`; Claude Code reads them through `~/.claude/CLAUDE.md` and one
+  `~/.claude/skills/<name>` symlink per skill. Review uses the native `/code-review` (Claude
+  Code) and `/review` (Codex).
 - **One agent per worktree.** `cw <name>` runs `claude --worktree <name>`.
 - **herdr inside Ghostty.** Run `herdr` and start agents in its panes. Each pane shows whether
   its agent is working, blocked or idle (`herdr integration install claude`, also `codex` and
