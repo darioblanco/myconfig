@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 SHELL := /usr/bin/env bash
-SCRIPTS := bootstrap.sh macos/*.sh home/dot_local/bin/executable_* home/dot_claude/modify_*
+SCRIPTS := bootstrap.sh macos/*.sh home/dot_local/bin/executable_* home/dot_claude/modify_* home/dot_codex/modify_*
 
 .PHONY: help install system brew apply diff update defaults awake sleep check
 

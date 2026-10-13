@@ -73,8 +73,37 @@ Then, in order (these need an Apple ID, sudo or a GUI):
   `` cmd+` `` toggles a system-wide quick terminal.
 - **From your phone.** Termius with Mosh enabled → `mosh <mac>` over Tailscale → `herdr`.
 - **Background agents.** [pulpo](https://github.com/darioblanco/pulpo) runs agents as durable
-  tmux sessions with budgets and schedules: `pulpo spawn <name> --workdir . -- claude -p "…"`.
+  tmux sessions you can attach to: `pulpo spawn <name> --workdir . -- claude`.
 - **Usage.** `ccusage` (or `pulpo usage --scan`) reports token use and cost per agent and repo.
+
+### Use the agent rules and skills without the rest
+
+[`home/dot_agents/AGENTS.md`](home/dot_agents/AGENTS.md) and
+[`home/dot_agents/skills/`](home/dot_agents/skills) work on their own with any agent that reads
+`AGENTS.md` and [Agent Skills](https://agentskills.io): Claude Code, Codex, pi and others. They
+are written in the first person ("wait for my OK"), so read them and adapt them to how you
+work. To try them (this replaces any existing `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`):
+
+```sh
+git clone https://github.com/darioblanco/myconfig && cp -R myconfig/home/dot_agents ~/.agents
+ln -sf ~/.agents/AGENTS.md ~/.claude/CLAUDE.md      # Claude Code
+ln -sf ~/.agents/AGENTS.md ~/.codex/AGENTS.md       # Codex (skills: ~/.agents/skills natively)
+mkdir -p ~/.claude/skills && ln -sf ~/.agents/skills/*/ ~/.claude/skills/
+```
+
+The rules borrow from published practice: short and specific, a line added each time an agent
+repeats a mistake ([Mitchell Hashimoto](https://mitchellh.com/writing/my-ai-adoption-journey)),
+root cause first and no compatibility shims ([Jesse Vincent](https://github.com/obra/dotfiles),
+[Peter Steinberger](https://github.com/steipete/agent-scripts)), and red/green TDD
+([Simon Willison](https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/),
+[Kent Beck](https://newsletter.kentbeck.com/p/augmented-coding-beyond-the-vibes)).
+
+### Subscriptions, not API keys
+
+Claude Code is restricted to claude.ai logins (`forceLoginMethod`) and Codex to ChatGPT logins
+(`forced_login_method`), and the shell warns if `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` is
+exported, since either would switch the agent to pay-per-token billing. Agents run in
+interactive sessions (auto mode included), not headless.
 
 ### Keeping the Mac awake
 

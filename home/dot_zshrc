@@ -67,5 +67,11 @@ bindkey -e
 bindkey '^U' backward-kill-line
 bindkey '^X^_' redo
 
+# Agents run on subscriptions; an exported API key would switch them to pay-per-token billing.
+for _key in ANTHROPIC_API_KEY OPENAI_API_KEY; do
+  [[ -n "${(P)_key}" ]] && print -P "%F{yellow}warning:%f $_key is set; Claude Code/Codex may bill the API instead of your subscription"
+done
+unset _key
+
 # Machine-specific settings and secrets. Not tracked.
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

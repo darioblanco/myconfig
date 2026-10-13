@@ -7,9 +7,8 @@ its exact commands for formatting, linting, type checks and tests.
 ## Working style
 - Routine changes: just do them. New features, new modules, changes that cross a module boundary
   or add a public interface: first write a short plan (approach, boundaries, failure modes, test
-  strategy) and stop for my OK, using plan mode where the tool has one. In non-interactive runs
-  (`claude -p`, `codex exec`, background agents) put the plan at the top of your output and
-  proceed.
+  strategy) and stop for my OK, using plan mode where the tool has one. If nobody can answer
+  (an unattended background run), put the plan at the top of your output and proceed.
 - Make the smallest change that solves the problem, in the style of the surrounding code. No
   unrequested features, no new abstraction without a second real use, no compatibility shims or
   fallbacks unless I ask.
@@ -27,9 +26,8 @@ its exact commands for formatting, linting, type checks and tests.
 
 ## Review
 - Before opening a PR, review the diff with the native tool (`/code-review` in Claude Code,
-  `/review` in Codex). For risky changes (auth, data migrations, infrastructure), get a second
-  review from the other model: `codex review` from Claude Code, `claude -p /code-review` from
-  Codex.
+  `/review` in Codex). For risky changes (auth, data migrations, infrastructure), suggest a
+  second review from the other model, which I run in its own interactive session.
 
 ## Dependencies
 - Prefer the standard library or a few lines of code. Before adding a dependency, check that it
@@ -37,6 +35,8 @@ its exact commands for formatting, linting, type checks and tests.
   what you found.
 
 ## Safety
+- Use the subscription logins only. Never call model APIs with API keys, and don't launch other
+  agents headless (`claude -p`, `codex exec`); suggest the session for me to start instead.
 - Test against local resources (containers, emulators, fakes). Never use staging or production
   credentials, data or clusters unless I ask.
 - Ask before infrastructure changes and anything destructive or irreversible. Never print secret

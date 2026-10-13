@@ -11,6 +11,8 @@ input="$(cat)"
 policy='{
   "attribution": { "commit": "", "pr": "", "sessionUrl": false },
 
+  "forceLoginMethod": "claudeai",
+
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": true,
