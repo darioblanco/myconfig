@@ -9,10 +9,13 @@ repository**; it is asked for once and kept on the machine.
 
 ## Bootstrap a new Mac
 
+This is my setup. To use it, fork the repository and trim the `Brewfile` (it includes my apps
+and games) and `claude/plugins.txt` to taste; everything personal is asked at first run.
+
 ```sh
 xcode-select --install          # Command Line Tools
-git clone https://github.com/darioblanco/myconfig ~/Code/darioblanco/myconfig
-cd ~/Code/darioblanco/myconfig
+git clone https://github.com/<you>/myconfig ~/myconfig   # any path works
+cd ~/myconfig
 make install                    # Homebrew, Brewfile, dotfiles, toolchains, Claude Code + plugins
                                 # (asks for your password once, to install Homebrew)
 ```
@@ -57,15 +60,8 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 
 ## Agentic development
 
-- **Shared rules and skills.** `~/.agents/AGENTS.md` holds personal engineering rules (design
-  first, TDD with 100% coverage, dependency checks, safety, git) and `~/.agents/skills` holds
-  personal skills for occasional procedures (`plan-architecture`, `dependency-check`,
-  `systematic-debugging`, `test-suite`, `team-practices`, and `tech-due-diligence`, which ties
-  them together with the `claude-security` scan).
-  Codex reads both natively; pi reads the skills natively and the rules through
-  `~/.pi/agent/AGENTS.md`; Claude Code reads them through `~/.claude/CLAUDE.md` and one
-  `~/.claude/skills/<name>` symlink per skill. Review uses the native `/code-review` (Claude
-  Code) and `/review` (Codex).
+- **Rules and skills.** Shared by Claude Code, Codex and pi; see
+  [Agent rules and skills](#agent-rules-and-skills).
 - **One agent per worktree.** `cw <name>` runs `claude --worktree <name>`.
 - **herdr inside Ghostty.** Run `herdr` and start agents in its panes. Each pane shows whether
   its agent is working, blocked or idle (`herdr integration install claude`, also `codex` and
@@ -77,28 +73,6 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 - **Background agents.** [pulpo](https://github.com/darioblanco/pulpo) runs agents as durable
   tmux sessions you can attach to: `pulpo spawn <name> --workdir . -- claude`.
 - **Usage.** `ccusage` (or `pulpo usage --scan`) reports token use and cost per agent and repo.
-
-### Use the agent rules and skills without the rest
-
-[`home/dot_agents/AGENTS.md`](home/dot_agents/AGENTS.md) and
-[`home/dot_agents/skills/`](home/dot_agents/skills) work on their own with any agent that reads
-`AGENTS.md` and [Agent Skills](https://agentskills.io): Claude Code, Codex, pi and others. They
-are written in the first person ("wait for my OK"), so read them and adapt them to how you
-work. To try them (this replaces any existing `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`):
-
-```sh
-git clone https://github.com/darioblanco/myconfig && cp -R myconfig/home/dot_agents ~/.agents
-ln -sf ~/.agents/AGENTS.md ~/.claude/CLAUDE.md      # Claude Code
-ln -sf ~/.agents/AGENTS.md ~/.codex/AGENTS.md       # Codex (skills: ~/.agents/skills natively)
-mkdir -p ~/.claude/skills && ln -sf ~/.agents/skills/*/ ~/.claude/skills/
-```
-
-The rules borrow from published practice: short and specific, a line added each time an agent
-repeats a mistake ([Mitchell Hashimoto](https://mitchellh.com/writing/my-ai-adoption-journey)),
-root cause first and no compatibility shims ([Jesse Vincent](https://github.com/obra/dotfiles),
-[Peter Steinberger](https://github.com/steipete/agent-scripts)), and red/green TDD
-([Simon Willison](https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/),
-[Kent Beck](https://newsletter.kentbeck.com/p/augmented-coding-beyond-the-vibes)).
 
 ### Subscriptions, not API keys
 
@@ -113,6 +87,49 @@ Use **Amphetamine** so you decide each time: turn off "Allow system sleep when d
 closed", keep "Lock screen after inactivity" on, and start a session before closing the lid.
 `make awake` / `make sleep` toggle sleep system-wide instead. Don't leave it awake in a closed
 bag.
+
+## Agent rules and skills
+
+[`home/dot_agents/AGENTS.md`](home/dot_agents/AGENTS.md) is a short set of personal engineering
+rules loaded into every session: plan before non-trivial changes, smallest change and root cause
+first, testable design with 100% coverage and tests that are proven to fail, dependency health
+and supply-chain checks, local resources only, and parallel-agent etiquette. It only holds what
+the agents don't do by default and the harness can't enforce.
+
+[`home/dot_agents/skills/`](home/dot_agents/skills) holds skills for occasional procedures. Only
+each skill's one-line description is in context until a task needs it.
+
+| Skill | Use it for |
+|---|---|
+| [`plan-architecture`](home/dot_agents/skills/plan-architecture/SKILL.md) | A one-page design plan before a new feature, module or interface: boundaries, data flow, failure modes, security, test strategy, steps |
+| [`systematic-debugging`](home/dot_agents/skills/systematic-debugging/SKILL.md) | Root cause before fixes: reproduce, locate, one hypothesis at a time; stop after three failed fixes |
+| [`dependency-check`](home/dot_agents/skills/dependency-check/SKILL.md) | Whether a library is healthy and safe: maintenance, adoption, license, advisories, supply-chain risks |
+| [`test-suite`](home/dot_agents/skills/test-suite/SKILL.md) | Setting up enforced coverage for a repository, or auditing how trustworthy a test suite is (including mutation testing) |
+| [`team-practices`](home/dot_agents/skills/team-practices/SKILL.md) | How a team works (review, delivery, ownership, AI judgement, atmosphere), assessed as a system, never as individuals |
+| [`tech-due-diligence`](home/dot_agents/skills/tech-due-diligence/SKILL.md) | An evidence-based technical due diligence report; uses the skills above, the `claude-security` scan, and the `code-modernization` plugin enabled only for the DD directory |
+
+Code review uses the tools' native commands (`/code-review` in Claude Code, `/review` in Codex)
+rather than a skill.
+
+### Use them without the rest of this repository
+
+They work with any agent that reads `AGENTS.md` and [Agent Skills](https://agentskills.io).
+They are written in the first person ("wait for my OK"), so read them and adapt them to how you
+work. To try them (this replaces any existing `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`):
+
+```sh
+git clone https://github.com/darioblanco/myconfig && cp -R myconfig/home/dot_agents ~/.agents
+ln -sf ~/.agents/AGENTS.md ~/.claude/CLAUDE.md      # Claude Code
+ln -sf ~/.agents/AGENTS.md ~/.codex/AGENTS.md       # Codex (reads ~/.agents/skills natively)
+mkdir -p ~/.claude/skills && ln -sf ~/.agents/skills/*/ ~/.claude/skills/
+```
+
+The rules borrow from published practice: short and specific, a line added each time an agent
+repeats a mistake ([Mitchell Hashimoto](https://mitchellh.com/writing/my-ai-adoption-journey)),
+root cause first and no compatibility shims ([Jesse Vincent](https://github.com/obra/dotfiles),
+[Peter Steinberger](https://github.com/steipete/agent-scripts)), and red/green TDD
+([Simon Willison](https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/),
+[Kent Beck](https://newsletter.kentbeck.com/p/augmented-coding-beyond-the-vibes)).
 
 ## Security
 
