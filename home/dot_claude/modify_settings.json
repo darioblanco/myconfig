@@ -21,7 +21,8 @@ policy='{
       "gh *", "gcloud *", "terraform *",
       "git fetch *", "git pull *", "git push *",
       "kubectl *", "kubecolor *", "helm *", "stern *",
-      "container *", "container-compose *"
+      "container *", "container-compose *",
+      "pnpm *"
     ],
 
     "filesystem": {
