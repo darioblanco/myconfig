@@ -1,6 +1,7 @@
 # Claude Code plugins installed by bootstrap.sh (user scope). Format: plugin@marketplace <marketplace-repo>
 # Kept small on purpose: every skill description costs context in each session.
-# Skipped: security-guidance (sends each turn's diff to an Opus review: high token use).
+# Skipped: security-guidance (sends each turn's diff to an Opus review: high token use),
+# pr-review-toolkit (duplicates the built-in /code-review; its agents cost context every session).
 dart-flutter@dart-flutter flutter/skills
 terraform@hashicorp hashicorp/agent-skills
 pyright-lsp@claude-plugins-official anthropics/claude-plugins-official
@@ -8,5 +9,4 @@ typescript-lsp@claude-plugins-official anthropics/claude-plugins-official
 jdtls-lsp@claude-plugins-official anthropics/claude-plugins-official
 gopls-lsp@claude-plugins-official anthropics/claude-plugins-official
 rust-analyzer-lsp@claude-plugins-official anthropics/claude-plugins-official
-pr-review-toolkit@claude-plugins-official anthropics/claude-plugins-official
 claude-security@claude-plugins-official anthropics/claude-plugins-official

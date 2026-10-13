@@ -57,6 +57,11 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 
 ## Agentic development
 
+- **Shared rules and skills.** `~/.agents/AGENTS.md` holds personal engineering rules (design
+  first, TDD with 100% coverage, dependency checks, safety, git) and `~/.agents/skills` holds
+  personal skills (`tdd`, `plan-architecture`, `dependency-check`, `systematic-debugging`).
+  Codex and pi read both natively; Claude Code reads them through `~/.claude/CLAUDE.md` and
+  `~/.claude/skills` symlinks. Review uses the native `/code-review` and `codex review`.
 - **One agent per worktree.** `cw <name>` runs `claude --worktree <name>`.
 - **herdr inside Ghostty.** Run `herdr` and start agents in its panes. Each pane shows whether
   its agent is working, blocked or idle (`herdr integration install claude`, also `codex` and
@@ -109,6 +114,7 @@ Use `/sandbox` inside Claude Code to inspect or adjust the policy for a session.
 | `Brewfile` | CLI tools, apps, fonts, Mac App Store apps |
 | `bootstrap.sh` | Homebrew, Brewfile, dotfiles, toolchains, Claude Code and plugins |
 | `home/` | chezmoi source for `$HOME`: zsh, git, ssh, Ghostty, Starship, mise, Atuin, container, Claude Code |
+| `home/dot_agents/` | Personal agent rules and skills, shared by Claude Code, Codex and pi |
 | `claude/plugins.txt` | Claude Code plugins (kept small: each one costs context) |
 | `macos/system.sh` | One-time sudo setup: Xcode, container DNS, SSH server, machine name |
 | `macos/defaults.sh` | Finder, Dock, keyboard and trackpad |

@@ -78,6 +78,11 @@ grep -vE '^\s*(#|$)' "$repo/claude/plugins.txt" | while read -r plugin marketpla
 	fi
 done
 
+step "herdr agent status"
+if have herdr; then
+	for agent in claude codex; do herdr integration install "$agent" >/dev/null && echo "  $agent"; done
+fi
+
 if [[ "${1:-}" == "--defaults" ]]; then
 	step "macOS defaults"
 	"$repo/macos/defaults.sh"
