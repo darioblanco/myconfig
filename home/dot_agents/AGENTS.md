@@ -5,13 +5,14 @@ repository's own commands for formatting, linting, type checks and tests.
 
 ## Working style
 - Routine changes: just do them. New features, new modules, changes that cross a module boundary
-  or add a public interface: first write a short plan (approach, boundaries, failure modes, test
-  strategy) and stop for my OK, using plan mode where the tool has one. If nobody can answer
-  (an unattended background run), put the plan at the top of your output and proceed.
+  or add a public interface: first write a plan with the `plan-architecture` skill and stop for
+  my OK, using plan mode where the tool has one. If nobody can answer (an unattended
+  background run), put the plan at the top of your output and proceed.
 - Make the smallest change that solves the problem, in the style of the surrounding code. No
   unrequested features, no new abstraction without a second real use, no compatibility shims or
   fallbacks unless I ask.
-- Find the root cause before fixing. Don't patch symptoms or swallow errors to make them go away.
+- Find the root cause before fixing (the `systematic-debugging` skill). Don't patch symptoms or
+  swallow errors to make them go away.
 - Don't invent APIs, flags or facts. Check the source or the docs, or say you don't know.
 
 ## Tests
@@ -30,12 +31,10 @@ repository's own commands for formatting, linting, type checks and tests.
   full test and coverage commands, and report what ran and the result.
 
 ## Dependencies
-- Prefer the standard library or a few lines of code. Before adding a dependency, check that it
-  is healthy (recent releases, active maintainers, adoption, license, advisories) and report
-  what you found.
-- Verify the exact package name and publisher before installing: agents hallucinate names, and
-  attackers register them. Use the repo's lockfile and package manager; never approve new
-  install scripts or bypass a release-age cooldown without asking me.
+- Prefer the standard library or a few lines of code. Before adding or upgrading a dependency,
+  run the `dependency-check` skill and report what you found.
+- Use the repo's lockfile and package manager. Never approve new install scripts or bypass a
+  release-age cooldown without asking me.
 
 ## Safety
 - Test against local resources (containers, emulators, fakes). Never use staging or production
