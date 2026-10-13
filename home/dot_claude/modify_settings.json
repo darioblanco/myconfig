@@ -1,6 +1,7 @@
 #!/bin/sh
 # chezmoi modify script: merges this policy into ~/.claude/settings.json and keeps everything else
-# that Claude Code, plugins and herdr write there. Arrays are unioned, so local additions survive.
+# that Claude Code, plugins and herdr write there. Arrays are unioned in order, so local
+# additions survive and re-applying is a no-op.
 #
 # Goal: agents can run in auto mode without being able to read credentials or send data to
 # arbitrary hosts. See the "Security" section of the README for the reasoning.
@@ -73,6 +74,6 @@ printf '%s' "$input" | /opt/homebrew/bin/jq --argjson policy "$policy" '
     if (type == "object") and ($b | type == "object") then
       reduce ($b | keys_unsorted[]) as $k (.; .[$k] = (.[$k] | merge($b[$k])))
     elif (type == "array") and ($b | type == "array") then
-      (. + $b) | unique
+      reduce $b[] as $x (.; if index([$x]) then . else . + [$x] end)
     else $b end;
   merge($policy)'
