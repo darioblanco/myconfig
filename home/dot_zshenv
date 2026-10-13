@@ -1,0 +1,19 @@
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export EDITOR=nvim
+export VISUAL=nvim
+
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+
+typeset -U path
+path=(
+  "$HOME/.local/bin"
+  "$HOME/.cargo/bin"
+  "$HOME/fvm/default/bin"
+  "$HOME/.pub-cache/bin"
+  "$ANDROID_HOME/platform-tools"
+  "$ANDROID_HOME/emulator"
+  "$ANDROID_HOME/cmdline-tools/latest/bin"
+  "${KREW_ROOT:-$HOME/.krew}/bin"
+  $path
+)

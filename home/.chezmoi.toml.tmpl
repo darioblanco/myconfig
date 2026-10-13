@@ -1,0 +1,15 @@
+{{- /* Answers are stored locally in ~/.config/chezmoi/chezmoi.toml, never in this repo. */ -}}
+{{- $name := promptStringOnce . "name" "Full name for git commits" -}}
+{{- $email := promptStringOnce . "email" "Personal git email" -}}
+{{- $workEmail := promptStringOnce . "workEmail" "Work git email (leave empty to skip)" "" -}}
+{{- $workDir := promptStringOnce . "workDir" "Directory holding work repos" "~/Code/work" -}}
+sourceDir = {{ .chezmoi.workingTree | quote }}
+
+[data]
+  name = {{ $name | quote }}
+  email = {{ $email | quote }}
+  workEmail = {{ $workEmail | quote }}
+  workDir = {{ $workDir | quote }}
+
+[diff]
+  pager = "delta"

@@ -1,27 +1,34 @@
 .DEFAULT_GOAL := help
 SHELL := /usr/bin/env bash
-MAKEFLAGS += --no-builtin-rules
-MAKEFLAGS += --no-builtin-variables
 
-.PHONY: format help init install
-
-format: init ## format yaml and json files
-	prettier --write "**/*.{json,yaml,yml}"
+.PHONY: help install brew apply diff update defaults check
 
 help: ## list available commands
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-12s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-init: ## verify that all the required commands are already installed
-	@if [ -z "$$CI" ]; then \
-		function cmd { \
-			if ! command -v "$$1" &>/dev/null ; then \
-				echo "error: missing required command in PATH: $$1" >&2 ;\
-				return 1 ;\
-			fi \
-		} ;\
-		cmd prettier ;\
-		cp .githooks/* .git/hooks/ ;\
-	fi
+install: ## bootstrap the machine (idempotent)
+	./bootstrap.sh
 
-install: ## start bootstrapping process
-	./install.sh
+brew: ## install everything in the Brewfile
+	brew bundle --file=Brewfile
+
+apply: ## apply dotfiles to $HOME
+	chezmoi apply --verbose
+
+diff: ## show what `apply` would change in $HOME
+	chezmoi diff
+
+update: ## upgrade packages and toolchains
+	brew update && brew bundle --file=Brewfile --upgrade
+	mise upgrade --yes
+	rustup update
+	uv python upgrade
+
+defaults: ## apply macOS defaults
+	./macos/defaults.sh
+
+check: ## lint scripts and configs
+	shellcheck bootstrap.sh macos/*.sh
+	shfmt -d bootstrap.sh macos/*.sh
+	actionlint
+	ghostty +validate-config --config-file=home/dot_config/ghostty/config

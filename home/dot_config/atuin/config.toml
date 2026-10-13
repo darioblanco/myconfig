@@ -1,0 +1,9 @@
+# Local-only history: sync is off unless you log in with `atuin login`.
+auto_sync = false
+update_check = false
+search_mode = "fuzzy"
+filter_mode_shell_up_key_binding = "directory"
+style = "compact"
+inline_height = 20
+enter_accept = false
+secrets_filter = true

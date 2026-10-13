@@ -1,31 +1,66 @@
 # myconfig
 
-My personal configuration for a macOS programming environment. This repository offers a set of
-scripts that can be run idempotently to bootstrap a macOS machine from scratch, getting it ready
-for development.
+Reproducible macOS setup for terminal-first, agent-assisted development
+(iOS/Android/Flutter, Python, Go, Rust, Node, Kubernetes, Terraform).
+Everything is idempotent: re-run it whenever you like.
 
-Before running the bootstrap scripts, make sure you know what you are doing.
-Even if applying it will not destroy your system, applications installed with this automation script
-might not be what you need, or you could misconfigure your current environment.
-I suggest you alter the configuration files in a fork from this repo.
+## Bootstrap a new Mac
 
-## Bootstrap your Mac
+```sh
+xcode-select --install          # Command Line Tools
+git clone https://github.com/darioblanco/myconfig ~/Code/darioblanco/myconfig
+cd ~/Code/darioblanco/myconfig
+make install                    # or: ./bootstrap.sh --defaults
+```
 
-Steps to be done in a brand new Macbook (tested with `macOS Ventura`):
+`chezmoi` asks for your name, emails and work directory the first time and stores the
+answers in `~/.config/chezmoi/chezmoi.toml`. **No personal data lives in this repository.**
 
-1. Run `git --version` in a Terminal. There will be a prompt to install the Command Line Developer Tools.
-2. Configure your SSH key in `~/.ssh` or your PAT if you will clone via HTTPs.
-3. `git clone git@github.com:darioblanco/myconfig.git`
-4. `cd myconfig`
-5. `make install`. Sudo password might be prompted to install certain tools.
+Manual steps that need an Apple ID, sudo or a GUI:
 
-## Components
+- Xcode: `xcodes install <version> --experimental-unxip`, then
+  `sudo xcodebuild -license accept && xcodebuild -runFirstLaunch && xcodebuild -downloadPlatform iOS`
+- Android Studio: open it once to install the SDK, emulator and command-line tools, then `flutter doctor --android-licenses`
+- Casks shipped as `.pkg` (they prompt for your password): `make brew`
 
-- `install.sh`: install essential packages, fonts, programming language dependencies and macOS applications.
-- `utils.sh`: common functions used in the bootstrap scripts.
+## Layout
 
-## Development
+| Path | What |
+|---|---|
+| `Brewfile` | CLI tools, apps, fonts, Mac App Store apps |
+| `bootstrap.sh` | Installs Homebrew, the Brewfile, dotfiles and toolchains |
+| `home/` | chezmoi source for `$HOME` (zsh, git, ssh, Ghostty, Starship, mise, Atuin) |
+| `macos/defaults.sh` | Finder, Dock, keyboard and trackpad defaults |
 
-To develop over this repository, run `make init` to see if you satisfy all the requirements:
+## Toolchain choices
 
-- `prettier` is needed for autoformatting JSON and YAML files. You can install it in MacOS with `brew install prettier`.
+| Need | Tool |
+|---|---|
+| Shell | zsh + zinit (a few oh-my-zsh snippets), Starship, Atuin, zoxide, fzf |
+| Node, Go, Java | `mise` (honors `.nvmrc`, `.go-version`, `mise.toml`) |
+| Python | `uv` |
+| Rust | `rustup` |
+| Flutter | `fvm` (per-project `.fvmrc`) |
+| Terraform / OpenTofu | `tenv` (per-project `.terraform-version`) |
+| Containers | Apple `container` + `container-compose` |
+| Kubernetes | kubectl + kubecolor, k9s, kubectx/kubens, stern, krew, Freelens |
+
+## Agentic development with Ghostty
+
+- One agent per git worktree: `cw <name>` runs `claude --worktree <name>`.
+- One Ghostty tab per task; split it (`cmd+d` / `cmd+shift+d`) into agent, `lazygit` and a
+  dev-server or test pane. Move between panes with `cmd+alt+h/j/k/l`, zoom with `cmd+shift+enter`.
+- Ghostty notifies when a long command finishes in an unfocused pane, so you know when an
+  agent is waiting.
+- `` cmd+` `` toggles a system-wide quick terminal.
+- For durable, budgeted background agents use [pulpo](https://github.com/darioblanco/pulpo):
+  `pulpo spawn <name> --workdir . -- claude -p "..."`, then `pulpo ui` or `pulpo usage --scan`.
+
+## Maintenance
+
+```sh
+make update   # brew, mise, rustup, uv
+make diff     # preview dotfile changes
+make apply    # apply dotfiles
+make check    # lint
+```

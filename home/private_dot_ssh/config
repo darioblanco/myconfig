@@ -1,0 +1,10 @@
+# Private hosts live in ~/.ssh/config.d/ (not tracked).
+Include ~/.ssh/config.d/*
+
+# Use the Bitwarden desktop SSH agent when it is running.
+Match host * exec "test -S ~/.bitwarden-ssh-agent.sock"
+	IdentityAgent ~/.bitwarden-ssh-agent.sock
+
+Host *
+	AddKeysToAgent yes
+	ServerAliveInterval 60

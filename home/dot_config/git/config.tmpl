@@ -1,0 +1,69 @@
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
+{{- if .workEmail }}
+
+# Repos under the work directory commit with the work identity.
+[includeIf "gitdir:{{ .workDir | trimSuffix "/" }}/"]
+	path = ~/.config/git/work
+{{- end }}
+[include]
+	# Machine-specific overrides (signing keys, etc.). Not tracked.
+	path = ~/.config/git/local
+[init]
+	defaultBranch = main
+[core]
+	pager = delta
+	editor = nvim
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+[merge]
+	conflictStyle = zdiff3
+[diff]
+	algorithm = histogram
+	colorMoved = default
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+[fetch]
+	prune = true
+[rebase]
+	autoStash = true
+	updateRefs = true
+[rerere]
+	enabled = true
+[branch]
+	sort = -committerdate
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !gh auth git-credential
+[alias]
+	co = checkout
+	cob = checkout -b
+	st = status -sb
+	amend = commit --amend --no-edit
+	graph = log --all --graph --decorate --oneline -n30
+	diffc = diff --cached
+	unstage = restore --staged
+	wt = worktree
+	# Remove local branches already merged into the default branch.
+	clean-merged = "!git branch --merged \"$(git symbolic-ref --short refs/remotes/origin/HEAD | cut -d/ -f2)\" | grep -vE '^\\*|^\\+' | xargs -r git branch -d"
+	# Conventional commits: `git feat "add x"` or `git fix -s router "fix y"`.
+	cc = "!f() { t=$1; shift; if [ \"$1\" = -s ]; then s=$2; shift 2; git commit -m \"$t($s): $*\"; else git commit -m \"$t: $*\"; fi; }; f"
+	build = !git cc build
+	chore = !git cc chore
+	ci = !git cc ci
+	docs = !git cc docs
+	feat = !git cc feat
+	fix = !git cc fix
+	perf = !git cc perf
+	refactor = !git cc refactor
+	style = !git cc style
+	test = !git cc test

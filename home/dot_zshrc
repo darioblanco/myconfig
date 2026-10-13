@@ -1,0 +1,69 @@
+# ── History ───────────────────────────────────────────────────────────────────
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+setopt extended_history hist_ignore_all_dups hist_ignore_space share_history
+setopt auto_cd interactive_comments no_beep
+
+# ── Plugins (zinit, installed by Homebrew) ───────────────────────────────────
+source "$HOMEBREW_PREFIX/opt/zinit/zinit.zsh"
+
+# Selected oh-my-zsh pieces, without the framework.
+zinit snippet OMZL::git.zsh
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo            # Esc Esc prefixes the last command with sudo
+zinit snippet OMZP::kubectl
+
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+zinit light zdharma-continuum/fast-syntax-highlighting   # keep last
+
+# ── Completion ────────────────────────────────────────────────────────────────
+fpath=("$HOMEBREW_PREFIX/share/zsh/site-functions" $fpath)
+autoload -Uz compinit
+# Rebuild the completion dump at most once a day.
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then compinit; else compinit -C; fi
+zinit cdreplay -q
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+
+# ── Tools ─────────────────────────────────────────────────────────────────────
+eval "$(mise activate zsh)"
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"
+source <(fzf --zsh)
+
+# ── Aliases ───────────────────────────────────────────────────────────────────
+alias ls='eza --group-directories-first'
+alias ll='eza -l --git --group-directories-first'
+alias la='eza -la --git --group-directories-first'
+alias lt='eza --tree --level=2'
+alias cat='bat --paging=never'
+alias vim='nvim'
+alias lg='lazygit'
+alias k='kubecolor'
+alias kx='kubectx'
+alias kn='kubens'
+alias tf='terraform'
+compdef kubecolor=kubectl
+
+# `y` opens yazi and cds into the last directory on exit.
+y() {
+  local tmp="$(mktemp -t yazi-cwd.XXXXXX)" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(<"$tmp")" && [[ -n "$cwd" && "$cwd" != "$PWD" ]]; then cd -- "$cwd"; fi
+  rm -f -- "$tmp"
+}
+
+# `cw <name>` starts Claude Code in its own git worktree.
+cw() { claude --worktree "$@"; }
+
+# ── Key bindings ──────────────────────────────────────────────────────────────
+bindkey -e
+bindkey '^U' backward-kill-line
+bindkey '^X^_' redo
+
+# Machine-specific settings and secrets. Not tracked.
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

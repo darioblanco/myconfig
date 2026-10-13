@@ -2,18 +2,35 @@ name: check
 
 on:
   push:
-    branch:
-      - master
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
 
 jobs:
-  shell:
-    name: shell
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Run shellcheck
-        uses: ludeeus/action-shellcheck@master
-        env:
-          SHELLCHECK_OPTS: -e SC1091
+      - uses: actions/checkout@v5
+      - name: shellcheck
+        run: shellcheck bootstrap.sh macos/*.sh
+      - name: actionlint
+        uses: raven-actions/actionlint@v2
+
+  privacy:
+    # This repo is public: fail if anything that looks like an email or a secret sneaks in.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
         with:
-          ignore: files
+          fetch-depth: 0
+      - name: no email addresses
+        run: |
+          if git grep -nIE '[[:alnum:]._%+-]+@[[:alnum:].-]+\.[[:alpha:]]{2,}' -- . ':!LICENSE'; then
+            echo "::error::Email-like strings found. Keep personal data in chezmoi prompts or untracked local files."
+            exit 1
+          fi
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
