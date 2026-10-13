@@ -35,6 +35,9 @@ rustup component add clippy rustfmt rust-analyzer
 step "mise tools (node, pnpm, bun, go, java)"
 mise install --yes
 
+step "gcloud components"
+gcloud components install gke-gcloud-auth-plugin -q
+
 step "Python (uv)"
 uv python install
 

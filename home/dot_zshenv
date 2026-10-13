@@ -15,5 +15,6 @@ path=(
   "$ANDROID_HOME/emulator"
   "$ANDROID_HOME/cmdline-tools/latest/bin"
   "${KREW_ROOT:-$HOME/.krew}/bin"
+  /opt/homebrew/share/google-cloud-sdk/bin
   $path
 )
