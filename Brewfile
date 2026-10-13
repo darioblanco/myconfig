@@ -27,7 +27,6 @@ brew "jq"
 brew "yq"
 brew "wget"
 brew "watch"
-brew "tree"
 cask "ghostty"
 
 # ── Dev tooling ────────────────────────────────────────────────────────────────
@@ -38,15 +37,9 @@ brew "chezmoi"           # dotfiles
 brew "mise"              # node, go, java, ruby... per-project versions + env
 brew "uv"                # python
 brew "rustup"
-brew "gnupg"
-brew "age"
-brew "sops"
 brew "shellcheck"
 brew "shfmt"
 brew "actionlint"
-brew "yamllint"
-brew "graphviz"
-brew "nmap"
 brew "darioblanco/tap/pulpo"   # durable, metered coding-agent sessions
 brew "ccusage"            # Claude / Codex usage and cost reports
 
@@ -63,12 +56,7 @@ brew "k9s"               # cluster TUI
 brew "stern"             # multi-pod logs
 brew "krew"              # kubectl plugins
 brew "helm"
-brew "kustomize"
 brew "kubeconform"
-brew "flux"
-brew "argocd"
-brew "kind"
-brew "hcloud"
 cask "gcloud-cli"
 cask "freelens"          # Kubernetes GUI (successor of Lens)
 
@@ -78,7 +66,6 @@ brew "xcodes"
 brew "aria2"             # faster xcodes downloads
 brew "fvm"               # flutter versions
 brew "cocoapods"
-brew "fastlane"
 cask "android-studio"
 
 # ── Editors & AI ──────────────────────────────────────────────────────────────

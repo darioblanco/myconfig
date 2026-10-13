@@ -51,7 +51,7 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 | Flutter | `fvm` (per-project `.fvmrc`), Xcode, Android Studio, CocoaPods, fastlane |
 | Containers | Apple `container` + `container-compose`, defaults in `~/.config/container/config.toml` |
 | Kubernetes | kubectl + kubecolor, k9s, kubectx/kubens, stern, krew, helm, Freelens |
-| Infrastructure | `tenv` (Terraform/OpenTofu per `.terraform-version`), tflint, gcloud |
+| Infrastructure | `tenv` (Terraform/OpenTofu per `.terraform-version`), gcloud |
 | Security | Secretive, Bitwarden, Little Snitch, Tailscale |
 
 ## Agentic development
