@@ -17,8 +17,12 @@ its exact commands for formatting, linting, type checks and tests.
 - Make failures visible: precise errors and useful logs. Never swallow exceptions.
 
 ## Tests
-- Red/green TDD: write the test, watch it fail, write just enough code to pass, then refactor.
-- Bug fixes start with a test that reproduces the bug.
+- Design code to be easy to test: logic separate from I/O, dependencies passed in at the
+  boundaries, small units. Hard-to-test code is a design problem, not a testing one.
+- Every behaviour change ships with its tests in the same change. Test-first is the default when
+  the behaviour is clear; writing the code first is fine while exploring, as long as the tests
+  exist before you're done. Bug fixes always start with a test that reproduces the bug.
+- Prove each new test can fail: it must fail when the behaviour is missing or broken.
 - Coverage stays at 100%. Exclude only single lines, each with an inline reason. Never lower the
   threshold, or delete, skip or weaken tests to get green; test behaviour, not mocks.
 - Before saying you're done, run the repo's format, lint, type-check and test commands, and

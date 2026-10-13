@@ -1,33 +1,41 @@
 ---
 name: tdd
-description: Red/green test-driven development with 100% coverage. Use whenever writing or changing production code (new features, bug fixes, refactors), and whenever someone asks for tests, coverage, or "TDD".
+description: Test-driven development with testable design and 100% coverage. Use whenever writing or changing production code (new features, bug fixes, refactors), and whenever someone asks for tests, coverage, or "TDD".
 ---
 
 # Test-driven development
 
-A test you never saw fail proves nothing: it may not exercise the code at all. Coverage is a
-floor, not a goal: it shows nothing important was left untested.
+The goal is code that is easy to test, tests that would catch a regression, and 100% coverage.
+Writing the test first is the usual way to get there, not a ritual: what matters is that every
+behaviour has a test that can fail.
+
+## Design for testability
+
+- Keep logic separate from I/O (network, database, filesystem, clock): pure functions or small
+  units in the middle, thin adapters at the edges.
+- Pass dependencies in at the boundaries instead of reaching for globals or singletons.
+- If something is hard to test, change the design rather than the test strategy.
 
 ## The loop
 
-1. **Test list.** Write down the behaviours to build, smallest first. Work through them one
-   test at a time; add new ones to the list instead of building them now.
-2. **Red.** Write the test for the next behaviour and run it. It must fail on an assertion
-   about the missing behaviour, not on an import error, typo or missing symbol. **Show the
-   failing assertion line** before writing any production code. If the test passes straight
-   away, the test is wrong or the behaviour already exists: fix the test first.
-3. **Green.** Write just enough code to make that test pass. No extra branches "while you're
-   there". Run the test, then the related suite.
-4. **Refactor.** With everything green, improve names and structure, and run the tests again.
-   If there's nothing worth changing, say "nothing to refactor" rather than skipping silently.
-   Refactors change no behaviour, so they go in their own commit.
-5. When the list is done, run the full suite and the coverage report.
+1. **Test list.** Write down the behaviours to build, smallest first. Work through them one at
+   a time; add new ideas to the list instead of building them now.
+2. **Test first when the behaviour is clear.** Write the test, run it, and show the failing
+   assertion (a failing assertion, not an import error or missing symbol). Then write just
+   enough code to pass.
+3. **Code first while exploring.** When the shape isn't clear yet, spike the code, then write
+   the tests before moving on. Prove each one can fail: break the behaviour briefly (flip a
+   condition, return early), confirm the test fails, restore it.
+4. **Refactor** with everything green. If there's nothing worth changing, say so. Refactors go
+   in their own commit.
+5. During the loop run only the targeted tests; run the full suite and the coverage report
+   once at the end.
 
 ## Bug fixes
 
-Write a test that reproduces the bug and show it failing before touching the code. The test
-stays as a regression guard. If you can't reproduce it in a test, find the root cause first
-(the `systematic-debugging` skill) instead of guessing at a fix.
+Always test first: reproduce the bug in a failing test before touching the code, and keep the
+test as a regression guard. If you can't reproduce it, find the root cause first (the
+`systematic-debugging` skill).
 
 ## Tests that mean something
 
@@ -36,8 +44,6 @@ stays as a regression guard. If you can't reproduce it in a test, find the root 
   what a mock did instead of what the code produced.
 - One reason to fail, a name that says what broke, no logic in the test, deterministic (no
   sleeps, real time, unseeded randomness or ordering assumptions), clean output.
-- For critical logic, check the test can catch a bug: briefly break the code (flip a condition,
-  return early), confirm the test fails, then restore it.
 
 ## Coverage policy
 
