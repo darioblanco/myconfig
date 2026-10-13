@@ -22,7 +22,7 @@ policy='{
       "git fetch *", "git pull *", "git push *",
       "kubectl *", "kubecolor *", "helm *", "stern *",
       "container *", "container-compose *",
-      "pnpm *"
+      "pnpm install*", "pnpm i *", "pnpm add *", "pnpm update*", "pnpm up *", "pnpm remove *"
     ],
 
     "filesystem": {
@@ -35,9 +35,13 @@ policy='{
         "~/.ssh", "~/.gnupg", "~/.config/gcloud", "~/.kube", "~/.config/gh", "~/.docker",
         "~/.aws", "~/.azure", "~/.terraform.d", "~/.terraformrc", "~/.npmrc", "~/.pypirc",
         "~/.netrc", "~/.git-credentials", "~/.cargo/credentials.toml", "~/.gradle/gradle.properties",
-        "~/.codex/auth.json", "~/.pi/agent/auth.json",
-        "~/.zsh_history", "~/.local/share/atuin",
-        "~/Library/Keychains", "~/Library/Application Support/Bitwarden"
+        "~/.codex/auth.json", "~/.pi/agent/auth.json", "~/.config/sops", "~/.m2/settings.xml",
+        "~/.android/adbkey", "~/.config/chezmoi", "~/.claude.json", "~/.claude/projects",
+        "~/.codex/sessions", "~/.zsh_history", "~/.local/share/atuin",
+        "~/Library/Keychains", "~/Library/Cookies", "~/Library/Application Support/Bitwarden",
+        "~/Library/Application Support/Google/Chrome", "~/Library/Application Support/Firefox",
+        "~/Library/Application Support/Slack", "~/Library/Application Support/Signal",
+        "~/Library/Application Support/discord"
       ]
     },
 
@@ -76,18 +80,41 @@ policy='{
       "Read(~/.terraform.d/**)", "Read(~/.terraformrc)", "Read(~/.npmrc)", "Read(~/.pypirc)",
       "Read(~/.netrc)", "Read(~/.git-credentials)", "Read(~/.cargo/credentials.toml)",
       "Read(~/.gradle/gradle.properties)", "Read(~/.codex/auth.json)", "Read(~/.pi/agent/auth.json)",
-      "Read(~/.zsh_history)", "Read(~/.local/share/atuin/**)",
+      "Read(~/.zsh_history)", "Read(~/.local/share/atuin/**)", "Read(~/.config/sops/**)",
+      "Read(~/.m2/settings.xml)", "Read(~/.android/adbkey*)", "Read(~/.config/chezmoi/**)",
+      "Read(~/.claude.json)", "Read(~/.claude/projects/**)", "Read(~/.codex/sessions/**)",
+      "Read(~/Library/Cookies/**)",
       "Read(~/Library/Keychains/**)", "Read(~/Library/Application Support/Bitwarden/**)",
       "Read(//**/.env)", "Read(//**/.env.local)", "Read(//**/.env.*.local)",
       "Read(//**/.env.production)", "Read(//**/*service-account*.json)",
       "Read(//**/*credentials*.json)", "Read(//**/key.properties)", "Read(//**/*.jks)",
-      "Read(//**/*.keystore)", "Read(//**/*.p8)"
+      "Read(//**/*.keystore)", "Read(//**/*.p8)",
+      "Edit(~/.local/bin/**)", "Edit(~/.zshrc*)", "Edit(~/.zshenv)", "Edit(~/.zprofile)",
+      "Edit(~/.config/git/**)",
+      "Bash(gh gist *)", "Bash(gh ssh-key *)", "Bash(gh gpg-key *)", "Bash(gh auth token*)",
+      "Bash(gh alias set *)", "Bash(gh extension install *)",
+      "Bash(tailscale *)", "Bash(*Tailscale.app*)"
     ],
     "ask": [
       "Bash(terraform apply*)", "Bash(terraform destroy*)", "Bash(terraform import*)",
       "Bash(kubectl apply*)", "Bash(kubectl delete*)", "Bash(kubectl patch*)", "Bash(kubectl edit*)",
       "Bash(kubectl scale*)", "Bash(kubectl rollout*)", "Bash(helm install*)", "Bash(helm upgrade*)",
       "Bash(helm uninstall*)", "Bash(gcloud * delete*)", "Bash(gcloud * create*)",
+      "Bash(kubectl exec*)", "Bash(kubectl cp*)", "Bash(kubectl create*)", "Bash(kubectl run*)",
+      "Bash(kubectl replace*)", "Bash(kubectl drain*)", "Bash(kubectl set*)",
+      "Bash(kubectl port-forward*)", "Bash(kubectl *--kubeconfig*)",
+      "Bash(kubecolor apply*)", "Bash(kubecolor delete*)", "Bash(kubecolor patch*)",
+      "Bash(kubecolor edit*)", "Bash(kubecolor scale*)", "Bash(kubecolor rollout*)",
+      "Bash(kubecolor exec*)", "Bash(kubecolor *--kubeconfig*)",
+      "Bash(helm rollback*)", "Bash(helm plugin *)",
+      "Bash(gcloud secrets *)", "Bash(gcloud auth print-*)", "Bash(gcloud storage cp*)",
+      "Bash(gcloud compute ssh*)",
+      "Bash(gh api *-X *)", "Bash(gh api *--method *)", "Bash(gh api *--input*)",
+      "Bash(gh secret *)", "Bash(gh repo create*)", "Bash(gh release upload*)",
+      "Bash(container run *-v *)", "Bash(container run *--volume*)", "Bash(container run *--mount*)",
+      "Bash(pnpm publish*)", "Bash(npm publish*)",
+      "Bash(git * --upload-pack*)", "Bash(git * --receive-pack*)", "Bash(git *ext::*)",
+      "Bash(git push --delete*)", "Bash(git push *:*)",
       "Bash(git push *--force*)", "Bash(git push * -f*)", "Bash(git push *+*)"
     ]
   }

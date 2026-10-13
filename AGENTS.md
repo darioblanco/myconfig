@@ -20,7 +20,9 @@ It is **public**. `CLAUDE.md` imports this file.
   except chezmoi's first-run questions and the sudo password in `macos/system.sh`.
 - **Don't weaken the security policy** in `home/dot_claude/modify_settings.json` (sandbox,
   credential denies, ask rules) without the owner asking. Adding a package registry to
-  `allowedDomains` is fine; removing a credential path or an ask rule is not.
+  `allowedDomains` is fine; removing a credential path or an ask rule is not. CI compares the
+  policy with `claude/policy-baseline.json`; after an approved change, refresh it with
+  `claude/policy-check.sh --update`.
 
 ## Where things go
 

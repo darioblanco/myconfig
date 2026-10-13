@@ -14,6 +14,9 @@
 [hook "strip-ai-trailers"]
 	event = commit-msg
 	command = {{ .chezmoi.homeDir }}/.local/bin/git-strip-ai-trailers
+# Never let a remote URL run local commands (ext::sh -c …).
+[protocol "ext"]
+	allow = never
 [init]
 	defaultBranch = main
 [core]

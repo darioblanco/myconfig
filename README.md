@@ -148,8 +148,14 @@ can reach the network. The setup removes what they could leak and limits where d
     needs the classifier's approval per command;
   - destructive infrastructure commands (`terraform apply`, `kubectl delete`, `helm upgrade`,
     force pushes…) always ask, even in auto mode;
-  - tools that can't run sandboxed (`gh`, `gcloud`, `terraform`, `kubectl`, `pnpm`, git network
-    commands, Apple `container`) are excluded and go through the normal permission flow.
+  - tools that can't run sandboxed (`gh`, `gcloud`, `terraform`, `kubectl`, `pnpm install`,
+    git network commands, Apple `container`) are excluded and go through the normal permission
+    flow, with deny or ask rules for their exfiltration paths (gists, `gh api` writes, volume
+    mounts, custom kubeconfigs, `ext::` remotes);
+  - CI fails if the policy loses a rule recorded in `claude/policy-baseline.json`, so weakening
+    it takes a deliberate two-file change.
+  - Accepted risk: package caches are writable from the sandbox so builds work, which means a
+    sandboxed command could tamper with a cached dependency.
 - **No AI attribution.** Claude Code's attribution is off, and a global git commit-msg hook
   strips AI co-author trailers in every repository.
 - **Supply chain.** pnpm refuses versions younger than a day and blocks dependency install
