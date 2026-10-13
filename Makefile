@@ -2,7 +2,7 @@
 SHELL := /usr/bin/env bash
 SCRIPTS := bootstrap.sh macos/*.sh claude/*.sh home/dot_local/bin/executable_* home/dot_claude/modify_* home/dot_codex/modify_*
 
-.PHONY: help install system brew apply diff update defaults awake sleep check
+.PHONY: help install system brew apply diff update defaults awake sleep lint check
 
 help: ## list available commands
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-12s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -39,10 +39,12 @@ sleep: ## restore normal sleep
 	sudo pmset -a disablesleep 0
 	@pmset -g | grep -i sleepdisabled
 
-check: ## lint scripts and configs
+lint: ## lint scripts, workflows and the Claude policy (what CI runs)
 	shellcheck $(SCRIPTS)
 	shfmt -d $(SCRIPTS)
 	actionlint
+	sh claude/policy-check.sh
+
+check: lint ## lint, plus Ghostty config and agent skills validation (needs the apps)
 	ghostty +validate-config --config-file=home/dot_config/ghostty/config
 	claude plugin validate home/dot_agents/skills
-	sh claude/policy-check.sh

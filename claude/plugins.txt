@@ -1,12 +1,17 @@
-# Claude Code plugins installed by bootstrap.sh (user scope). Format: plugin@marketplace <marketplace-repo>
-# Kept small on purpose: every skill description costs context in each session.
-# Skipped: security-guidance (sends each turn's diff to an Opus review: high token use),
-# pr-review-toolkit (duplicates the built-in /code-review; its agents cost context every session).
-dart-flutter@dart-flutter flutter/skills
-terraform@hashicorp hashicorp/agent-skills
+# Claude Code plugins installed by bootstrap.sh for every session (user scope).
+# Format: plugin@marketplace <marketplace-repo>. Kept small: anything here costs context in
+# every session. Language servers run out of process and cost no context.
 pyright-lsp@claude-plugins-official anthropics/claude-plugins-official
 typescript-lsp@claude-plugins-official anthropics/claude-plugins-official
-jdtls-lsp@claude-plugins-official anthropics/claude-plugins-official
 gopls-lsp@claude-plugins-official anthropics/claude-plugins-official
 rust-analyzer-lsp@claude-plugins-official anthropics/claude-plugins-official
-claude-security@claude-plugins-official anthropics/claude-plugins-official
+
+# Per-project plugins: not installed globally. Enable them only in the repositories that need
+# them, from inside the repository (local scope is stored in .claude/settings.local.json and
+# never committed):
+#   claude plugin marketplace add flutter/skills && claude plugin install dart-flutter@dart-flutter --scope local
+#   claude plugin marketplace add hashicorp/agent-skills && claude plugin install terraform@hashicorp --scope local
+#   claude plugin install claude-security@claude-plugins-official --scope local   # security reviews, due diligence
+#
+# Skipped: security-guidance (sends each turn's diff to an Opus review: high token use),
+# pr-review-toolkit (duplicates the built-in /code-review).

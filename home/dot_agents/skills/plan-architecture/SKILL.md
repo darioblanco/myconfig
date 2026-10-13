@@ -34,7 +34,7 @@ repository keeps plans.
 6. **Security and privacy.** Authentication, authorisation, secrets, personal or sensitive data,
    and what gets logged.
 7. **Test strategy.** Which behaviours get unit, integration or end-to-end tests, what runs
-   locally (containers, emulators, fakes), and how coverage stays at 100%.
+   locally (containers, emulators, fakes), and how coverage stays at the required threshold.
 8. **Steps.** Small, independently testable increments in order, each ending green.
 9. **Risks and open questions.**
 

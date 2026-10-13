@@ -31,7 +31,10 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 export PATH="/opt/homebrew/opt/rustup/bin:$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
 
 step "Brewfile"
-brew tap darioblanco/tap && brew trust darioblanco/tap
+# Homebrew refuses formulae from taps it doesn't trust; trust the ones the Brewfile declares.
+awk -F'"' '/^tap /{print $2}' "$repo/Brewfile" | while read -r tap; do
+	brew tap "$tap" && brew trust "$tap"
+done
 # Upgrades belong to `make update`. Casks shipped as .pkg ask for sudo, so a failure here
 # should not stop the rest.
 brew bundle --no-upgrade --file="$repo/Brewfile" ||
@@ -48,7 +51,7 @@ if have rustup; then
 	rustup component add clippy rustfmt rust-analyzer
 fi
 
-step "mise tools (node, pnpm, bun, go, java)"
+step "mise tools (node, pnpm, go, java)"
 if have mise; then mise install --yes; fi
 
 step "Flutter (fvm)"

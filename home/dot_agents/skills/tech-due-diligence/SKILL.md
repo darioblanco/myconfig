@@ -1,5 +1,6 @@
 ---
 name: tech-due-diligence
+disable-model-invocation: true
 description: Run a technical due diligence on a codebase or engineering organisation and write an evidence-based report. Use when asked for a due diligence, a technical assessment of a company, product or acquisition target, or a health check of an unfamiliar system.
 ---
 
@@ -16,12 +17,12 @@ Separate what you observed from what you conclude.
   confidential.
 - Work read-only on the target: no commits, pushes, issues or changes to their systems. Never
   copy secrets into notes or the report; note that one exists and where.
-- Work in a dedicated directory with the repositories cloned under it. For architecture and
-  inventory, the `code-modernization` plugin helps, but it is heavy (hooks on every prompt), so
-  enable it only for that directory and remove it afterwards:
-  `claude plugin install code-modernization@claude-plugins-official --scope local` and
-  `claude plugin uninstall code-modernization@claude-plugins-official --scope local`.
-  Ask me to run these; don't install it globally.
+- Work in a dedicated directory with the repositories cloned under it. Two plugins help but are
+  heavy, so enable them only for that directory and remove them afterwards: `claude-security`
+  (whole-codebase vulnerability scan) and `code-modernization` (inventory and architecture
+  map). Ask me to run, inside the directory,
+  `claude plugin install <name>@claude-plugins-official --scope local`, and the matching
+  `claude plugin uninstall … --scope local` at the end. Don't install them globally.
 
 ## Order of work
 

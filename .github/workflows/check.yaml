@@ -8,32 +8,16 @@ on:
 permissions:
   contents: read
 
-env:
-  SCRIPTS: bootstrap.sh macos/*.sh claude/*.sh home/dot_local/bin/executable_* home/dot_claude/modify_* home/dot_codex/modify_*
-
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - name: shellcheck
-        run: |
-          # shellcheck disable=SC2086 # word-splitting the file list is intended
-          shellcheck $SCRIPTS
-      - name: actionlint
-        uses: raven-actions/actionlint@3d39aea434753780c3b3d4a1a31c854b4dbf49d7 # v2.2.0
-
   macos:
-    # Exercise the parts of the bootstrap that can run on a clean macOS runner.
+    # Lint, then exercise the parts of the bootstrap that can run on a clean macOS runner.
     runs-on: macos-15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: install tools
-        run: brew install chezmoi jq shfmt
-      - name: shfmt
-        run: |
-          # shellcheck disable=SC2086 # word-splitting the file list is intended
-          shfmt -d $SCRIPTS
+        run: brew install chezmoi jq shfmt shellcheck actionlint
+      - name: lint
+        run: make lint
       - name: Brewfile parses
         run: brew bundle list --file=Brewfile --all >/dev/null
       - name: dotfiles render
@@ -49,8 +33,6 @@ jobs:
             sh home/dot_claude/modify_settings.json |
             jq -e '.enabledPlugins["a@b"] and .sandbox.enabled and (.hooks | has("SessionStart"))
                    and .attribution.commit == ""'
-      - name: Claude policy not weakened
-        run: sh claude/policy-check.sh
       - name: Claude settings merge is idempotent
         run: |
           once=$(echo '{}' | sh home/dot_claude/modify_settings.json)

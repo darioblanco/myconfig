@@ -48,13 +48,13 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 |---|---|
 | Terminal | Ghostty, zsh + zinit, Starship, Atuin, zoxide, fzf, eza, bat, ripgrep, lazygit, yazi |
 | Agent sessions | herdr (agent-aware multiplexer inside Ghostty), pulpo (background agents), mosh |
-| Coding agents | Claude Code (native installer), Codex, pi; Claude plugins in `claude/plugins.txt` |
+| Coding agents | Claude Code (native installer), Codex, pi; Claude plugins in `claude/plugins.txt` (language servers globally, Flutter/Terraform/security plugins per repository) |
 | Node, Go, Java | `mise` (honors `.nvmrc`, `.go-version`, `mise.toml`) |
 | Python | `uv` |
 | Rust | `rustup` |
 | Flutter | `fvm` (per-project `.fvmrc`, global stable), Xcode, Android Studio, CocoaPods |
 | Containers | Apple `container` + `container-compose`, defaults in `~/.config/container/config.toml` |
-| Kubernetes | kubectl + kubecolor, k9s, kubectx/kubens, stern, krew, helm |
+| Kubernetes | kubectl + kubecolor, k9s, kubectx/kubens, stern, helm |
 | Infrastructure | `tenv` (Terraform/OpenTofu per `.terraform-version`), gcloud |
 | Security | Secretive, Bitwarden, Little Snitch, Tailscale |
 
@@ -91,10 +91,8 @@ bag.
 ## Agent rules and skills
 
 [`home/dot_agents/AGENTS.md`](home/dot_agents/AGENTS.md) is a short set of personal engineering
-rules loaded into every session: plan before non-trivial changes, smallest change and root cause
-first, testable design with 100% coverage and tests that are proven to fail, dependency health
-and supply-chain checks, local resources only, and parallel-agent etiquette. It only holds what
-the agents don't do by default and the harness can't enforce.
+rules loaded into every session. It holds only what the agents don't do by default and the
+settings, sandbox and hooks can't enforce.
 
 [`home/dot_agents/skills/`](home/dot_agents/skills) holds skills for occasional procedures. Only
 each skill's one-line description is in context until a task needs it.
@@ -118,7 +116,8 @@ They are written in the first person ("wait for my OK"), so read them and adapt 
 work. To try them (this replaces any existing `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`):
 
 ```sh
-git clone https://github.com/darioblanco/myconfig && cp -R myconfig/home/dot_agents ~/.agents
+git clone https://github.com/darioblanco/myconfig
+mkdir -p ~/.agents && cp -R myconfig/home/dot_agents/. ~/.agents/
 ln -sf ~/.agents/AGENTS.md ~/.claude/CLAUDE.md      # Claude Code
 ln -sf ~/.agents/AGENTS.md ~/.codex/AGENTS.md       # Codex (reads ~/.agents/skills natively)
 mkdir -p ~/.claude/skills && ln -sf ~/.agents/skills/*/ ~/.claude/skills/
@@ -187,7 +186,8 @@ Use `/sandbox` inside Claude Code to inspect or adjust the policy for a session.
 make update     # upgrade Homebrew packages, mise tools, Rust and Python
 make diff       # preview dotfile changes
 make apply      # apply dotfiles
-make check      # lint scripts and configs
+make lint       # what CI runs: shell, workflows, Claude policy
+make check      # lint plus Ghostty config and skills validation
 make help       # every target
 ```
 

@@ -12,7 +12,7 @@ enforced coverage *and* tests that fail when behaviour breaks.
 
 1. Find what exists: test runner, coverage config, CI workflow, how tests are run locally
    (Makefile, package scripts). Extend it rather than adding a second tool.
-2. Measure lines and branches, fail below the threshold (100% for my projects), and make the
+2. Measure lines and branches, fail below the required threshold, and make the
    same command run locally and in CI. Publish the report as a CI artifact.
 3. Exclusions are per line with a reason; whole-file exclusions only for generated code, listed
    in the config with a comment.

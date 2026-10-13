@@ -20,7 +20,6 @@ brew "lazygit"
 brew "yazi"              # file manager
 brew "herdr"             # agent-aware terminal multiplexer (runs inside Ghostty)
 brew "mosh"              # roaming SSH for phone access (Termius)
-brew "tmux"              # session backend for pulpo
 brew "neovim"
 brew "tlrc"              # tldr pages
 brew "jq"
@@ -54,7 +53,6 @@ brew "kubecolor"
 brew "kubectx"           # kubectx + kubens
 brew "k9s"               # cluster TUI
 brew "stern"             # multi-pod logs
-brew "krew"              # kubectl plugins
 brew "helm"
 brew "kubeconform"
 cask "gcloud-cli"
@@ -75,7 +73,6 @@ cask "claude"
 # Language servers for the Claude Code LSP plugins (rust-analyzer comes from rustup).
 brew "pyright"
 brew "typescript-language-server"
-brew "jdtls"
 brew "gopls"
 
 # ── Apps ──────────────────────────────────────────────────────────────────────

@@ -1,5 +1,4 @@
 export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
 export EDITOR=nvim
 export VISUAL=nvim
 
@@ -18,6 +17,5 @@ path=(
   "$ANDROID_HOME/platform-tools"
   "$ANDROID_HOME/emulator"
   "$ANDROID_HOME/cmdline-tools/latest/bin"
-  "${KREW_ROOT:-$HOME/.krew}/bin"
   $path
 )

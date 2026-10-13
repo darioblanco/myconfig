@@ -7,7 +7,7 @@ It is **public**. `CLAUDE.md` imports this file.
 
 - **No personal data.** Never commit names, email addresses, hostnames, machine names, IPs,
   usernames, employer or client names, internal URLs, tokens, keys, `authorized_keys` entries,
-  or paths that reveal any of them. Personal values are chezmoi prompts
+  or paths that reveal any of them (the LICENSE copyright line excepted). Personal values are chezmoi prompts
   (`home/.chezmoi.toml.tmpl`, answers stored only in `~/.config/chezmoi/chezmoi.toml`) or
   untracked local files (`~/.zshrc.local`, `~/.config/git/local`, `~/.ssh/config.d/`).
   CI fails on anything email-like and runs gitleaks.
@@ -34,7 +34,7 @@ It is **public**. `CLAUDE.md` imports this file.
 | Claude Code settings (sandbox, permissions, attribution) | `home/dot_claude/modify_settings.json`. It merges keys into `~/.claude/settings.json`; never replace that file wholesale |
 | A personal agent rule | `home/dot_agents/AGENTS.md` (read by Claude Code, Codex and pi through symlinks). Add a line only when an agent repeats a mistake, and only for what the harness (settings, sandbox, hooks) can't enforce and the models don't already do; one-off learnings belong in the agent's own memory |
 | A personal agent skill | `home/dot_agents/skills/<name>/SKILL.md`, plus `home/dot_claude/skills/symlink_<name>.tmpl` for Claude Code. Every description is in every session's context, so add one only when it earns it |
-| A Claude Code plugin | `claude/plugins.txt`. Add one only if it earns its context cost; avoid plugins whose hooks call a model on every turn |
+| A Claude Code plugin | `claude/plugins.txt`. Global only if it is needed in most sessions; otherwise document it there as a per-project `--scope local` install. Avoid plugins whose hooks call a model on every turn |
 | A sudo or one-time system step | `macos/system.sh` |
 | A macOS preference | `macos/defaults.sh` |
 | A new entry point | `Makefile` (with a `##` help comment) and the README |

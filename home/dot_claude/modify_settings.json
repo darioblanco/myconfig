@@ -8,6 +8,22 @@
 input="$(cat)"
 [ -n "$input" ] || input='{}'
 
+# Credential and private-data paths, listed once. Each becomes a sandbox read block and a deny
+# rule for Claude's file tools. A trailing slash marks a directory.
+secrets='[
+  "~/.ssh/", "~/.gnupg/", "~/.config/gcloud/", "~/.kube/", "~/.config/gh/", "~/.docker/",
+  "~/.aws/", "~/.azure/", "~/.terraform.d/", "~/.terraformrc", "~/.npmrc", "~/.pypirc",
+  "~/.netrc", "~/.git-credentials", "~/.cargo/credentials.toml", "~/.gradle/gradle.properties",
+  "~/.m2/settings.xml", "~/.config/sops/", "~/.android/adbkey",
+  "~/.codex/auth.json", "~/.pi/agent/auth.json", "~/.claude.json",
+  "~/.claude/projects/", "~/.codex/sessions/", "~/.config/chezmoi/",
+  "~/.zsh_history", "~/.local/share/atuin/",
+  "~/Library/Keychains/", "~/Library/Cookies/", "~/Library/Application Support/Bitwarden/",
+  "~/Library/Application Support/Google/Chrome/", "~/Library/Application Support/Firefox/",
+  "~/Library/Application Support/Slack/", "~/Library/Application Support/Signal/",
+  "~/Library/Application Support/discord/"
+]'
+
 policy='{
   "attribution": { "commit": "", "pr": "", "sessionUrl": false },
 
@@ -30,18 +46,6 @@ policy='{
         "~/Library/pnpm", "~/Library/Caches/pnpm", "~/.npm", "~/.cache/uv", "~/.pub-cache",
         "~/go/pkg/mod", "~/.cargo/registry", "~/.cargo/git", "~/.gradle/caches",
         "~/Library/Caches/CocoaPods"
-      ],
-      "denyRead": [
-        "~/.ssh", "~/.gnupg", "~/.config/gcloud", "~/.kube", "~/.config/gh", "~/.docker",
-        "~/.aws", "~/.azure", "~/.terraform.d", "~/.terraformrc", "~/.npmrc", "~/.pypirc",
-        "~/.netrc", "~/.git-credentials", "~/.cargo/credentials.toml", "~/.gradle/gradle.properties",
-        "~/.codex/auth.json", "~/.pi/agent/auth.json", "~/.config/sops", "~/.m2/settings.xml",
-        "~/.android/adbkey", "~/.config/chezmoi", "~/.claude.json", "~/.claude/projects",
-        "~/.codex/sessions", "~/.zsh_history", "~/.local/share/atuin",
-        "~/Library/Keychains", "~/Library/Cookies", "~/Library/Application Support/Bitwarden",
-        "~/Library/Application Support/Google/Chrome", "~/Library/Application Support/Firefox",
-        "~/Library/Application Support/Slack", "~/Library/Application Support/Signal",
-        "~/Library/Application Support/discord"
       ]
     },
 
@@ -75,16 +79,6 @@ policy='{
 
   "permissions": {
     "deny": [
-      "Read(~/.ssh/**)", "Read(~/.gnupg/**)", "Read(~/.config/gcloud/**)", "Read(~/.kube/**)",
-      "Read(~/.config/gh/**)", "Read(~/.docker/**)", "Read(~/.aws/**)", "Read(~/.azure/**)",
-      "Read(~/.terraform.d/**)", "Read(~/.terraformrc)", "Read(~/.npmrc)", "Read(~/.pypirc)",
-      "Read(~/.netrc)", "Read(~/.git-credentials)", "Read(~/.cargo/credentials.toml)",
-      "Read(~/.gradle/gradle.properties)", "Read(~/.codex/auth.json)", "Read(~/.pi/agent/auth.json)",
-      "Read(~/.zsh_history)", "Read(~/.local/share/atuin/**)", "Read(~/.config/sops/**)",
-      "Read(~/.m2/settings.xml)", "Read(~/.android/adbkey*)", "Read(~/.config/chezmoi/**)",
-      "Read(~/.claude.json)", "Read(~/.claude/projects/**)", "Read(~/.codex/sessions/**)",
-      "Read(~/Library/Cookies/**)",
-      "Read(~/Library/Keychains/**)", "Read(~/Library/Application Support/Bitwarden/**)",
       "Read(//**/.env)", "Read(//**/.env.local)", "Read(//**/.env.*.local)",
       "Read(//**/.env.production)", "Read(//**/*service-account*.json)",
       "Read(//**/*credentials*.json)", "Read(//**/key.properties)", "Read(//**/*.jks)",
@@ -120,11 +114,17 @@ policy='{
   }
 }'
 
-printf '%s' "$input" | /opt/homebrew/bin/jq --argjson policy "$policy" '
+jq=$(command -v jq || echo /opt/homebrew/bin/jq)
+# shellcheck disable=SC2016 # jq string interpolation, not shell
+printf '%s' "$input" | "$jq" --argjson policy "$policy" --argjson secrets "$secrets" '
   def merge($b):
     if (type == "object") and ($b | type == "object") then
       reduce ($b | keys_unsorted[]) as $k (.; .[$k] = (.[$k] | merge($b[$k])))
     elif (type == "array") and ($b | type == "array") then
       reduce $b[] as $x (.; if index([$x]) then . else . + [$x] end)
     else $b end;
-  merge($policy)'
+  ($policy
+    | .sandbox.filesystem.denyRead = [$secrets[] | rtrimstr("/")]
+    | .permissions.deny = [$secrets[] | if endswith("/") then "Read(\(.)**)" else "Read(\(.))" end]
+        + .permissions.deny) as $full
+  | merge($full)'

@@ -4,7 +4,6 @@
 [tools]
 node = "lts"
 pnpm = "latest"   # pnpm honors each repo's `packageManager` field
-bun = "latest"
 go = "latest"
 java = "temurin-17"   # Android Gradle Plugin / Flutter Android builds
 
