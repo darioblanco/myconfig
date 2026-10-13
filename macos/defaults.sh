@@ -41,5 +41,9 @@ defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 mkdir -p "$HOME/Pictures/Screenshots"
 defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots"
 
+# Reload input settings (trackpad, keyboard) without a logout, when the helper exists.
+activate=/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings
+[[ -x "$activate" ]] && "$activate" -u || true
+
 killall Finder Dock SystemUIServer 2>/dev/null || true
 echo "macOS defaults applied (some need a logout)."
