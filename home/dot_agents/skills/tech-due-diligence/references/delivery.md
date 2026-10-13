@@ -31,6 +31,30 @@ long-lived branches.
   that only work with a coordinated, all-at-once release are a red flag and often the real
   reason behind staging branches and release days.
 
+## Mobile apps
+
+App stores add two constraints: a shipped binary can't be rolled back, and old versions stay in
+use for months. Good teams stay trunk-based and add a release train on top.
+
+- **Development.** Small daily merges to `main`; unfinished features hidden behind remote
+  feature flags; every merge built and delivered to internal testers automatically.
+- **Release train.** A fixed cadence (weekly or fortnightly) that never waits for a feature.
+  Releases are a tag on `main` or a short-lived release branch for stabilisation, where fixes
+  land in `main` first and are cherry-picked over, and the branch is deleted after release.
+- **Build once.** The build testers approved is promoted through the store stages (TestFlight,
+  Play testing tracks) to production, never rebuilt.
+- **Rollout safety.** Staged or phased rollouts halted on crash-rate drops; remote kill
+  switches for risky features; a minimum-supported-version mechanism; over-the-air patching
+  where the stack allows it (for example Shorebird for Flutter) for urgent fixes only.
+- **Backend compatibility.** APIs stay compatible with the oldest supported app version
+  (additive or versioned changes, contract tests against old clients).
+- **Automation.** Signing, version numbers, release notes and store uploads are automated
+  (fastlane, Codemagic, Bitrise, Xcode Cloud…).
+
+Red flags: long-lived `develop` or `release` branches, manual builds or signing, rebuilding for
+production, no way to switch a feature off after release, backend changes that break older app
+versions.
+
 ## Operations
 
 - **Observability.** Logs, metrics, tracing, dashboards; whether alerts exist, who receives
