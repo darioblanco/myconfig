@@ -17,10 +17,10 @@ defaults write com.apple.dock static-only -bool true
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock show-recents -bool false
 
-# Keyboard: fast key repeat, no press-and-hold accents, no autocorrect quirks.
+# Keyboard: fast key repeat; keep press-and-hold accents (hold e → é); no auto-substitutions.
 defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool true
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
