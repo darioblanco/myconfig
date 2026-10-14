@@ -60,6 +60,23 @@ if have fvm; then
 	fvm global stable
 fi
 
+step "Android SDK"
+# Needs the licenses accepted once by a human (see README); after that this is idempotent.
+android_sdk="$HOME/Library/Android/sdk"
+if [[ -f "$android_sdk/licenses/android-sdk-license" ]] && have sdkmanager && have mise; then
+	JAVA_HOME="$(mise where java@temurin-17)" sdkmanager --sdk_root="$android_sdk" \
+		"cmdline-tools;latest" "platform-tools" "emulator" "platforms;android-36" \
+		"build-tools;36.1.0" "system-images;android-36;google_apis;arm64-v8a" >/dev/null
+	avdmanager="$android_sdk/cmdline-tools/latest/bin/avdmanager"
+	if ! JAVA_HOME="$(mise where java@temurin-17)" "$avdmanager" list avd -c | grep -qx pixel_api36; then
+		echo no | JAVA_HOME="$(mise where java@temurin-17)" "$avdmanager" create avd -n pixel_api36 \
+			-k "system-images;android-36;google_apis;arm64-v8a" -d pixel_8 >/dev/null
+	fi
+	echo "  SDK and emulator pixel_api36 ready"
+else
+	echo "  skipped: accept the Android SDK licenses first (see README)"
+fi
+
 step "Python (uv)"
 if have uv; then uv python install; fi
 
