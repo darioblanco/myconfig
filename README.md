@@ -74,8 +74,10 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 - **Background agents.** [pulpo](https://github.com/darioblanco/pulpo) runs agents as durable
   tmux sessions you can attach to: `pulpo spawn <name> --workdir . -- claude`.
 - **Usage.** `ccusage` (or `pulpo usage --scan`) reports token use and cost per agent and repo.
-- **Claude limits in the status line.** Every Claude Code session shows model, context use and
-  how much of the 5-hour and weekly plan limits is left.
+- **Claude limits.** Every Claude Code session's status line shows model, context use and how
+  much of the 5-hour and weekly plan limits is left. A SwiftBar menu-bar item (`✻ 94%`) shows
+  the same numbers outside Claude Code; open SwiftBar once and enable "Launch at login". The
+  numbers update while a Claude Code session runs; nothing leaves the Mac.
 
 ### Subscriptions, not API keys
 
