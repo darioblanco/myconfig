@@ -37,6 +37,9 @@ done
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
+# SwiftBar: load menu-bar plugins from the chezmoi-managed folder.
+defaults write com.ameba.SwiftBar PluginDirectory -string "$HOME/.config/swiftbar"
+
 # Screenshots in ~/Pictures/Screenshots.
 mkdir -p "$HOME/Pictures/Screenshots"
 defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots"
