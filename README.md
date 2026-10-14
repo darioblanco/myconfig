@@ -33,8 +33,9 @@ Then, in order (these need an Apple ID, sudo or a GUI):
    downloads the iOS platform, creates the `test` DNS domain for containers, and limits Remote
    Login to public keys. Add `MACHINE_NAME=<name>` to rename the Mac (also rename it in the
    Tailscale admin console).
-4. **Android.** Open Android Studio once and finish the setup wizard, then
-   `flutter doctor --android-licenses`.
+4. **Android.** Accept the SDK licenses once:
+   `sdkmanager --sdk_root="$HOME/Library/Android/sdk" --licenses`, then re-run `make install`.
+   It installs the SDK for Flutter's target API level and a `pixel_api36` emulator.
 5. **SSH keys.** Open Secretive and create this Mac's keys in the Secure Enclave. Add the public
    keys to GitHub and your servers. One key set per device; keys are never copied.
 6. **Remote access.** System Settings → General → Sharing → Remote Login. Put each device's

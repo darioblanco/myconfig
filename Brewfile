@@ -64,6 +64,7 @@ brew "aria2"             # faster xcodes downloads
 brew "fvm"               # flutter versions
 brew "cocoapods"
 cask "android-studio"
+cask "android-commandlinetools"   # sdkmanager / avdmanager for the bootstrap
 
 # ── Coding agents ─────────────────────────────────────────────────────────────
 # Claude Code itself uses Anthropic's native installer (auto-updates); see bootstrap.sh.
