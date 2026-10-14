@@ -1,7 +1,7 @@
 #!/bin/sh
 # Claude Code status line: model, directory, context use and how much of the 5-hour and weekly
 # plan limits is left. Also saves the limits to ~/.cache/claude-limits.json for the SwiftBar
-# menu-bar item (~/.config/swiftbar/claude-limits.1m.sh). Local only.
+# menu-bar item (~/.config/swiftbar/agents.1m.sh). Local only.
 input=$(cat)
 jq=$(command -v jq || echo /opt/homebrew/bin/jq)
 

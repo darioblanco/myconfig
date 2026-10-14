@@ -75,8 +75,9 @@ Then, in order (these need an Apple ID, sudo or a GUI):
   tmux sessions you can attach to: `pulpo spawn <name> --workdir . -- claude`.
 - **Usage.** `ccusage` (or `pulpo usage --scan`) reports token use and cost per agent and repo.
 - **Claude limits.** Every Claude Code session's status line shows model, context use and how
-  much of the 5-hour and weekly plan limits is left. A SwiftBar menu-bar item (`✻ 94%`) shows
-  the same numbers outside Claude Code; open SwiftBar once and enable "Launch at login". The
+  much of the 5-hour and weekly plan limits is left. A SwiftBar menu-bar item (`✻ 94%`, plus
+  `⏸2` when herdr agents are blocked on you) shows the same numbers outside Claude Code and
+  lists agents that need you, each a click away from focus in herdr; open SwiftBar once and enable "Launch at login". The
   numbers update while a Claude Code session runs; nothing leaves the Mac.
 
 ### Subscriptions, not API keys
