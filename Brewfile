@@ -80,6 +80,7 @@ brew "gopls"
 cask "bitwarden"
 cask "secretive"        # SSH keys in the Secure Enclave
 cask "raycast"
+cask "ubersicht"          # desktop widgets (Claude limits card)
 cask "tailscale-app"
 cask "logi-options+"
 cask "little-snitch"
