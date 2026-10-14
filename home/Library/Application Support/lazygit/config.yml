@@ -1,0 +1,7 @@
+# Render lazygit's diffs through delta (syntax highlighting, line numbers, word-level changes),
+# the same pager git uses (see ~/.config/git/config).
+git:
+  diffRenderers:
+    - type: stdinFilter
+      command: delta --paging=never
+      colorArg: always

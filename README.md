@@ -173,7 +173,7 @@ Use `/sandbox` inside Claude Code to inspect or adjust the policy for a session.
 |---|---|
 | `Brewfile` | CLI tools, apps, fonts, Mac App Store apps |
 | `bootstrap.sh` | Homebrew, Brewfile, dotfiles, toolchains, Claude Code and plugins |
-| `home/` | chezmoi source for `$HOME`: zsh, git, ssh, Ghostty, Starship, mise, Atuin, container, Claude Code |
+| `home/` | chezmoi source for `$HOME`: zsh, git, ssh, Ghostty, Starship, mise, Atuin, lazygit, container, Claude Code |
 | `home/dot_agents/` | Personal agent rules and skills, shared by Claude Code, Codex and pi |
 | `claude/plugins.txt` | Claude Code plugins (kept small: each one costs context) |
 | `macos/system.sh` | One-time sudo setup: Xcode, container DNS, SSH server, machine name |
