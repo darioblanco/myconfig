@@ -30,9 +30,10 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 2. **Xcode.** `xcodes install <version> --experimental-unxip` (Apple ID + 2FA). Name the
    version; `--latest` can pick a release candidate.
 3. **System setup.** `make system` (sudo): selects the newest Xcode, accepts its license,
-   downloads the iOS platform, creates the `test` DNS domain for containers, and limits Remote
-   Login to public keys. Add `MACHINE_NAME=<name>` to rename the Mac (also rename it in the
-   Tailscale admin console).
+   downloads the iOS platform, installs Rosetta, creates the `test` DNS domain for containers,
+   and limits Remote Login to public keys. Add `MACHINE_NAME=<name>` to rename the Mac (also
+   rename it in the Tailscale admin console). Then re-run `make install` to create the Colima
+   VM, which needs Rosetta for amd64 images.
 4. **Android.** Accept the SDK licenses once:
    `sdkmanager --sdk_root="$HOME/Library/Android/sdk" --licenses`, then re-run `make install`.
    It installs the SDK for Flutter's target API level and a `pixel_api36` emulator.
@@ -55,7 +56,7 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 | Python | `uv` |
 | Rust | `rustup` |
 | Flutter | `fvm` (per-project `.fvmrc`, global stable), Xcode, Android Studio, CocoaPods |
-| Containers | Apple `container` + `container-compose`, defaults in `~/.config/container/config.toml` |
+| Containers | Colima (VM with 4 CPUs, 8 GB, sharing only `~/Code`, started at login) + Docker CLI, Compose and Buildx; Apple `container` + `container-compose` (defaults in `~/.config/container/config.toml`) |
 | Kubernetes | kubectl + kubecolor, k9s, kubectx/kubens, stern, helm |
 | Infrastructure | `tenv` (Terraform/OpenTofu per `.terraform-version`), gcloud, Cloudflare `cf` |
 | Security | Secretive, Bitwarden, Little Snitch, Tailscale |
@@ -159,9 +160,12 @@ can reach the network. The setup removes what they could leak and limits where d
     `enableWeakerNetworkIsolation` lets Go tools verify TLS. Trade-off: sandboxed commands can
     read that token, so the gist, key-upload and `gh api` write rules are what limit its misuse;
   - tools that can't run sandboxed (`gh`, `gcloud`, `terraform`, `kubectl`, `pnpm install`,
-    git network commands, Apple `container`) are excluded and go through the normal permission
-    flow, with deny or ask rules for their exfiltration paths (gists, `gh api` writes, volume
-    mounts, custom kubeconfigs, `ext::` remotes);
+    git network commands, Apple `container`, Docker and Colima) are excluded and go through the
+    normal permission flow, with deny or ask rules for their exfiltration paths (gists, `gh api`
+    writes, volume mounts, `docker cp`/`push`/`login`, custom kubeconfigs, `ext::` remotes);
+  - Colima shares only `~/Code` with containers, so a compose file can't mount `~/.ssh` or other
+    credentials. Accepted risk: containers' own network traffic doesn't go through the sandbox
+    proxy, and `docker build` can read any folder given as its build context;
   - CI fails if the policy loses a rule recorded in `claude/policy-baseline.json`, so weakening
     it takes a deliberate two-file change.
   - Accepted risk: package caches are writable from the sandbox so builds work, which means a
@@ -184,10 +188,10 @@ Use `/sandbox` inside Claude Code to inspect or adjust the policy for a session.
 |---|---|
 | `Brewfile` | CLI tools, apps, fonts, Mac App Store apps |
 | `bootstrap.sh` | Homebrew, Brewfile, dotfiles, toolchains, Claude Code and plugins |
-| `home/` | chezmoi source for `$HOME`: zsh, git, ssh, Ghostty, Starship, mise, Atuin, lazygit, container, Claude Code |
+| `home/` | chezmoi source for `$HOME`: zsh, git, ssh, Ghostty, Starship, mise, Atuin, lazygit, container, Docker, Claude Code |
 | `home/dot_agents/` | Personal agent rules and skills, shared by Claude Code, Codex and pi |
 | `claude/plugins.txt` | Claude Code plugins (kept small: each one costs context) |
-| `macos/system.sh` | One-time sudo setup: Xcode, container DNS, SSH server, machine name |
+| `macos/system.sh` | One-time sudo setup: Xcode, Rosetta, container DNS, SSH server, machine name |
 | `macos/defaults.sh` | Finder, Dock, keyboard and trackpad |
 | `AGENTS.md` | How coding agents should change this repo |
 

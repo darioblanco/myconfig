@@ -40,7 +40,7 @@ policy='{
       "gh *", "gcloud *", "terraform *",
       "git fetch *", "git pull *", "git push *",
       "kubectl *", "kubecolor *", "helm *", "stern *",
-      "container *", "container-compose *",
+      "container *", "container-compose *", "docker *", "docker-compose *", "colima *",
       "pnpm install*", "pnpm i *", "pnpm add *", "pnpm update*", "pnpm up *", "pnpm remove *"
     ],
 
@@ -110,6 +110,9 @@ policy='{
       "Bash(gh api *-X *)", "Bash(gh api *--method *)", "Bash(gh api *--input*)",
       "Bash(gh secret *)", "Bash(gh repo create*)", "Bash(gh release upload*)",
       "Bash(container run *-v *)", "Bash(container run *--volume*)", "Bash(container run *--mount*)",
+      "Bash(docker run *-v *)", "Bash(docker run *--volume*)", "Bash(docker run *--mount*)",
+      "Bash(docker create *-v *)", "Bash(docker create *--volume*)", "Bash(docker create *--mount*)",
+      "Bash(docker cp *)", "Bash(docker push *)", "Bash(docker login*)", "Bash(colima start *--mount*)",
       "Bash(pnpm publish*)", "Bash(npm publish*)",
       "Bash(git * --upload-pack*)", "Bash(git * --receive-pack*)", "Bash(git *ext::*)",
       "Bash(git push --delete*)", "Bash(git push *:*)",

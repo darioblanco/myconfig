@@ -45,6 +45,10 @@ brew "ccusage"            # Claude / Codex usage and cost reports
 # ── Containers ─────────────────────────────────────────────────────────────────
 brew "container"         # Apple's native Linux containers
 brew "container-compose" # docker-compose.yml on top of `container`
+brew "colima"            # Docker-compatible Linux VM, while `container` matures
+brew "docker"            # Docker CLI, talks to Colima
+brew "docker-compose"    # `docker compose` plugin
+brew "docker-buildx"     # `docker buildx` plugin (multi-platform builds)
 
 # ── Infrastructure & Kubernetes ────────────────────────────────────────────────
 brew "tenv"              # terraform / opentofu version manager (.terraform-version)
