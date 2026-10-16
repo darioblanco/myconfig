@@ -153,9 +153,10 @@ can reach the network. The setup removes what they could leak and limits where d
     needs the classifier's approval per command;
   - destructive infrastructure commands (`terraform apply`, `kubectl delete`, `helm upgrade`,
     force pushes…) always ask, even in auto mode;
-  - `gh` also works inside the sandbox (its config holds no token; the token stays in the
-    Keychain), so agents can use it in pipes; `enableWeakerNetworkIsolation` lets Go tools such
-    as `gh` verify TLS certificates there;
+  - `gh` and `git` work inside the sandbox with your GitHub token, but agents never see it: the
+    `claude` shell function passes the Keychain token as `GH_TOKEN`, sandboxed commands get a
+    placeholder, and the proxy swaps the real token in only on requests to GitHub
+    (`tlsTerminate`, experimental; `enableWeakerNetworkIsolation` lets Go tools verify TLS);
   - tools that can't run sandboxed (`gh`, `gcloud`, `terraform`, `kubectl`, `pnpm install`,
     git network commands, Apple `container`) are excluded and go through the normal permission
     flow, with deny or ask rules for their exfiltration paths (gists, `gh api` writes, volume

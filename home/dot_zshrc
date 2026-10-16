@@ -59,6 +59,10 @@ y() {
   rm -f -- "$tmp"
 }
 
+# Claude Code gets the GitHub token from the Keychain for its own session only; inside the
+# sandbox it is masked and injected by the proxy on requests to GitHub (see ~/.claude/settings.json).
+claude() { GH_TOKEN="$(gh auth token 2>/dev/null)" command claude "$@"; }
+
 # `cw <name>` starts Claude Code in its own git worktree.
 cw() { claude --worktree "$@"; }
 
