@@ -164,7 +164,8 @@ can reach the network. The setup removes what they could leak and limits where d
     normal permission flow, with deny or ask rules for their exfiltration paths (gists, `gh api`
     writes, volume mounts, `docker cp`/`push`/`login`, custom kubeconfigs, `ext::` remotes);
   - Colima shares only `~/Code` with containers, so a compose file can't mount `~/.ssh` or other
-    credentials. Containers' own network traffic doesn't go through the sandbox proxy;
+    credentials. Accepted risk: containers' own network traffic doesn't go through the sandbox
+    proxy, and `docker build` can read any folder given as its build context;
   - CI fails if the policy loses a rule recorded in `claude/policy-baseline.json`, so weakening
     it takes a deliberate two-file change.
   - Accepted risk: package caches are writable from the sandbox so builds work, which means a
