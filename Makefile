@@ -25,7 +25,7 @@ update: ## upgrade packages and toolchains
 	rustup update
 	uv python upgrade
 
-system: ## one-time sudo setup: Xcode, container DNS (MACHINE_NAME=Name to rename the Mac)
+system: ## one-time sudo setup: Xcode, Rosetta, container DNS (MACHINE_NAME=Name to rename the Mac)
 	./macos/system.sh
 
 defaults: ## apply macOS defaults (Finder, Dock, keyboard, trackpad)

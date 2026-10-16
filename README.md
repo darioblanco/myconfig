@@ -30,21 +30,19 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 2. **Xcode.** `xcodes install <version> --experimental-unxip` (Apple ID + 2FA). Name the
    version; `--latest` can pick a release candidate.
 3. **System setup.** `make system` (sudo): selects the newest Xcode, accepts its license,
-   downloads the iOS platform, creates the `test` DNS domain for containers, and limits Remote
-   Login to public keys. Add `MACHINE_NAME=<name>` to rename the Mac (also rename it in the
-   Tailscale admin console).
+   downloads the iOS platform, installs Rosetta, creates the `test` DNS domain for containers,
+   and limits Remote Login to public keys. Add `MACHINE_NAME=<name>` to rename the Mac (also
+   rename it in the Tailscale admin console). Then re-run `make install` to create the Colima
+   VM, which needs Rosetta for amd64 images.
 4. **Android.** Accept the SDK licenses once:
    `sdkmanager --sdk_root="$HOME/Library/Android/sdk" --licenses`, then re-run `make install`.
    It installs the SDK for Flutter's target API level and a `pixel_api36` emulator.
 5. **SSH keys.** Open Secretive and create this Mac's keys in the Secure Enclave. Add the public
    keys to GitHub and your servers. One key set per device; keys are never copied.
 6. **GitHub CLI.** `gh auth login --insecure-storage`, so agents can use `gh` inside the sandbox.
-7. **Docker (Colima).** Create the VM once, sharing only your code folder with containers:
-   `colima start --cpu 4 --memory 8 --vm-type vz --vz-rosetta --mount-type virtiofs --mount ~/Code:w`.
-   Later `colima start` reuses those settings; `brew services start colima` starts it at login.
-8. **Remote access.** System Settings → General → Sharing → Remote Login. Put each device's
+7. **Remote access.** System Settings → General → Sharing → Remote Login. Put each device's
    public key in `~/.ssh/authorized_keys` (one per line, `chmod 600`).
-9. **macOS preferences.** `make defaults`: Finder, Dock, keyboard and trackpad (tap to click,
+8. **macOS preferences.** `make defaults`: Finder, Dock, keyboard and trackpad (tap to click,
    drag lock, press-and-hold accents kept).
 
 ## What you get
@@ -58,7 +56,7 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 | Python | `uv` |
 | Rust | `rustup` |
 | Flutter | `fvm` (per-project `.fvmrc`, global stable), Xcode, Android Studio, CocoaPods |
-| Containers | Colima + Docker CLI, Compose and Buildx; Apple `container` + `container-compose` (defaults in `~/.config/container/config.toml`) |
+| Containers | Colima (VM with 4 CPUs, 8 GB, sharing only `~/Code`, started at login) + Docker CLI, Compose and Buildx; Apple `container` + `container-compose` (defaults in `~/.config/container/config.toml`) |
 | Kubernetes | kubectl + kubecolor, k9s, kubectx/kubens, stern, helm |
 | Infrastructure | `tenv` (Terraform/OpenTofu per `.terraform-version`), gcloud, Cloudflare `cf` |
 | Security | Secretive, Bitwarden, Little Snitch, Tailscale |
@@ -192,7 +190,7 @@ Use `/sandbox` inside Claude Code to inspect or adjust the policy for a session.
 | `home/` | chezmoi source for `$HOME`: zsh, git, ssh, Ghostty, Starship, mise, Atuin, lazygit, container, Docker, Claude Code |
 | `home/dot_agents/` | Personal agent rules and skills, shared by Claude Code, Codex and pi |
 | `claude/plugins.txt` | Claude Code plugins (kept small: each one costs context) |
-| `macos/system.sh` | One-time sudo setup: Xcode, container DNS, SSH server, machine name |
+| `macos/system.sh` | One-time sudo setup: Xcode, Rosetta, container DNS, SSH server, machine name |
 | `macos/defaults.sh` | Finder, Dock, keyboard and trackpad |
 | `AGENTS.md` | How coding agents should change this repo |
 

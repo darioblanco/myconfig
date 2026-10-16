@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # One-time system setup that needs sudo. Safe to re-run.
-#   ./macos/system.sh            Xcode + container DNS
+#   ./macos/system.sh            Xcode, Rosetta, container DNS
 #   MACHINE_NAME=Name ./macos/system.sh   also renames the Mac
 set -euo pipefail
 
@@ -27,6 +27,12 @@ if [[ -n "$xcode" ]]; then
 	fi
 else
 	echo "No Xcode found. Install one with: xcodes install <version> --experimental-unxip"
+fi
+
+# Colima runs amd64 images through Rosetta.
+if ! /usr/bin/arch -x86_64 /usr/bin/true 2>/dev/null; then
+	step "Rosetta"
+	sudo softwareupdate --install-rosetta --agree-to-license
 fi
 
 if command -v container >/dev/null 2>&1; then
