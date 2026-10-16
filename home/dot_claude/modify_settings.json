@@ -48,7 +48,7 @@ policy='{
       "allowWrite": [
         "~/Library/pnpm", "~/Library/Caches/pnpm", "~/.npm", "~/.cache/uv", "~/.pub-cache",
         "~/go/pkg/mod", "~/.cargo/registry", "~/.cargo/git", "~/.gradle/caches",
-        "~/Library/Caches/CocoaPods"
+        "~/Library/Caches/CocoaPods", "~/.cache/node/corepack"
       ]
     },
 
