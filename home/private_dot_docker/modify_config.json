@@ -1,0 +1,9 @@
+#!/bin/sh
+# chezmoi modify script: points the Docker CLI at Homebrew's plugins (compose, buildx) and keeps
+# everything else Docker and Colima write here (current context, registry logins).
+input="$(cat)"
+[ -n "$input" ] || input='{}'
+jq=$(command -v jq || echo /opt/homebrew/bin/jq)
+printf '%s' "$input" | "$jq" '
+  .cliPluginsExtraDirs = ((.cliPluginsExtraDirs // []) - ["/opt/homebrew/lib/docker/cli-plugins"]
+    + ["/opt/homebrew/lib/docker/cli-plugins"])'

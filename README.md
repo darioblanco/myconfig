@@ -39,9 +39,12 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 5. **SSH keys.** Open Secretive and create this Mac's keys in the Secure Enclave. Add the public
    keys to GitHub and your servers. One key set per device; keys are never copied.
 6. **GitHub CLI.** `gh auth login --insecure-storage`, so agents can use `gh` inside the sandbox.
-7. **Remote access.** System Settings → General → Sharing → Remote Login. Put each device's
+7. **Docker (Colima).** Create the VM once, sharing only your code folder with containers:
+   `colima start --cpu 4 --memory 8 --vm-type vz --vz-rosetta --mount-type virtiofs --mount ~/Code:w`.
+   Later `colima start` reuses those settings; `brew services start colima` starts it at login.
+8. **Remote access.** System Settings → General → Sharing → Remote Login. Put each device's
    public key in `~/.ssh/authorized_keys` (one per line, `chmod 600`).
-8. **macOS preferences.** `make defaults`: Finder, Dock, keyboard and trackpad (tap to click,
+9. **macOS preferences.** `make defaults`: Finder, Dock, keyboard and trackpad (tap to click,
    drag lock, press-and-hold accents kept).
 
 ## What you get
@@ -55,7 +58,7 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 | Python | `uv` |
 | Rust | `rustup` |
 | Flutter | `fvm` (per-project `.fvmrc`, global stable), Xcode, Android Studio, CocoaPods |
-| Containers | Apple `container` + `container-compose`, defaults in `~/.config/container/config.toml` |
+| Containers | Colima + Docker CLI, Compose and Buildx; Apple `container` + `container-compose` (defaults in `~/.config/container/config.toml`) |
 | Kubernetes | kubectl + kubecolor, k9s, kubectx/kubens, stern, helm |
 | Infrastructure | `tenv` (Terraform/OpenTofu per `.terraform-version`), gcloud, Cloudflare `cf` |
 | Security | Secretive, Bitwarden, Little Snitch, Tailscale |
@@ -159,9 +162,11 @@ can reach the network. The setup removes what they could leak and limits where d
     `enableWeakerNetworkIsolation` lets Go tools verify TLS. Trade-off: sandboxed commands can
     read that token, so the gist, key-upload and `gh api` write rules are what limit its misuse;
   - tools that can't run sandboxed (`gh`, `gcloud`, `terraform`, `kubectl`, `pnpm install`,
-    git network commands, Apple `container`) are excluded and go through the normal permission
-    flow, with deny or ask rules for their exfiltration paths (gists, `gh api` writes, volume
-    mounts, custom kubeconfigs, `ext::` remotes);
+    git network commands, Apple `container`, Docker and Colima) are excluded and go through the
+    normal permission flow, with deny or ask rules for their exfiltration paths (gists, `gh api`
+    writes, volume mounts, `docker cp`/`push`/`login`, custom kubeconfigs, `ext::` remotes);
+  - Colima shares only `~/Code` with containers, so a compose file can't mount `~/.ssh` or other
+    credentials. Containers' own network traffic doesn't go through the sandbox proxy;
   - CI fails if the policy loses a rule recorded in `claude/policy-baseline.json`, so weakening
     it takes a deliberate two-file change.
   - Accepted risk: package caches are writable from the sandbox so builds work, which means a
@@ -184,7 +189,7 @@ Use `/sandbox` inside Claude Code to inspect or adjust the policy for a session.
 |---|---|
 | `Brewfile` | CLI tools, apps, fonts, Mac App Store apps |
 | `bootstrap.sh` | Homebrew, Brewfile, dotfiles, toolchains, Claude Code and plugins |
-| `home/` | chezmoi source for `$HOME`: zsh, git, ssh, Ghostty, Starship, mise, Atuin, lazygit, container, Claude Code |
+| `home/` | chezmoi source for `$HOME`: zsh, git, ssh, Ghostty, Starship, mise, Atuin, lazygit, container, Docker, Claude Code |
 | `home/dot_agents/` | Personal agent rules and skills, shared by Claude Code, Codex and pi |
 | `claude/plugins.txt` | Claude Code plugins (kept small: each one costs context) |
 | `macos/system.sh` | One-time sudo setup: Xcode, container DNS, SSH server, machine name |
