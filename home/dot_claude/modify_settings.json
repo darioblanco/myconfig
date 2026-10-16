@@ -55,7 +55,7 @@ policy='{
     "credentials": {
       "envVars": [
         { "name": "GITHUB_TOKEN", "mode": "deny" },
-        { "name": "GH_TOKEN", "mode": "mask", "injectHosts": ["api.github.com", "github.com"] },
+        { "name": "GH_TOKEN", "mode": "deny" },
         { "name": "NPM_TOKEN", "mode": "deny" }, { "name": "ANTHROPIC_API_KEY", "mode": "deny" },
         { "name": "OPENAI_API_KEY", "mode": "deny" },
         { "name": "CLOUDSDK_AUTH_ACCESS_TOKEN", "mode": "deny" },
@@ -64,7 +64,6 @@ policy='{
     },
 
     "network": {
-      "tlsTerminate": {},
       "allowLocalBinding": true,
       "allowMachLookup": ["com.apple.coresimulator.*"],
       "allowedDomains": [
@@ -133,4 +132,5 @@ printf '%s' "$input" | "$jq" --argjson policy "$policy" --argjson secrets "$secr
     | .permissions.deny = [$secrets[] | if endswith("/") then "Read(\(.)**)" else "Read(\(.))" end]
         + .permissions.deny) as $full
   | merge($full)
-  | .sandbox.credentials.envVars |= (reduce .[] as $e ({}; .[$e.name] = $e) | [.[]])'
+  | .sandbox.credentials.envVars |= (reduce .[] as $e ({}; .[$e.name] = $e) | [.[]])
+  | del(.sandbox.network.tlsTerminate)'

@@ -38,9 +38,10 @@ Then, in order (these need an Apple ID, sudo or a GUI):
    It installs the SDK for Flutter's target API level and a `pixel_api36` emulator.
 5. **SSH keys.** Open Secretive and create this Mac's keys in the Secure Enclave. Add the public
    keys to GitHub and your servers. One key set per device; keys are never copied.
-6. **Remote access.** System Settings → General → Sharing → Remote Login. Put each device's
+6. **GitHub CLI.** `gh auth login --insecure-storage`, so agents can use `gh` inside the sandbox.
+7. **Remote access.** System Settings → General → Sharing → Remote Login. Put each device's
    public key in `~/.ssh/authorized_keys` (one per line, `chmod 600`).
-7. **macOS preferences.** `make defaults`: Finder, Dock, keyboard and trackpad (tap to click,
+8. **macOS preferences.** `make defaults`: Finder, Dock, keyboard and trackpad (tap to click,
    drag lock, press-and-hold accents kept).
 
 ## What you get
@@ -153,10 +154,10 @@ can reach the network. The setup removes what they could leak and limits where d
     needs the classifier's approval per command;
   - destructive infrastructure commands (`terraform apply`, `kubectl delete`, `helm upgrade`,
     force pushes…) always ask, even in auto mode;
-  - `gh` and `git` work inside the sandbox with your GitHub token, but agents never see it: the
-    `claude` shell function passes the Keychain token as `GH_TOKEN`, sandboxed commands get a
-    placeholder, and the proxy swaps the real token in only on requests to GitHub
-    (`tlsTerminate`, experimental; `enableWeakerNetworkIsolation` lets Go tools verify TLS);
+  - `gh` works inside the sandbox, including in pipes: its token is stored in its own config
+    (`gh auth login --insecure-storage`) instead of the Keychain, which the sandbox blocks, and
+    `enableWeakerNetworkIsolation` lets Go tools verify TLS. Trade-off: sandboxed commands can
+    read that token, so the gist, key-upload and `gh api` write rules are what limit its misuse;
   - tools that can't run sandboxed (`gh`, `gcloud`, `terraform`, `kubectl`, `pnpm install`,
     git network commands, Apple `container`) are excluded and go through the normal permission
     flow, with deny or ask rules for their exfiltration paths (gists, `gh api` writes, volume
