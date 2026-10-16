@@ -76,7 +76,8 @@ policy='{
         "repo.maven.apache.org", "repo1.maven.org", "plugins.gradle.org", "services.gradle.org",
         "dl.google.com", "maven.google.com",
         "cdn.cocoapods.org",
-        "registry.terraform.io", "releases.hashicorp.com"
+        "registry.terraform.io", "releases.hashicorp.com",
+        "mise-versions.jdx.dev", "mise-java.jdx.dev"
       ]
     }
   },
