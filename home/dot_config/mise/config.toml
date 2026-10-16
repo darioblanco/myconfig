@@ -6,6 +6,7 @@ node = "lts"
 pnpm = "latest"   # pnpm honors each repo's `packageManager` field
 go = "latest"
 java = "temurin-17"   # Android Gradle Plugin / Flutter Android builds
+"npm:cf" = "1.0.0-beta.17"   # Cloudflare CLI (cloudflare/cf), beta: bump by hand. Not Homebrew's `cf`
 
 [settings]
 idiomatic_version_file_enable_tools = ["node", "go", "java"]
