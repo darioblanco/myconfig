@@ -115,8 +115,8 @@ policy='{
       "Bash(docker create *-v *)", "Bash(docker create *--volume*)", "Bash(docker create *--mount*)",
       "Bash(docker cp *)", "Bash(docker push *)", "Bash(docker login*)", "Bash(colima start *--mount*)",
       "Bash(pnpm publish*)", "Bash(npm publish*)",
-      "Bash(git * --upload-pack*)", "Bash(git * --receive-pack*)", "Bash(git *ext::*)",
-      "Bash(git push --delete*)", "Bash(git push *:*)",
+      "Bash(git * --upload-pack*)", "Bash(git * --receive-pack*)", "Bash(git *protocol.*allow*)",
+      "Bash(git push --delete*)",
       "Bash(git push *--force*)", "Bash(git push * -f*)", "Bash(git push *+*)"
     ]
   }
