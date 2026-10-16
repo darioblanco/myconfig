@@ -51,7 +51,7 @@ if have rustup; then
 	rustup component add clippy rustfmt rust-analyzer
 fi
 
-step "mise tools (node, pnpm, go, java)"
+step "mise tools (node, Corepack for pnpm, go, java)"
 if have mise; then mise install --yes; fi
 
 step "Flutter (fvm)"
