@@ -69,7 +69,7 @@ This machine runs Claude Code with the sandbox from this repo, so:
 
 - `chezmoi diff/apply` and anything touching `~/.ssh` fail with "Operation not permitted";
   they need an unsandboxed run.
-- `gh`, `git push/fetch/pull`, `gcloud` and `terraform` run unsandboxed only as **plain**
+- `git push/fetch/pull`, `gcloud` and `terraform` run unsandboxed only as **plain**
   commands. Inside a pipe, loop, `cd …&&` or `git -C`, they stay sandboxed and lose their
   credentials, so run them on their own.
 - `open` and `osascript` are blocked; ask the owner to run GUI or browser steps.

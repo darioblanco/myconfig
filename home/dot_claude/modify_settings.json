@@ -11,7 +11,7 @@ input="$(cat)"
 # Credential and private-data paths, listed once. Each becomes a sandbox read block and a deny
 # rule for Claude's file tools. A trailing slash marks a directory.
 secrets='[
-  "~/.ssh/", "~/.gnupg/", "~/.config/gcloud/", "~/.kube/", "~/.config/gh/", "~/.docker/",
+  "~/.ssh/", "~/.gnupg/", "~/.config/gcloud/", "~/.kube/", "~/.docker/",
   "~/.aws/", "~/.azure/", "~/.terraform.d/", "~/.terraformrc", "~/.npmrc", "~/.pypirc",
   "~/.netrc", "~/.git-credentials", "~/.cargo/credentials.toml", "~/.gradle/gradle.properties",
   "~/.m2/settings.xml", "~/.config/sops/", "~/.android/adbkey",
@@ -34,6 +34,7 @@ policy='{
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": true,
+    "enableWeakerNetworkIsolation": true,
 
     "excludedCommands": [
       "gh *", "gcloud *", "terraform *",
@@ -53,7 +54,8 @@ policy='{
 
     "credentials": {
       "envVars": [
-        { "name": "GITHUB_TOKEN", "mode": "deny" }, { "name": "GH_TOKEN", "mode": "deny" },
+        { "name": "GITHUB_TOKEN", "mode": "deny" },
+        { "name": "GH_TOKEN", "mode": "deny" },
         { "name": "NPM_TOKEN", "mode": "deny" }, { "name": "ANTHROPIC_API_KEY", "mode": "deny" },
         { "name": "OPENAI_API_KEY", "mode": "deny" },
         { "name": "CLOUDSDK_AUTH_ACCESS_TOKEN", "mode": "deny" },
@@ -129,4 +131,6 @@ printf '%s' "$input" | "$jq" --argjson policy "$policy" --argjson secrets "$secr
     | .sandbox.filesystem.denyRead = [$secrets[] | rtrimstr("/")]
     | .permissions.deny = [$secrets[] | if endswith("/") then "Read(\(.)**)" else "Read(\(.))" end]
         + .permissions.deny) as $full
-  | merge($full)'
+  | merge($full)
+  | .sandbox.credentials.envVars |= (reduce .[] as $e ({}; .[$e.name] = $e) | [.[]])
+  | del(.sandbox.network.tlsTerminate)'
