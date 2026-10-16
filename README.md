@@ -153,6 +153,9 @@ can reach the network. The setup removes what they could leak and limits where d
     needs the classifier's approval per command;
   - destructive infrastructure commands (`terraform apply`, `kubectl delete`, `helm upgrade`,
     force pushes…) always ask, even in auto mode;
+  - `gh` also works inside the sandbox (its config holds no token; the token stays in the
+    Keychain), so agents can use it in pipes; `enableWeakerNetworkIsolation` lets Go tools such
+    as `gh` verify TLS certificates there;
   - tools that can't run sandboxed (`gh`, `gcloud`, `terraform`, `kubectl`, `pnpm install`,
     git network commands, Apple `container`) are excluded and go through the normal permission
     flow, with deny or ask rules for their exfiltration paths (gists, `gh api` writes, volume

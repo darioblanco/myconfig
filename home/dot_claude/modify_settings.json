@@ -11,7 +11,7 @@ input="$(cat)"
 # Credential and private-data paths, listed once. Each becomes a sandbox read block and a deny
 # rule for Claude's file tools. A trailing slash marks a directory.
 secrets='[
-  "~/.ssh/", "~/.gnupg/", "~/.config/gcloud/", "~/.kube/", "~/.config/gh/", "~/.docker/",
+  "~/.ssh/", "~/.gnupg/", "~/.config/gcloud/", "~/.kube/", "~/.docker/",
   "~/.aws/", "~/.azure/", "~/.terraform.d/", "~/.terraformrc", "~/.npmrc", "~/.pypirc",
   "~/.netrc", "~/.git-credentials", "~/.cargo/credentials.toml", "~/.gradle/gradle.properties",
   "~/.m2/settings.xml", "~/.config/sops/", "~/.android/adbkey",
@@ -34,6 +34,7 @@ policy='{
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": true,
+    "enableWeakerNetworkIsolation": true,
 
     "excludedCommands": [
       "gh *", "gcloud *", "terraform *",
