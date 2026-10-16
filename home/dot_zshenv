@@ -4,6 +4,9 @@ export VISUAL=nvim
 
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 
+# Node's fetch (Corepack's downloads) honors HTTP(S)_PROXY, which the agent sandboxes set.
+export NODE_USE_ENV_PROXY=1
+
 # Testcontainers (Quarkus Dev Services and others) can't find Colima's Docker socket on its own.
 export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock

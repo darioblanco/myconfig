@@ -48,7 +48,7 @@ policy='{
       "allowWrite": [
         "~/Library/pnpm", "~/Library/Caches/pnpm", "~/.npm", "~/.cache/uv", "~/.pub-cache",
         "~/go/pkg/mod", "~/.cargo/registry", "~/.cargo/git", "~/.gradle/caches",
-        "~/Library/Caches/CocoaPods"
+        "~/Library/Caches/CocoaPods", "~/.cache/node/corepack"
       ]
     },
 
@@ -138,7 +138,4 @@ printf '%s' "$input" | "$jq" --argjson policy "$policy" --argjson secrets "$secr
     | .permissions.deny = [$secrets[] | if endswith("/") then "Read(\(.)**)" else "Read(\(.))" end]
         + .permissions.deny) as $full
   | merge($full)
-  | .sandbox.credentials.envVars |= (reduce .[] as $e ({}; .[$e.name] = $e) | [.[]])
-  | del(.sandbox.network.tlsTerminate)
-  | .sandbox.excludedCommands -= ["pnpm install*", "pnpm i *", "pnpm add *", "pnpm update*",
-      "pnpm up *", "pnpm remove *"]'
+  | .sandbox.credentials.envVars |= (reduce .[] as $e ({}; .[$e.name] = $e) | [.[]])'
