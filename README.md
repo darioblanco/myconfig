@@ -159,9 +159,9 @@ can reach the network. The setup removes what they could leak and limits where d
     (`gh auth login --insecure-storage`) instead of the Keychain, which the sandbox blocks, and
     `enableWeakerNetworkIsolation` lets Go tools verify TLS. Trade-off: sandboxed commands can
     read that token, so the gist, key-upload and `gh api` write rules are what limit its misuse;
-  - tools that can't run sandboxed (`gh`, `gcloud`, `terraform`, `kubectl`, `pnpm install`,
-    git network commands, Apple `container`, Docker and Colima) are excluded and go through the
-    normal permission flow, with deny or ask rules for their exfiltration paths (gists, `gh api`
+  - tools that can't run sandboxed (`gh`, `gcloud`, `terraform`, `kubectl`, git network
+    commands, Apple `container`, Docker and Colima) are excluded and go through the normal
+    permission flow, with deny or ask rules for their exfiltration paths (gists, `gh api`
     writes, volume mounts, `docker cp`/`push`/`login`, custom kubeconfigs, `ext::` remotes);
   - Colima shares only `~/Code` with containers, so a compose file can't mount `~/.ssh` or other
     credentials. Accepted risk: containers' own network traffic doesn't go through the sandbox
