@@ -1,8 +1,18 @@
 {
   "ask": [
+    "Bash(colima start *--mount*)",
     "Bash(container run *--mount*)",
     "Bash(container run *--volume*)",
     "Bash(container run *-v *)",
+    "Bash(docker cp *)",
+    "Bash(docker create *--mount*)",
+    "Bash(docker create *--volume*)",
+    "Bash(docker create *-v *)",
+    "Bash(docker login*)",
+    "Bash(docker push *)",
+    "Bash(docker run *--mount*)",
+    "Bash(docker run *--volume*)",
+    "Bash(docker run *-v *)",
     "Bash(gcloud * create*)",
     "Bash(gcloud * delete*)",
     "Bash(gcloud auth print-*)",
