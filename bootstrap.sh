@@ -90,8 +90,9 @@ if ! /usr/bin/arch -x86_64 /usr/bin/true 2>/dev/null; then
 elif have colima; then
 	# Created once; later starts reuse the profile. Containers only see ~/Code.
 	if ! colima list 2>/dev/null | grep -q '^default '; then
+		# --ssh-config=false: keep Colima from adding an Include to ~/.ssh/config (chezmoi owns it).
 		colima start --cpu 4 --memory 8 --vm-type vz --vz-rosetta --mount-type virtiofs \
-			--mount "$HOME/Code:w"
+			--mount "$HOME/Code:w" --ssh-config=false
 	fi
 	# Starts it at login; `brew services start` fails if the service is already loaded.
 	if ! brew services info colima --json | jq -e '.[0].loaded' >/dev/null; then
