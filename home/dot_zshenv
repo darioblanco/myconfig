@@ -15,6 +15,9 @@ export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
 typeset -U path
 path=(
   "$HOME/.local/bin"
+  # mise shims pick each repo's versions at run time. Interactive shells put the real tool paths
+  # ahead with `mise activate` (~/.zshrc); agents' non-interactive shells rely on these.
+  "$HOME/.local/share/mise/shims"
   /opt/homebrew/bin
   /opt/homebrew/sbin
   /opt/homebrew/opt/rustup/bin
