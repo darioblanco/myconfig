@@ -7,6 +7,7 @@
 # arbitrary hosts. See the "Security" section of the README for the reasoning.
 input="$(cat)"
 [ -n "$input" ] || input='{}'
+uid=$(id -u)
 
 # Credential and private-data paths, listed once. Each becomes a sandbox read block and a deny
 # rule for Claude's file tools. A trailing slash marks a directory.
@@ -40,8 +41,7 @@ policy='{
       "gh *", "gcloud *", "terraform *",
       "git fetch *", "git pull *", "git push *",
       "kubectl *", "kubecolor *", "helm *", "stern *",
-      "container *", "container-compose *", "docker *", "docker-compose *", "colima *",
-      "pnpm install*", "pnpm i *", "pnpm add *", "pnpm update*", "pnpm up *", "pnpm remove *"
+      "container *", "container-compose *", "docker *", "docker-compose *", "colima *"
     ],
 
     "filesystem": {
@@ -123,7 +123,7 @@ policy='{
 
 jq=$(command -v jq || echo /opt/homebrew/bin/jq)
 # shellcheck disable=SC2016 # jq string interpolation, not shell
-printf '%s' "$input" | "$jq" --argjson policy "$policy" --argjson secrets "$secrets" '
+printf '%s' "$input" | "$jq" --argjson policy "$policy" --argjson secrets "$secrets" --arg uid "$uid" '
   def merge($b):
     if (type == "object") and ($b | type == "object") then
       reduce ($b | keys_unsorted[]) as $k (.; .[$k] = (.[$k] | merge($b[$k])))
@@ -132,8 +132,13 @@ printf '%s' "$input" | "$jq" --argjson policy "$policy" --argjson secrets "$secr
     else $b end;
   ($policy
     | .sandbox.filesystem.denyRead = [$secrets[] | rtrimstr("/")]
+    # pnpm 12 takes its store locks in /tmp/pnpm-*-locks-<uid>, whatever TMPDIR or store-dir say.
+    | .sandbox.filesystem.allowWrite += ["/private/tmp/pnpm-store-operation-locks-\($uid)",
+        "/private/tmp/pnpm-dir-locks-\($uid)"]
     | .permissions.deny = [$secrets[] | if endswith("/") then "Read(\(.)**)" else "Read(\(.))" end]
         + .permissions.deny) as $full
   | merge($full)
   | .sandbox.credentials.envVars |= (reduce .[] as $e ({}; .[$e.name] = $e) | [.[]])
-  | del(.sandbox.network.tlsTerminate)'
+  | del(.sandbox.network.tlsTerminate)
+  | .sandbox.excludedCommands -= ["pnpm install*", "pnpm i *", "pnpm add *", "pnpm update*",
+      "pnpm up *", "pnpm remove *"]'

@@ -73,8 +73,9 @@ This machine runs Claude Code with the sandbox from this repo, so:
   **plain** commands. Inside a pipe, loop, `cd …&&` or `git -C`, they stay sandboxed and lose
   their credentials, so run them on their own.
 - `open` and `osascript` are blocked; ask the owner to run GUI or browser steps.
-- `pnpm` runs outside the sandbox (its store uses a system lock the sandbox forbids); pnpm
-  itself still blocks install scripts and versions younger than a day.
+- `pnpm` runs inside the sandbox: pnpm 12 keeps its store locks in `/tmp/pnpm-*-locks-<uid>`
+  (ignoring `TMPDIR`), so those two folders are writable. pnpm itself still blocks install
+  scripts and versions younger than a day.
 
 ## Commits
 
