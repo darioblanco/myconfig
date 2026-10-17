@@ -15,6 +15,12 @@ repository's own commands for formatting, linting, type checks and tests.
   swallow errors to make them go away.
 - Don't invent APIs, flags or facts. Check the source or the docs, or say you don't know.
 
+## Design
+- Dependencies point one way: no cycles between modules, and I/O and frameworks stay at the
+  edges.
+- Every network or remote call has a timeout and can be cancelled. No fire-and-forget tasks;
+  queues are bounded.
+
 ## Tests
 - Design code to be easy to test: logic separate from I/O, dependencies passed in at the
   boundaries, small units. Hard-to-test code is a design problem, not a testing one.
@@ -24,7 +30,10 @@ repository's own commands for formatting, linting, type checks and tests.
 - Prove each new test can fail: show it failing on an assertion before the code exists, or break
   the behaviour briefly and watch it fail.
 - Test behaviour through public interfaces. Mock only at real boundaries (network, clock,
-  filesystem, third-party APIs). Tests are deterministic.
+  filesystem, third-party APIs), and prefer a real local stand-in (an in-process test server, a
+  container) to a mock of your own client. Tests are deterministic.
+- Test the failure paths, not just the happy path: errors, timeouts, partial writes and
+  malformed input at each boundary. Fuzz or property-test code that parses untrusted input.
 - Coverage stays at 100%. Exclude only single lines, each with an inline reason. Never lower the
   threshold, or delete, skip or weaken tests to get green.
 - Run targeted tests while working. Before saying you're done, run the format, lint, type-check,

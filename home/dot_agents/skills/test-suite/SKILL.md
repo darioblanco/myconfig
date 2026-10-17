@@ -40,9 +40,12 @@ Gather facts, then judge. Run things; don't infer from file names.
 3. **Meaning.** Sample tests in the riskiest modules: tests without assertions, assertions only
    on mocks, snapshot tests nobody reads, logic inside tests, sleeps and real time, tests that
    mirror the implementation line by line.
-4. **Can they fail?** Run mutation testing on one or two critical modules (or break a few
+4. **Failure paths.** Are errors, timeouts, partial writes and malformed input tested at each
+   boundary, for example with a fake that fails on demand? Is code that parses untrusted input
+   fuzzed or property-tested?
+5. **Can they fail?** Run mutation testing on one or two critical modules (or break a few
    behaviours by hand) and report how many changes the suite caught.
-5. **Shape.** Balance of unit, integration and end-to-end tests; whether external services are
+6. **Shape.** Balance of unit, integration and end-to-end tests; whether external services are
    faked locally; whether tests can run in parallel.
 
 Report: a one-line verdict, the facts above with numbers, the three highest-risk gaps, and a

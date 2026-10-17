@@ -26,17 +26,23 @@ repository keeps plans.
 2. **Approach.** The design in a few sentences. If there were real alternatives, name them and
    why this one wins (simplicity, reversibility, fit with the codebase).
 3. **Boundaries.** Which modules, services or packages change; new public interfaces (functions,
-   endpoints, events, schemas) with their shapes; who owns what.
+   endpoints, events, schemas) with their shapes; who owns what. Dependencies point one way,
+   with no cycles.
 4. **Data flow.** How data enters, moves and is stored, including migrations and
    backwards compatibility for stored data and APIs.
 5. **Failure modes.** What can fail (dependencies down, bad input, partial writes, retries,
    concurrency), how each is handled, and how it becomes visible (errors, logs, metrics).
-6. **Security and privacy.** Authentication, authorisation, secrets, personal or sensitive data,
+   Remote calls have timeouts and cancellation, and queues have a bound and a policy for when
+   they are full.
+6. **Performance.** Only for hot paths: the expected load, the data structures chosen for its
+   access pattern, and the benchmark on realistic data that will show it holds. Measure before
+   optimising.
+7. **Security and privacy.** Authentication, authorisation, secrets, personal or sensitive data,
    and what gets logged.
-7. **Test strategy.** Which behaviours get unit, integration or end-to-end tests, what runs
+8. **Test strategy.** Which behaviours get unit, integration or end-to-end tests, what runs
    locally (containers, emulators, fakes), and how coverage stays at the required threshold.
-8. **Steps.** Small, independently testable increments in order, each ending green.
-9. **Risks and open questions.**
+9. **Steps.** Small, independently testable increments in order, each ending green.
+10. **Risks and open questions.**
 
 ## After approval
 

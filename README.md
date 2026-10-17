@@ -115,6 +115,21 @@ Claude Code also loads each repository's `AGENTS.md` next to the `CLAUDE.md` fil
 `CLAUDE.md` exists in the repository or any folder above it, so a workspace `CLAUDE.md` above
 the checkouts would hide every repository's `AGENTS.md`.
 
+The design and testing lines are distilled from projects whose engineering is worth copying,
+following [Cindy Sridharan's approach](https://x.com/copyconstruct/status/2111068549469098492)
+of building agent instructions from the best code and writing rather than from scratch:
+
+| Project | Lesson kept |
+|---|---|
+| [SQLite](https://sqlite.org/testing.html) | Test the failure paths (errors, partial writes, malformed input), fuzz parsers, and start every bug fix with a test |
+| [LLVM](https://llvm.org/docs/CodingStandards.html) | Layering: dependencies point one way, libraries with narrow interfaces |
+| [Go standard library](https://pkg.go.dev/net/http/httptest) | Test protocol clients against a real local server instead of mocking them |
+| [Tokio](https://tokio.rs/) and [Swift concurrency](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/) | Structured concurrency: timeouts, cancellation, no orphaned tasks, bounded queues |
+| [ScyllaDB](https://www.scylladb.com/) | Measure before optimising, and choose data structures for the access pattern |
+
+Only the lines that change what agents do by default are kept; the rest of each project's
+wisdom is left to the models.
+
 [`home/dot_agents/skills/`](home/dot_agents/skills) holds skills for occasional procedures. Only
 each skill's one-line description is in context until a task needs it.
 
