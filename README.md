@@ -100,7 +100,9 @@ bag.
 
 [`home/dot_agents/AGENTS.md`](home/dot_agents/AGENTS.md) is a short set of personal engineering
 rules loaded into every session. It holds only what the agents don't do by default and the
-settings, sandbox and hooks can't enforce.
+settings, sandbox and hooks can't enforce. Claude Code also loads
+[`home/dot_claude/rules/sandbox.md`](home/dot_claude/rules/sandbox.md), which tells it how to run
+credentialed tools under this repo's sandbox.
 
 [`home/dot_agents/skills/`](home/dot_agents/skills) holds skills for occasional procedures. Only
 each skill's one-line description is in context until a task needs it.
