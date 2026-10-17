@@ -1,0 +1,13 @@
+onboarding = false
+
+[ui]
+status_indicators = "symbols"
+
+[theme]
+name = "dracula"
+auto_switch = false
+
+[keys]
+# Step through agents across all workspaces; with prefix+z (zoom) this is the phone workflow.
+next_agent = "prefix+a"
+previous_agent = "prefix+shift+a"

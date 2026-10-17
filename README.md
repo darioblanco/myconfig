@@ -72,7 +72,13 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 - **Ghostty.** Splits with `cmd+d` / `cmd+shift+d`, move with `cmd+alt+h/j/k/l`, zoom with
   `cmd+shift+enter`. Long commands that finish in an unfocused pane send a notification.
   `` cmd+` `` toggles a system-wide quick terminal.
-- **From your phone.** Termius with Mosh enabled → `mosh <mac>` over Tailscale → `herdr`.
+- **From your phone.** Termius with Mosh enabled → `mosh <mac>` over Tailscale. Every SSH or
+  Mosh login opens `agents`, a picker of the running herdr agents (blocked ones first): pick one
+  to attach to it, `ctrl+b q` to detach and come back to the list (the agent keeps running), Esc
+  for a plain shell. Local terminals and
+  herdr's own panes skip it. Inside herdr, `prefix+a` / `prefix+shift+a` step through agents,
+  `prefix+o` jumps to the one that notified you, `prefix+z` zooms a pane and `prefix+b` hides the
+  sidebar (the prefix is `ctrl+b`).
 - **Background agents.** [pulpo](https://github.com/darioblanco/pulpo) runs agents as durable
   tmux sessions you can attach to: `pulpo spawn <name> --workdir . -- claude`.
 - **Usage.** `ccusage` (or `pulpo usage --scan`) reports token use and cost per agent and repo.
