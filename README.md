@@ -100,7 +100,9 @@ bag.
 
 [`home/dot_agents/AGENTS.md`](home/dot_agents/AGENTS.md) is a short set of personal engineering
 rules loaded into every session. It holds only what the agents don't do by default and the
-settings, sandbox and hooks can't enforce.
+settings, sandbox and hooks can't enforce. Claude Code also loads
+[`home/dot_claude/rules/sandbox.md`](home/dot_claude/rules/sandbox.md), which tells it how to run
+credentialed tools under this repo's sandbox.
 
 Claude Code also loads each repository's `AGENTS.md` next to the `CLAUDE.md` files
 (`instructionFiles: claude-md-and-agents-md`). By default it reads `AGENTS.md` only when no
