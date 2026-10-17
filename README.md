@@ -102,6 +102,11 @@ bag.
 rules loaded into every session. It holds only what the agents don't do by default and the
 settings, sandbox and hooks can't enforce.
 
+Claude Code also loads each repository's `AGENTS.md` next to the `CLAUDE.md` files
+(`instructionFiles: claude-md-and-agents-md`). By default it reads `AGENTS.md` only when no
+`CLAUDE.md` exists in the repository or any folder above it, so a workspace `CLAUDE.md` above
+the checkouts would hide every repository's `AGENTS.md`.
+
 [`home/dot_agents/skills/`](home/dot_agents/skills) holds skills for occasional procedures. Only
 each skill's one-line description is in context until a task needs it.
 
