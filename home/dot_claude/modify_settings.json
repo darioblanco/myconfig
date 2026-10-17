@@ -17,7 +17,7 @@ secrets='[
   "~/.netrc", "~/.git-credentials", "~/.cargo/credentials.toml", "~/.gradle/gradle.properties",
   "~/.m2/settings.xml", "~/.config/sops/", "~/.android/adbkey",
   "~/.codex/auth.json", "~/.pi/agent/auth.json", "~/.claude.json",
-  "~/.claude/projects/", "~/.codex/sessions/", "~/.config/chezmoi/",
+  "~/.codex/sessions/", "~/.config/chezmoi/",
   "~/.zsh_history", "~/.local/share/atuin/",
   "~/Library/Keychains/", "~/Library/Cookies/", "~/Library/Application Support/Bitwarden/",
   "~/Library/Application Support/Google/Chrome/", "~/Library/Application Support/Firefox/",
@@ -83,6 +83,7 @@ policy='{
   },
 
   "permissions": {
+    "defaultMode": "auto",
     "deny": [
       "Read(//**/.env)", "Read(//**/.env.local)", "Read(//**/.env.*.local)",
       "Read(//**/.env.production)", "Read(//**/*service-account*.json)",

@@ -87,7 +87,7 @@ Then, in order (these need an Apple ID, sudo or a GUI):
 Claude Code is restricted to claude.ai logins (`forceLoginMethod`) and Codex to ChatGPT logins
 (`forced_login_method`), and the shell warns if `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` is
 exported, since either would switch the agent to pay-per-token billing. Agents run in
-interactive sessions (auto mode included), not headless.
+interactive sessions, in auto mode by default, not headless.
 
 ### Keeping the Mac awake
 
@@ -170,6 +170,9 @@ can reach the network. The setup removes what they could leak and limits where d
     it takes a deliberate two-file change.
   - Accepted risk: package caches are writable from the sandbox so builds work, which means a
     sandboxed command could tamper with a cached dependency.
+  - Accepted risk: agents can read Claude Code's own session transcripts and memory
+    (`~/.claude/projects`), so they can pick up past sessions' memory and context, including
+    anything pasted into an earlier session.
 - **No AI attribution.** Claude Code's attribution is off, and a global git commit-msg hook
   strips AI co-author trailers in every repository.
 - **Supply chain.** pnpm refuses versions younger than a day and blocks dependency install
