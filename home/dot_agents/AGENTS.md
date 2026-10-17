@@ -16,6 +16,8 @@ repository's own commands for formatting, linting, type checks and tests.
 - Don't invent APIs, flags or facts. Check the source or the docs, or say you don't know.
 
 ## Design
+- Get the data structures right first. Restructure until special cases disappear instead of
+  adding branches for them.
 - Dependencies point one way: no cycles between modules, and I/O and frameworks stay at the
   edges.
 - Every network or remote call has a timeout and can be cancelled. No fire-and-forget tasks;
@@ -55,7 +57,8 @@ repository's own commands for formatting, linting, type checks and tests.
 
 ## Git and review
 - Conventional Commits, small and focused. Don't mix refactors with behaviour changes in one
-  commit. Never bypass hooks (`--no-verify`).
+  commit. Each commit builds and passes the tests on its own, and its message says why, not
+  just what. Never bypass hooks (`--no-verify`).
 - Work on a feature branch; pushing it and opening a PR is fine, but never push to the default
   branch.
 - Before opening a PR, review the diff with the native tool (`/code-review` in Claude Code,
