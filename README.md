@@ -144,12 +144,31 @@ ln -sf ~/.agents/AGENTS.md ~/.codex/AGENTS.md       # Codex (reads ~/.agents/ski
 mkdir -p ~/.claude/skills && ln -sf ~/.agents/skills/*/ ~/.claude/skills/
 ```
 
-The rules borrow from published practice: short and specific, a line added each time an agent
-repeats a mistake ([Mitchell Hashimoto](https://mitchellh.com/writing/my-ai-adoption-journey)),
-root cause first and no compatibility shims ([Jesse Vincent](https://github.com/obra/dotfiles),
-[Peter Steinberger](https://github.com/steipete/agent-scripts)), and red/green TDD
-([Simon Willison](https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/),
-[Kent Beck](https://newsletter.kentbeck.com/p/augmented-coding-beyond-the-vibes)).
+### Where the rules come from
+
+The design, testing and API lines are distilled from projects whose engineering is worth copying.
+Only what changes an agent's default behaviour is kept:
+
+| Project | Lesson kept |
+|---|---|
+| [SQLite](https://sqlite.org/testing.html) | Test the failure paths (errors, partial writes, malformed input), fuzz parsers, and start every bug fix with a test |
+| [Linux kernel](https://docs.kernel.org/process/submitting-patches.html) | Never break userspace (APIs change only additively); get the data structures right and the special cases disappear; every commit builds on its own and says why |
+| [LLVM](https://llvm.org/docs/CodingStandards.html) | Layering: dependencies point one way, libraries with narrow interfaces |
+| [Go standard library](https://pkg.go.dev/net/http/httptest) | Test protocol clients against a real local server instead of mocking them |
+| [Tokio](https://tokio.rs/) and [Swift concurrency](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/) | Structured concurrency: timeouts, cancellation, no orphaned tasks, bounded queues |
+| [ScyllaDB](https://www.scylladb.com/) | Measure before optimising, and choose data structures for the access pattern |
+| [Google's API Improvement Proposals](https://google.aip.dev/) and [Stripe's API](https://docs.stripe.com/api) | APIs: resources and standard methods, cursor pagination, idempotency keys on retried writes, one error shape ([RFC 9457](https://www.rfc-editor.org/rfc/rfc9457)) |
+
+How the agents are run and instructed owes a lot to people who write openly about working with
+them:
+
+| Person | What shaped this setup |
+|---|---|
+| [Mitchell Hashimoto](https://mitchellh.com/writing/my-ai-adoption-journey) | Short, specific rules, with a line added each time an agent repeats a mistake; reproduce your own work with an agent before trusting it |
+| [Armin Ronacher](https://lucumr.pocoo.org/2025/6/12/agentic-coding/) | Plain command-line tools and Makefile targets over MCP servers; an agent with full permissions needs an environment you can afford to lose |
+| [Simon Willison](https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/) | Red/green TDD with agents, and the lethal trifecta (private data, untrusted content, a way out) behind the sandbox's credential and network limits |
+| [Kent Beck](https://newsletter.kentbeck.com/p/augmented-coding-beyond-the-vibes) | Tests first, and agents kept to small, verified steps |
+| [Jesse Vincent](https://github.com/obra/dotfiles) and [Peter Steinberger](https://github.com/steipete/agent-scripts) | Root cause before fixes, and no compatibility shims nobody asked for |
 
 ## Security
 
@@ -197,6 +216,18 @@ can reach the network. The setup removes what they could leak and limits where d
 - **Little Snitch** alerts on new outbound connections from any process.
 
 Use `/sandbox` inside Claude Code to inspect or adjust the policy for a session.
+
+To use the policy without the rest of this repository, read
+[`home/dot_claude/modify_settings.json`](home/dot_claude/modify_settings.json) first (the
+excluded commands and allowed domains fit my tools), then merge it into your settings; it keeps
+every key you already have:
+
+```sh
+tmp=$(mktemp) && sh modify_settings.json < ~/.claude/settings.json > "$tmp" && mv "$tmp" ~/.claude/settings.json
+```
+
+Add [`home/dot_claude/rules/sandbox.md`](home/dot_claude/rules/sandbox.md) to `~/.claude/rules/`
+so agents know how to run the excluded tools.
 
 ## Layout
 
