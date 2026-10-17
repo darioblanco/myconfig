@@ -62,6 +62,18 @@ y() {
 # `cw <name>` starts Claude Code in its own git worktree.
 cw() { claude --worktree "$@"; }
 
+# `agents` lists the running herdr agents (blocked first) and attaches to the one you pick.
+# Detaching shows the list again; Esc leaves you in the shell.
+agents() {
+  local pane
+  while pane=$(herdr agent list | jq -r '.result.agents
+      | sort_by({blocked: 0, working: 1, done: 2, idle: 3}[.agent_status] // 4)[]
+      | [.pane_id, .agent_status, .agent, .terminal_title_stripped] | @tsv' |
+    fzf --exit-0 --delimiter='\t' --with-nth=2.. --prompt='agent> ' | cut -f1) && [[ -n $pane ]]; do
+    herdr agent attach "$pane"
+  done
+}
+
 # ── Key bindings ──────────────────────────────────────────────────────────────
 bindkey -e
 bindkey '^U' backward-kill-line
@@ -72,6 +84,10 @@ for _key in ANTHROPIC_API_KEY OPENAI_API_KEY; do
   [[ -n "${(P)_key}" ]] && print -P "%F{yellow}warning:%f $_key is set; Claude Code/Codex may bill the API instead of your subscription"
 done
 unset _key
+
+# Remote logins open the agent picker (Mosh too: its shell inherits SSH_CONNECTION from the SSH
+# login that starts it); local terminals and herdr's own panes don't.
+[[ -n $SSH_CONNECTION && -z $HERDR_PANE_ID ]] && agents
 
 # Machine-specific settings and secrets. Not tracked.
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
