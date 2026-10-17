@@ -70,9 +70,12 @@ agents() {
       (.[0].result.workspaces | map({(.workspace_id): .label}) | add) as $ws
       | .[1].result.agents
       | sort_by({blocked: 0, working: 1, done: 2, idle: 3}[.agent_status] // 4)[]
-      | [.pane_id, .agent_status, ($ws[.workspace_id] // "?"), .agent, .terminal_title_stripped]
+      | [.pane_id,
+         ({blocked: "\u001b[31m●", working: "\u001b[33m●", done: "\u001b[32m✓",
+           idle: "\u001b[90m○"}[.agent_status] // "\u001b[90m?") + "\u001b[0m",
+         ($ws[.workspace_id] // "?"), .agent, .terminal_title_stripped]
       | @tsv' | column -t -s $'\t' |
-    fzf --exit-0 --with-nth=2.. --prompt='agent> ' | awk '{print $1}') && [[ -n $pane ]]; do
+    fzf --ansi --exit-0 --with-nth=2.. --prompt='agent> ' | awk '{print $1}') && [[ -n $pane ]]; do
     herdr agent attach "$pane"
   done
 }
