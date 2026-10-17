@@ -32,6 +32,10 @@ policy='{
 
   "statusLine": { "type": "command", "command": "~/.claude/statusline.sh" },
 
+  "pluginConfigs": {
+    "cc-plugin-agents-md@builtin": { "options": { "instructionFiles": "claude-md-and-agents-md" } }
+  },
+
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": true,
