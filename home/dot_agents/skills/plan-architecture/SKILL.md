@@ -27,7 +27,9 @@ repository keeps plans.
    why this one wins (simplicity, reversibility, fit with the codebase).
 3. **Boundaries.** Which modules, services or packages change; new public interfaces (functions,
    endpoints, events, schemas) with their shapes; who owns what. Dependencies point one way,
-   with no cycles.
+   with no cycles. HTTP APIs follow [Google's AIPs](https://google.aip.dev/): resources and
+   standard methods, cursor pagination, idempotency keys on writes that clients retry, errors
+   as RFC 9457 problem details, and only additive changes without a new version.
 4. **Data flow.** How data enters, moves and is stored, including migrations and
    backwards compatibility for stored data and APIs.
 5. **Failure modes.** What can fail (dependencies down, bad input, partial writes, retries,

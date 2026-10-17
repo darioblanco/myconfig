@@ -20,6 +20,8 @@ repository's own commands for formatting, linting, type checks and tests.
   edges.
 - Every network or remote call has a timeout and can be cancelled. No fire-and-forget tasks;
   queues are bounded.
+- Public APIs change only additively: never remove, rename or repurpose a field or endpoint
+  without a new version. Errors share one shape.
 
 ## Tests
 - Design code to be easy to test: logic separate from I/O, dependencies passed in at the

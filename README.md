@@ -115,9 +115,7 @@ Claude Code also loads each repository's `AGENTS.md` next to the `CLAUDE.md` fil
 `CLAUDE.md` exists in the repository or any folder above it, so a workspace `CLAUDE.md` above
 the checkouts would hide every repository's `AGENTS.md`.
 
-The design and testing lines are distilled from projects whose engineering is worth copying,
-following [Cindy Sridharan's approach](https://x.com/copyconstruct/status/2111068549469098492)
-of building agent instructions from the best code and writing rather than from scratch:
+The design and testing lines are distilled from projects whose engineering is worth copying:
 
 | Project | Lesson kept |
 |---|---|
@@ -126,9 +124,19 @@ of building agent instructions from the best code and writing rather than from s
 | [Go standard library](https://pkg.go.dev/net/http/httptest) | Test protocol clients against a real local server instead of mocking them |
 | [Tokio](https://tokio.rs/) and [Swift concurrency](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/) | Structured concurrency: timeouts, cancellation, no orphaned tasks, bounded queues |
 | [ScyllaDB](https://www.scylladb.com/) | Measure before optimising, and choose data structures for the access pattern |
+| [Google's API Improvement Proposals](https://google.aip.dev/) and [Stripe's API](https://docs.stripe.com/api) | APIs: resources and standard methods, cursor pagination, idempotency keys on retried writes, one error shape ([RFC 9457](https://www.rfc-editor.org/rfc/rfc9457)), and only additive changes without a new version |
 
 Only the lines that change what agents do by default are kept; the rest of each project's
 wisdom is left to the models.
+
+How the agents are run (sandboxed, in parallel, mostly through command-line tools rather than
+MCP servers) owes a lot to people who write openly about working with them:
+
+| Person | What shaped this setup |
+|---|---|
+| [Armin Ronacher](https://lucumr.pocoo.org/) | Agents do best with plain command-line tools and Makefile targets; an agent with full permissions needs an environment you can afford to lose |
+| [Mitchell Hashimoto](https://mitchellh.com/writing/my-ai-adoption-journey) | Adopt agents deliberately: reproduce your own work with one first, then build the harness around the failures you see |
+| [Simon Willison](https://simonwillison.net/) | The lethal trifecta (private data, untrusted content, a way out), which is why the sandbox blocks credentials and limits network access |
 
 [`home/dot_agents/skills/`](home/dot_agents/skills) holds skills for occasional procedures. Only
 each skill's one-line description is in context until a task needs it.
