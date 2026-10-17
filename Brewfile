@@ -74,6 +74,7 @@ cask "android-commandlinetools"   # sdkmanager / avdmanager for the bootstrap
 # Claude Code itself uses Anthropic's native installer (auto-updates); see bootstrap.sh.
 cask "codex"
 brew "pi-coding-agent"
+brew "skillshare"        # skills for repos that commit .skillshare/; chezmoi owns personal ones
 cask "claude"
 # Language servers for the Claude Code LSP plugins (rust-analyzer comes from rustup).
 brew "pyright"
