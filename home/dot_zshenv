@@ -11,6 +11,12 @@ export NODE_USE_ENV_PROXY=1
 export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
 
+# A phone attached through Mosh keeps its pane at phone width until its mosh-server exits, and a
+# closed Termius never tells it. Exit after 30 minutes without the phone, and let `pkill -USR1`
+# (`unphone` in ~/.zshrc) end only sessions that have been silent for a minute.
+export MOSH_SERVER_NETWORK_TMOUT=1800
+export MOSH_SERVER_SIGNAL_TMOUT=60
+
 # Homebrew is on PATH here too, so non-interactive SSH commands (mosh-server) find it.
 typeset -U path
 path=(

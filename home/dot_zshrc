@@ -81,6 +81,10 @@ agents() {
   done
 }
 
+# `unphone` ends Mosh sessions whose phone has been gone for a minute, so their agents' panes
+# return to the desktop's width. A phone that is still connected keeps its session.
+unphone() { pkill -USR1 -x mosh-server; }
+
 # ── Key bindings ──────────────────────────────────────────────────────────────
 bindkey -e
 bindkey '^U' backward-kill-line

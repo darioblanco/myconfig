@@ -76,7 +76,9 @@ Then, in order (these need an Apple ID, sudo or a GUI):
   Mosh login opens `agents`, a picker of the running herdr agents (blocked ones first): pick one
   to attach to it, `ctrl+b q` to detach and come back to the list (the agent keeps running), Esc
   for a plain shell. Local terminals and
-  herdr's own panes skip it. Inside herdr, `prefix+a` / `prefix+shift+a` step through agents,
+  herdr's own panes skip it. An attached phone sets that agent's width, so closing Termius
+  without detaching leaves it narrow on the desktop: Mosh sessions end after 30 minutes without
+  the phone, and `unphone` on the Mac ends them after one. Inside herdr, `prefix+a` / `prefix+shift+a` step through agents,
   `prefix+o` jumps to the one that notified you, `prefix+z` zooms a pane and `prefix+b` hides the
   sidebar (the prefix is `ctrl+b`).
 - **Background agents.** [pulpo](https://github.com/darioblanco/pulpo) runs agents as durable
