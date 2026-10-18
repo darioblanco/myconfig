@@ -1,4 +1,4 @@
-# myconfig
+# dotfiles
 
 Reproducible macOS setup for terminal-first, agent-assisted development: iOS, Android and
 Flutter, Python, Go, Rust, Node, Kubernetes and Terraform, with coding agents (Claude Code,
@@ -14,8 +14,8 @@ and games) and `claude/plugins.txt` to taste; everything personal is asked at fi
 
 ```sh
 xcode-select --install          # Command Line Tools
-git clone https://github.com/<you>/myconfig ~/myconfig   # any path works
-cd ~/myconfig
+git clone https://github.com/<you>/dotfiles ~/dotfiles   # any path works
+cd ~/dotfiles
 make install                    # Homebrew, Brewfile, dotfiles, toolchains, Claude Code + plugins
                                 # (asks for your password once, to install Homebrew)
 ```
@@ -139,8 +139,8 @@ They are written in the first person ("wait for my OK"), so read them and adapt 
 work. To try them (this replaces any existing `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`):
 
 ```sh
-git clone https://github.com/darioblanco/myconfig
-mkdir -p ~/.agents && cp -R myconfig/home/dot_agents/. ~/.agents/
+git clone https://github.com/darioblanco/dotfiles
+mkdir -p ~/.agents && cp -R dotfiles/home/dot_agents/. ~/.agents/
 ln -sf ~/.agents/AGENTS.md ~/.claude/CLAUDE.md      # Claude Code
 ln -sf ~/.agents/AGENTS.md ~/.codex/AGENTS.md       # Codex (reads ~/.agents/skills natively)
 mkdir -p ~/.claude/skills && ln -sf ~/.agents/skills/*/ ~/.claude/skills/
