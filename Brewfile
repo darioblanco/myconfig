@@ -41,6 +41,7 @@ brew "shfmt"
 brew "actionlint"
 brew "darioblanco/tap/pulpo"   # durable, metered coding-agent sessions
 brew "ccusage"            # Claude / Codex usage and cost reports
+brew "mongosh"           # MongoDB shell
 
 # ── Containers ─────────────────────────────────────────────────────────────────
 brew "container"         # Apple's native Linux containers
