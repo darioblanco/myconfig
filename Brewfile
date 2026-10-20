@@ -92,6 +92,7 @@ cask "little-snitch"
 cask "keka"
 cask "iina"
 cask "firefox"
+cask "bruno"             # API client; collections are plain files in the repo
 cask "google-drive"
 cask "figma"
 cask "miro"
