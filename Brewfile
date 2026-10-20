@@ -42,6 +42,7 @@ brew "actionlint"
 brew "darioblanco/tap/pulpo"   # durable, metered coding-agent sessions
 brew "ccusage"            # Claude / Codex usage and cost reports
 brew "mongosh"           # MongoDB shell
+brew "libpq"             # psql, pg_dump and the other PostgreSQL clients, without a server
 
 # ── Containers ─────────────────────────────────────────────────────────────────
 brew "container"         # Apple's native Linux containers
