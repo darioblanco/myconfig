@@ -26,6 +26,7 @@ path=(
   "$HOME/.local/share/mise/shims"
   /opt/homebrew/bin
   /opt/homebrew/sbin
+  /opt/homebrew/opt/libpq/bin   # keg-only, so Homebrew doesn't link psql
   /opt/homebrew/opt/rustup/bin
   "$HOME/.cargo/bin"
   "$HOME/fvm/default/bin"
