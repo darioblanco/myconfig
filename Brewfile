@@ -32,6 +32,8 @@ cask "ghostty"
 brew "git"
 brew "git-lfs"
 brew "gh"
+brew "gnupg"
+brew "pinentry-mac"      # passphrase dialog, so gpg works outside a terminal (git signing, agents)
 brew "chezmoi"           # dotfiles
 brew "mise"              # node, go, java, ruby... per-project versions + env
 brew "uv"                # python
