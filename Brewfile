@@ -87,6 +87,8 @@ brew "gopls"
 
 # ── Apps ──────────────────────────────────────────────────────────────────────
 cask "bitwarden"
+cask "1password"
+cask "1password-cli"     # `op`; every agent use asks first (Claude policy)
 cask "secretive"        # SSH keys in the Secure Enclave
 cask "raycast"
 cask "swiftbar"           # menu-bar items from scripts (Claude limits)
