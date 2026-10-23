@@ -61,6 +61,7 @@
     "Bash(kubectl scale*)",
     "Bash(kubectl set*)",
     "Bash(npm publish*)",
+    "Bash(op *)",
     "Bash(pnpm publish*)",
     "Bash(terraform apply*)",
     "Bash(terraform destroy*)",
@@ -99,6 +100,7 @@
     "Read(~/.codex/sessions/**)",
     "Read(~/.config/chezmoi/**)",
     "Read(~/.config/gcloud/**)",
+    "Read(~/.config/op/**)",
     "Read(~/.config/sops/**)",
     "Read(~/.docker/**)",
     "Read(~/.git-credentials)",
@@ -122,6 +124,7 @@
     "Read(~/Library/Application Support/Slack/**)",
     "Read(~/Library/Application Support/discord/**)",
     "Read(~/Library/Cookies/**)",
+    "Read(~/Library/Group Containers/2BUA8C4S2C.com.1password/**)",
     "Read(~/Library/Keychains/**)"
   ],
   "denyRead": [
@@ -134,6 +137,7 @@
     "~/.codex/sessions",
     "~/.config/chezmoi",
     "~/.config/gcloud",
+    "~/.config/op",
     "~/.config/sops",
     "~/.docker",
     "~/.git-credentials",
@@ -157,6 +161,7 @@
     "~/Library/Application Support/Slack",
     "~/Library/Application Support/discord",
     "~/Library/Cookies",
+    "~/Library/Group Containers/2BUA8C4S2C.com.1password",
     "~/Library/Keychains"
   ],
   "envVars": [

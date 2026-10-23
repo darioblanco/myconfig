@@ -20,6 +20,7 @@ secrets='[
   "~/.codex/sessions/", "~/.config/chezmoi/",
   "~/.zsh_history", "~/.local/share/atuin/",
   "~/Library/Keychains/", "~/Library/Cookies/", "~/Library/Application Support/Bitwarden/",
+  "~/.config/op/", "~/Library/Group Containers/2BUA8C4S2C.com.1password/",
   "~/Library/Application Support/Google/Chrome/", "~/Library/Application Support/Firefox/",
   "~/Library/Application Support/Slack/", "~/Library/Application Support/Signal/",
   "~/Library/Application Support/discord/"
@@ -120,6 +121,7 @@ policy='{
       "Bash(docker create *-v *)", "Bash(docker create *--volume*)", "Bash(docker create *--mount*)",
       "Bash(docker cp *)", "Bash(docker push *)", "Bash(docker login*)", "Bash(colima start *--mount*)",
       "Bash(pnpm publish*)", "Bash(npm publish*)",
+      "Bash(op *)",
       "Bash(git * --upload-pack*)", "Bash(git * --receive-pack*)", "Bash(git *protocol.*allow*)",
       "Bash(git push --delete*)",
       "Bash(git push *--force*)", "Bash(git push * -f*)", "Bash(git push *+*)"
